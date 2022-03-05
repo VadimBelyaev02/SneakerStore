@@ -9,11 +9,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final ClientRegistrationRepository clientRegistrationRepository;
+
+    public SecurityConfig(ClientRegistrationRepository clientRegistrationRepository) {
+        this.clientRegistrationRepository = clientRegistrationRepository;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -29,8 +35,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/**").permitAll()
 
                 .anyRequest()
-                .authenticated();
-               // .and()
+                .authenticated()
+                .and()
+                .oauth2Client();
+               // .clientRegistrationRepository(clientRegistrationRepository);
                // .apply(jwtConfigurer);
     }
 
