@@ -6,8 +6,6 @@ import com.vadim.sneakerstore.repository.CardRepository;
 import com.vadim.sneakerstore.service.CardService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -20,23 +18,23 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public Optional<Card> getCard(UUID id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public List<CardDto> getCards() {
+    public Card getCard(UUID id) {
         return null;
     }
 
     @Override
-    public Optional<CardDto> saveCard(CardDto cardDto) {
-        return Optional.empty();
+    public CardDto getCards() {
+        return null;
     }
 
     @Override
-    public Optional<CardDto> updateCard(CardDto cardDto) {
-        return Optional.empty();
+    public CardDto saveCard(CardDto cardDto) {
+        return null;
+    }
+
+    @Override
+    public CardDto updateCard(CardDto cardDto) {
+        return null;
     }
 
     @Override

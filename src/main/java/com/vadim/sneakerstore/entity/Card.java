@@ -1,5 +1,6 @@
 package com.vadim.sneakerstore.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Data
 @Entity
@@ -35,6 +37,6 @@ public class Card {
     private Integer cvv;
 
     @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
-
 }

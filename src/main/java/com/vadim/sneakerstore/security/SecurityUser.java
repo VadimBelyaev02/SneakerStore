@@ -55,8 +55,7 @@ public class SecurityUser implements UserDetails {
     public static UserDetails toCustomerDetails(Customer customer) {
         return new org.springframework.security.core.userdetails.User(
                 customer.getEmail(), customer.getPassword(),
-                customer.isConfirmed(), customer.isConfirmed(),
-                customer.isConfirmed(), customer.isConfirmed(),
+                true, true, true, true,
                 customer.getRole().getAuthorities()
         );
     }

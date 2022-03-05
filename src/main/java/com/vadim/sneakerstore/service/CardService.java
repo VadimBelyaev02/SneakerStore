@@ -9,13 +9,12 @@ import java.util.UUID;
 
 public interface CardService {
 
-    Optional<Card> getCard(UUID id);
+    Card getCard(UUID id);
 
-    List<CardDto> getCards();
+    CardDto getCards();
 
-    Optional<CardDto> saveCard(CardDto cardDto);
-
-    Optional<CardDto> updateCard(CardDto cardDto);
+    CardDto saveCard(CardDto cardDto);
+    CardDto updateCard(CardDto cardDto);
 
     void deleteCard(UUID id);
 }

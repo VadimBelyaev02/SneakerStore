@@ -1,5 +1,6 @@
 package com.vadim.sneakerstore.entity;
 
+import com.vadim.sneakerstore.entity.enums.Role;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -7,8 +8,8 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 @Builder
 @NoArgsConstructor
 @Entity
@@ -20,10 +21,10 @@ public class Customer {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    @Column(name = "firstName")
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "lastName")
+    @Column(name = "last_name")
     private String lastName;
 
     @Column(name = "phone")
@@ -35,17 +36,20 @@ public class Customer {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "role")
+    private Role role;
+
     @OneToMany
     private List<Order> orders;
 
     @ManyToMany
-    @JoinTable(name = "customer_product",
+    @JoinTable(name = "products_customers",
             joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
     private List<Product> favorites;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Cart cart;
+   // @OneToOne(cascade = CascadeType.ALL)
+  //  private Cart cart;
 
     @OneToMany
     private List<Card> cards;

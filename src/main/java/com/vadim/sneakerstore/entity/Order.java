@@ -1,5 +1,6 @@
 package com.vadim.sneakerstore.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
+@AllArgsConstructor
 @Builder
 @NoArgsConstructor
 @Table(name = "orders")
@@ -27,6 +29,7 @@ public class Order {
     private String status;
 
     @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @OneToMany
