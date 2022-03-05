@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -28,12 +29,20 @@ public class CustomerDto {
     @NotNull
     private UUID cartId;
 
+    @NotBlank
     private String role;
 
-//    private List<UUID> orderIds;
+    private String country;
 
- //   private List<UUID> favorites;
+    private String city;
 
-//    private List<Card> cards;
+    @NotBlank
+    private String address;
+
+    private String avatar;
+
+    private List<CardDto> cards;
+
+    private List<ProductDto> favorite;
 
 }

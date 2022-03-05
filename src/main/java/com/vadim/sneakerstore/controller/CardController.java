@@ -2,12 +2,14 @@ package com.vadim.sneakerstore.controller;
 
 import com.vadim.sneakerstore.dto.CardDto;
 import com.vadim.sneakerstore.service.CardService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.UUID;
 
+@Tag(name = "Card Controller", description = "Card CRUD ")
 @RestController
 @RequestMapping("/api")
 public class CardController {

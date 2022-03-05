@@ -29,15 +29,15 @@ public class OrderConverter {
         final LocalDate orderedDate = orderDto.getOrderedDate();
         final UUID id = orderDto.getId();
         final Customer customer = Objects.requireNonNull(customerRepository.getById(orderDto.getCustomerId()));
-        final List<UUID> productsIds = orderDto.getProductIds();
-        final List<Product> products = productRepository.findAll().stream()
-                .filter(product ->  productsIds.contains(product.getId()))
-                .collect(Collectors.toList());
+        //final List<UUID> productsIds = orderDto.getProductIds();
+        //final List<Product> products = productRepository.findAll().stream()
+         //       .filter(product ->  productsIds.contains(product.getId()))
+          //      .collect(Collectors.toList());
         return Order.builder()
                 .id(id)
                 .customer(customer)
                 .orderedDate(orderedDate)
-                .products(products)
+            //    .products(products)
                 .build();
 
     }

@@ -32,6 +32,7 @@ public class Order {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany
-    private List<Product> products;
+    @OneToOne
+    @JoinColumn(name = "product_id")
+    private Product products;
 }

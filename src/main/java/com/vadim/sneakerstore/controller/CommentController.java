@@ -3,6 +3,8 @@ package com.vadim.sneakerstore.controller;
 import com.vadim.sneakerstore.dto.CommentDto;
 import com.vadim.sneakerstore.entity.Comment;
 import com.vadim.sneakerstore.service.CommentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
-
+@Tag(name = "Comment Controller", description = "Comment CRUD operations")
 @RestController
 @RequestMapping("/api/comment")
 public class CommentController {
@@ -21,6 +23,7 @@ public class CommentController {
         this.commentService = commentService;
     }
 
+    @Operation(summary = "")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<CommentDto> getAllComments() {

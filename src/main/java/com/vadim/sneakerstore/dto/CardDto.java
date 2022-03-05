@@ -35,6 +35,6 @@ public class CardDto {
     @NotNull
     private Integer cvv;
 
-    @NotNull
-    private UUID customerId;
+//    @NotNull
+//    private UUID customerId;
 }

@@ -48,6 +48,13 @@ public class ProductDto {
     @NotBlank
     private String material;
 
+//    @NotBlank
+//    private String photos;
+
+  //  private Double avg;
+
     @NotNull
     private Long size;
+
+    // private Integer amount;
 }

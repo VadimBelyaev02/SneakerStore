@@ -11,6 +11,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -23,13 +24,17 @@ public class OrderDto {
 
     @NotBlank
     @JsonSerialize(using = ToStringSerializer.class)
-    private LocalDate orderedDate;
+    private LocalDate date;
 
     @NotBlank
     private String status;
 
     @NotBlank
-    private UUID customerId;
+    private String email;
 
-    private List<UUID> productIds;
+    @NotNull
+    private UUID productId;
+
+    @NotNull
+    private Integer amount;
 }

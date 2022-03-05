@@ -28,8 +28,8 @@ public class CommentDto {
 
     @NotNull
     @JsonSerialize(using = ToStringSerializer.class)
-    private LocalDate createdDate;
+    private LocalDate date;
 
     @NotBlank
-    private String username;
+    private String customer;
 }

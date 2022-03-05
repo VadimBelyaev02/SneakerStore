@@ -47,7 +47,7 @@ public class Product {
     @Column(name = "season")
     private String season;
 
-    @Column(name = "originCountry")
+    @Column(name = "origin_country")
     private String originCountry;
 
     @Column(name = "description")
