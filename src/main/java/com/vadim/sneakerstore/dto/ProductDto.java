@@ -1,0 +1,49 @@
+package com.vadim.sneakerstore.dto;
+
+import lombok.Builder;
+import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.util.UUID;
+
+@Builder
+@Data
+public class ProductDto {
+
+    private UUID id;
+
+    @NotNull
+    private BigDecimal price;
+
+    @NotBlank
+    private String name;
+
+    @NotBlank
+    private String brand;
+
+    @NotBlank
+    private String sex;
+
+    @NotBlank
+    private String destiny;
+
+    @NotBlank
+    private String color;
+
+    @NotBlank
+    private String season;
+
+    @NotBlank
+    private String originCountry;
+
+    @NotBlank
+    private String description;
+
+    @NotBlank
+    private String material;
+
+    @NotNull
+    private Long size;
+}
