@@ -23,8 +23,8 @@ public class CommentConverter {
         final UUID id = comment.getId();
         final String message = comment.getMessage();
         final Integer rate = comment.getRate();
-        final LocalDate createdDate = comment.getCreatedDate();
-        final String username = comment.getUsername();
+        final LocalDate createdDate = comment.getDate();
+        final String username = comment.getCustomer();
         final Product product = Objects.requireNonNull(productRepository.getById(comment.getProductId()));
         return Comment.builder()
                 .id(id)
@@ -46,10 +46,10 @@ public class CommentConverter {
         return CommentDto.builder()
                 .id(id)
                 .productId(productId)
-                .createdDate(createdDate)
+                .date(createdDate)
                 .message(message)
                 .rate(rate)
-                .username(username)
+                .customer(username)
                 .build();
     }
 }
