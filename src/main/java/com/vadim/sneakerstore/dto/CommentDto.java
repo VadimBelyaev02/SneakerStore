@@ -32,4 +32,7 @@ public class CommentDto {
 
     @NotBlank
     private String customer;
+
+    @NotNull
+    private UUID customerId;
 }

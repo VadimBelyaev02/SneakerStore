@@ -53,4 +53,7 @@ public class Customer {
 
     @OneToMany
     private List<Card> cards;
+
+    @OneToMany
+    private List<Comment> comments;
 }

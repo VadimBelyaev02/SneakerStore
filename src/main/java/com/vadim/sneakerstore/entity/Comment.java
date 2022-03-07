@@ -38,4 +38,7 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
+
+    @ManyToOne
+    private Customer customer;
 }

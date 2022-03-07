@@ -56,13 +56,21 @@ public class Product {
     @Column(name = "material")
     private String material;
 
-    @Column(name = "size")
-    private Long size;
+    @ManyToMany
+    @JoinTable(name = "products_sizes",
+            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "size_id", referencedColumnName = "id"))
+    private List<Size> size;
+
+    private String sizes;
 
     @Column(name = "preview")
     private String preview;
 
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Customer> customers;
+
+    @OneToMany
+    private List<Comment> comments;
 
 }

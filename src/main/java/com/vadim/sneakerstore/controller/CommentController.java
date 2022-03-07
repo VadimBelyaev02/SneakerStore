@@ -42,6 +42,12 @@ public class CommentController {
         return commentService.saveComment(commentDto);
     }
 
+    @PostMapping("/asdf")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CommentDto postCommen2t(@Valid @RequestBody List<UUID> uuids) {
+       // return commentService.saveComment(commentDto);
+    }
+
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public CommentDto putComment(@Valid @RequestBody CommentDto commentDto) {
