@@ -28,9 +28,9 @@ public class CustomerConverter {
                 .email(email)
                 .firstName(firstName)
                 .role(role)
-                .city(city)
-                .country(country)
-                .address(address)
+             //   .city(city)
+             //   .country(country)
+             //   .address(address)
                 .phone(phone)
                 .lastName(lastName)
                 .build();

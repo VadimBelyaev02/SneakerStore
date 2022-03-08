@@ -2,6 +2,8 @@ package com.vadim.sneakerstore.controller;
 
 import com.vadim.sneakerstore.dto.CardDto;
 import com.vadim.sneakerstore.service.CardService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +22,14 @@ public class CardController {
         this.cardService = cardService;
     }
 
+    @Operation(description = "Add a new card")
     @PostMapping("/cards")
     @ResponseStatus(HttpStatus.CREATED)
-    public CardDto postCard(@Valid @RequestBody CardDto cardDto) {
+    public CardDto postCard(@Parameter(description = "Contains ") @Valid @RequestBody CardDto cardDto) {
         return cardService.saveCard(cardDto);
     }
 
+    @Operation(description = "Delete a card by id")
     @DeleteMapping("/cards/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCard(@PathVariable("id") UUID id) {
