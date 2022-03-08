@@ -2,36 +2,29 @@ package com.vadim.sneakerstore.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
-@Entity
-@AllArgsConstructor
+@Data
 @Builder
 @NoArgsConstructor
-@Table(name = "orders")
-public class Order {
+@AllArgsConstructor
+@Entity
+@Table(name = "photos")
+public class Photo {
 
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    @Column(name = "ordered_date")
-    private LocalDate orderedDate;
-
-    @Column(name = "status")
-    private String status;
+    @Column(name = "url")
+    private String url;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
-
-    @OneToOne
-    private Product products;
+    private Product product;
 }

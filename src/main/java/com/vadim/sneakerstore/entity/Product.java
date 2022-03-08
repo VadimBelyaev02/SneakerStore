@@ -60,12 +60,13 @@ public class Product {
     @JoinTable(name = "products_sizes",
             joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "size_id", referencedColumnName = "id"))
-    private List<Size> size;
-
-    private String sizes;
+    private List<Size> sizes;
 
     @Column(name = "preview")
     private String preview;
+
+    @OneToMany
+    private List<Photo> photos;
 
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Customer> customers;
