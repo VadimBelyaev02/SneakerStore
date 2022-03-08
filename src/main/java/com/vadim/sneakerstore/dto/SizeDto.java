@@ -1,6 +1,5 @@
 package com.vadim.sneakerstore.dto;
 
-import com.vadim.sneakerstore.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

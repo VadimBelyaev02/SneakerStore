@@ -3,6 +3,7 @@ package com.vadim.sneakerstore.dto;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.vadim.sneakerstore.entity.Customer;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.UUID;
 
+@Schema(name = "Card", description = "Transfer card data")
 @Data
 @Builder
 @NoArgsConstructor
@@ -23,18 +25,23 @@ public class CardDto {
 
     private UUID id;
 
+    @Schema(description = "Card number")
     @NotBlank
     private String number;
 
+    @Schema(description = "Validity date")
     @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate validityDate;
 
+    @Schema(description = "Owner on a card")
     @NotBlank
     private String owner;
 
+    @Schema(description = "Cvv number")
     @NotNull
     private Integer cvv;
 
+    @Schema(description = "Owner id")
     @NotNull
     private UUID customerId;
 }

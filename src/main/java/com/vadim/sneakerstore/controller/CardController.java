@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.UUID;
 
-@Tag(name = "Card Controller", description = "Card CRUD ")
+@Tag(name = "Card Controller", description = "Card CRUD operations")
 @RestController
 @RequestMapping("/api")
 public class CardController {

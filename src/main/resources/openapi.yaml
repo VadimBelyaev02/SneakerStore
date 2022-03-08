@@ -1,0 +1,9 @@
+openapi: "3.0.0"
+info:
+  title: Sneaker Store API
+  description: RESP API
+  contact:
+    name: Vadim
+    url: http://localhost:8080
+    email: vadimbelaev002@gmail.com
+  version: 1.2.0

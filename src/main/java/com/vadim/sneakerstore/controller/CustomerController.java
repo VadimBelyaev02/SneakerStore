@@ -2,6 +2,7 @@ package com.vadim.sneakerstore.controller;
 
 import com.vadim.sneakerstore.dto.CustomerDto;
 import com.vadim.sneakerstore.service.CustomerService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    @Operation(description = "Get request")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CustomerDto getCustomer(@PathVariable("id") UUID id) {
