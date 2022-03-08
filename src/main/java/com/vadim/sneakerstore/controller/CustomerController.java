@@ -4,6 +4,7 @@ import com.vadim.sneakerstore.dto.CustomerDto;
 import com.vadim.sneakerstore.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Tag(name = "Customer Controller", description = "Customer CRUD operations")
 @RestController
 @RequestMapping("/api/customers")
@@ -26,6 +28,7 @@ public class CustomerController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CustomerDto getCustomer(@PathVariable("id") UUID id) {
+        log.info("KJKJFDGKFJGKFDJGRTJROINVBM");
         return customerService.getCustomer(id);
     }
 
