@@ -48,8 +48,8 @@ public class CustomerServiceImpl implements CustomerService {
         if (repository.existsById(customerDto.getId())) {
             throw new AlreadyExistsException("Customer with id=" + customerDto.getId() + " already exists");
         }
-        return null;
-
+        Customer customer = repository.save(converter.convertToEntity(customerDto));
+        return converter.convertToDto(customer);
     }
 
     @Override

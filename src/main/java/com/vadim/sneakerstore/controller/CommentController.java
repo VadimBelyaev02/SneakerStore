@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Tag(name = "Comment Controller", description = "Comment CRUD operations")
 @RestController
-@RequestMapping("/api/comment")
+@RequestMapping("/api/comments")
 public class CommentController {
 
     private final CommentService commentService;
@@ -23,31 +23,35 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @Operation(summary = "")
+    @Operation(description = "Get all comments")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<CommentDto> getAllComments() {
         return commentService.getAllComments();
     }
 
+    @Operation(description = "Get a comment by its id")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CommentDto getComment(@PathVariable("id")UUID i) {
-        return null;
+    public CommentDto getComment(@PathVariable("id") UUID id) {
+        return commentService.getComment(id);
     }
 
+    @Operation(description = "Add a new comment")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CommentDto postComment(@Valid @RequestBody CommentDto commentDto) {
         return commentService.saveComment(commentDto);
     }
 
+    @Operation(description = "Update existed comment")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public CommentDto putComment(@Valid @RequestBody CommentDto commentDto) {
         return commentService.updateComment(commentDto);
     }
 
+    @Operation(description = "Delete a comment by its id")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteComment(@PathVariable("id") UUID id) {

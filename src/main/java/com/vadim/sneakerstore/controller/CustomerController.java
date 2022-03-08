@@ -22,31 +22,35 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @Operation(description = "Get request")
+    @Operation(description = "Get customer by id")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CustomerDto getCustomer(@PathVariable("id") UUID id) {
         return customerService.getCustomer(id);
     }
 
+    @Operation(description = "Get all customers")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<CustomerDto> getAllCustomers() {
         return customerService.getAllCustomers();
     }
 
+    @Operation(description = "Add a new customer")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerDto postCustomer(@Valid @RequestBody CustomerDto customerDto) {
         return customerService.saveCustomer(customerDto);
     }
 
+    @Operation(description = "Update existed customer")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public CustomerDto putCustomer(@Valid @RequestBody CustomerDto customerDto) {
         return customerService.updateCustomer(customerDto);
     }
 
+    @Operation(description = "Delete customer by id")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCustomer(@PathVariable("id") UUID id) {
