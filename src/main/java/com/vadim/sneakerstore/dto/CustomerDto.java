@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -28,11 +29,10 @@ public class CustomerDto {
     private String phone;
 
     @Schema(description = "Person's email")
-    @NotBlank
+    @Email
     private String email;
 
     @Schema(description = "Person's role")
-    @NotBlank
     private String role;
 
     @Schema(description = "What country person lives")
@@ -42,7 +42,6 @@ public class CustomerDto {
     private String city;
 
     @Schema(description = "Exact address of living")
-    @NotBlank
     private String address;
 
     @Schema(description = "Person's avatar")
