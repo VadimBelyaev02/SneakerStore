@@ -9,9 +9,9 @@ import java.util.UUID;
 
 public interface CardService {
 
-    Card getCard(UUID id);
+    CardDto getCard(UUID id);
 
-    CardDto getCards();
+    List<CardDto> getCards();
 
     CardDto saveCard(CardDto cardDto);
     CardDto updateCard(CardDto cardDto);

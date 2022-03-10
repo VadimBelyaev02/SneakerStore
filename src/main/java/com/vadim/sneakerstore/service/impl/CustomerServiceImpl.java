@@ -45,8 +45,15 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional
     public CustomerDto saveCustomer(CustomerDto customerDto) {
-        if (repository.existsById(customerDto.getId())) {
-            throw new AlreadyExistsException("Customer with id=" + customerDto.getId() + " already exists");
+        if (repository.existsByPhoneAndEmail(customerDto.getPhone(), customerDto.getEmail())) {
+            throw new AlreadyExistsException("Customer with phone  = " + customerDto.getPhone()
+                    + " and email = " + customerDto.getEmail() + " already exists");
+        }
+        if (repository.existsByPhone(customerDto.getPhone())) {
+            throw new AlreadyExistsException("Customer with phone = " + customerDto.getPhone() + " already exists");
+        }
+        if (repository.existsByEmail(customerDto.getEmail())) {
+            throw new AlreadyExistsException("Customer with email = " + customerDto.getEmail() + " already exists");
         }
         Customer customer = repository.save(converter.convertToEntity(customerDto));
         return converter.convertToDto(customer);
