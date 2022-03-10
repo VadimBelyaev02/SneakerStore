@@ -3,6 +3,7 @@ package com.vadim.sneakerstore.dto.converter;
 import com.vadim.sneakerstore.dto.CustomerDto;
 import com.vadim.sneakerstore.entity.Customer;
 import com.vadim.sneakerstore.entity.enums.Role;
+import com.vadim.sneakerstore.model.RegistrationRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.stereotype.Component;
 
@@ -28,9 +29,9 @@ public class CustomerConverter {
                 .email(email)
                 .firstName(firstName)
                 .role(role)
-             //   .city(city)
-             //   .country(country)
-             //   .address(address)
+                .city(city)
+                .country(country)
+                .address(address)
                 .phone(phone)
                 .lastName(lastName)
                 .build();
@@ -39,14 +40,32 @@ public class CustomerConverter {
     public CustomerDto convertToDto(Customer customer) {
         final UUID id = customer.getId();
         final String email = customer.getEmail();
-        //      final List<CardacustomerDto.getCards();
-        //customerDto.getCart();
-        // customerDto.getFavorites();
         final String firstName = customer.getFirstName();
         final String phone = customer.getPhone();
         final String lastName = customer.getLastName();
         return CustomerDto.builder()
                 .id(id)
+                .email(email)
+                .firstName(firstName)
+                .phone(phone)
+                .lastName(lastName)
+                .build();
+    }
+
+    public Customer convertToEntity(RegistrationRequestDto requestDto) {
+        final String email = requestDto.getEmail();
+        final String city = requestDto.getCity();
+        final String address = requestDto.getAddress();
+        final String country = requestDto.getCountry();
+        final String password = requestDto.getPassword();
+        final String firstName = requestDto.getFirstName();
+        final String phone = requestDto.getPhone();
+        final String lastName = requestDto.getLastName();
+        return Customer.builder()
+                .city(city)
+                .address(address)
+                .country(country)
+                .password(password)
                 .email(email)
                 .firstName(firstName)
                 .phone(phone)

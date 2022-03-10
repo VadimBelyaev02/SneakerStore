@@ -48,17 +48,14 @@ public class Customer {
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
     private List<Product> favorites;
 
-   // @OneToOne(cascade = CascadeType.ALL)
-  //  private Cart cart;
+    @Column(name = "city")
+    private String city;
 
-//    @Column(name = "city")
-//    private String city;
-//
-//    @Column(name = "country")
-//    private String country;
-//
-//    @Column(name = "address")
-//    private String address;
+    @Column(name = "country")
+    private String country;
+
+    @Column(name = "address")
+    private String address;
 
     @OneToMany
     private List<Card> cards;
