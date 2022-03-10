@@ -47,10 +47,10 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                     + " and email " + requestDto.getEmail() + " already exists");
         }
         if (repository.existsByPhone(requestDto.getPhone())) {
-            throw new AlreadyExistsException("Customer with phone = " + requestDto.getPhone() + " already exists");
+            throw new AlreadyExistsException("Customer with phone " + requestDto.getPhone() + " already exists");
         }
         if (repository.existsByEmail(requestDto.getEmail())) {
-            throw new AlreadyExistsException("Customer with email = " + requestDto.getEmail() + " already exists");
+            throw new AlreadyExistsException("Customer with email " + requestDto.getEmail() + " already exists");
         }
         requestDto.setPassword(encoder.encode(requestDto.getPassword()));
         Customer customer = repository.save(converter.convertToEntity(requestDto));
