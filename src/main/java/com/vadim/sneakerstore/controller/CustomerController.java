@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @Slf4j
 @Tag(name = "Customer Controller", description = "Customer CRUD operations")
 @RestController
