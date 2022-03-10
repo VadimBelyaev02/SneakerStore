@@ -21,12 +21,6 @@ public class AuthorizationController {
         this.service = service;
     }
 
-    @PostMapping("/login")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void login(@Valid @RequestBody AuthorizationRequestDto requestDto) {
-        service.authorize(requestDto);
-    }
-
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerDto register(@Valid @RequestBody RegistrationRequestDto requestDto) {

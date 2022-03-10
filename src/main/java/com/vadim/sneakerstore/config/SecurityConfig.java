@@ -44,9 +44,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
-             //   .and()
-             //   .oauth2Client();;
+                .httpBasic()
+                .and()
+                .oauth2Client();;
     }
 
     @Override
