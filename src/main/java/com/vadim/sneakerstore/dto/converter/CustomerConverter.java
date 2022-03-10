@@ -61,6 +61,7 @@ public class CustomerConverter {
         final String firstName = requestDto.getFirstName();
         final String phone = requestDto.getPhone();
         final String lastName = requestDto.getLastName();
+        final Role role = Role.USER;
         return Customer.builder()
                 .city(city)
                 .address(address)
@@ -70,6 +71,7 @@ public class CustomerConverter {
                 .firstName(firstName)
                 .phone(phone)
                 .lastName(lastName)
+                .role(role)
                 .build();
     }
 }
