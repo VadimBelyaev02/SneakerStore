@@ -1,5 +1,6 @@
 package com.vadim.sneakerstore.exceptionhandler;
 
+import com.vadim.sneakerstore.exception.AccessDeniedException;
 import com.vadim.sneakerstore.exception.AlreadyExistsException;
 import com.vadim.sneakerstore.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -23,11 +24,11 @@ public class ResponseEntityExceptionHandler {
 //        return new ResponseEntity<>(info, HttpStatus.BAD_REQUEST);
 //    }
 //
-//    @ExceptionHandler(AccessDeniedException.class)
-//    public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException e) {
-//        ExceptionInfo info = new ExceptionInfo(e.getMessage(), HttpStatus.FORBIDDEN.value());
-//        return new ResponseEntity<>(info, HttpStatus.FORBIDDEN);
-//    }
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException e) {
+        ExceptionInfo info = new ExceptionInfo(e.getMessage(), HttpStatus.FORBIDDEN.value());
+        return new ResponseEntity<>(info, HttpStatus.FORBIDDEN);
+    }
 //
     @ExceptionHandler(AlreadyExistsException.class)
     public ResponseEntity<?> handleAlreadyExistsException(AlreadyExistsException e) {
