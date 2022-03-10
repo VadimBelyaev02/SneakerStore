@@ -3,7 +3,6 @@ package com.vadim.sneakerstore.service.impl;
 import com.vadim.sneakerstore.dto.CustomerDto;
 import com.vadim.sneakerstore.dto.converter.CustomerConverter;
 import com.vadim.sneakerstore.entity.Customer;
-import com.vadim.sneakerstore.exception.AccessDeniedException;
 import com.vadim.sneakerstore.exception.AlreadyExistsException;
 import com.vadim.sneakerstore.exception.NotFoundException;
 import com.vadim.sneakerstore.model.AuthorizationRequestDto;
@@ -19,12 +18,13 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     private final CustomerRepository repository;
     private final CustomerConverter converter;
-   // private final PasswordEncoder encoder;
+    private final PasswordEncoder encoder;
 
-    public AuthorizationServiceImpl(CustomerRepository repository, CustomerConverter converter) {
+    public AuthorizationServiceImpl(CustomerRepository repository, CustomerConverter converter, PasswordEncoder encoder) {
         this.repository = repository;
         this.converter = converter;
    //     this.encoder = encoder;
+        this.encoder = encoder;
     }
 
     @Override
@@ -42,6 +42,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     @Transactional
     public CustomerDto registerCustomer(RegistrationRequestDto requestDto) {
+        requestDto.setPassword(encoder.encode(requestDto.getPassword()));
         if (repository.existsByPhoneAndEmail(requestDto.getPhone(), requestDto.getEmail())) {
             throw new AlreadyExistsException("Customer with phone  = " + requestDto.getPhone()
                     + " and email = " + requestDto.getEmail() + " already exists");
