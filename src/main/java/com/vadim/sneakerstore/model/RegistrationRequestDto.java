@@ -28,10 +28,8 @@ public class RegistrationRequestDto {
     @NotBlank
     private String country;
 
-    @NotBlank
     private String city;
 
-    @NotBlank
     private String address;
 
     @NotBlank
