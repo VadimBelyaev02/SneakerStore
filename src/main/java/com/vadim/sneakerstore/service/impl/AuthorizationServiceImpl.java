@@ -36,6 +36,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         if (!customer.getPassword().equals(encoder.encode(requestDto.getPassword()))) {
             throw new AccessDeniedException("Wrong password");
         }
+
     }
 
     @Override
