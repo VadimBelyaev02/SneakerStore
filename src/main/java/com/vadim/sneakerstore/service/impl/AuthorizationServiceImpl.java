@@ -43,8 +43,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Transactional
     public CustomerDto registerCustomer(RegistrationRequestDto requestDto) {
         if (repository.existsByPhoneAndEmail(requestDto.getPhone(), requestDto.getEmail())) {
-            throw new AlreadyExistsException("Customer with phone  = " + requestDto.getPhone()
-                    + " and email = " + requestDto.getEmail() + " already exists");
+            throw new AlreadyExistsException("Customer with phone " + requestDto.getPhone()
+                    + " and email " + requestDto.getEmail() + " already exists");
         }
         if (repository.existsByPhone(requestDto.getPhone())) {
             throw new AlreadyExistsException("Customer with phone = " + requestDto.getPhone() + " already exists");
