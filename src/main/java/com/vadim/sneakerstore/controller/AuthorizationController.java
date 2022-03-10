@@ -3,7 +3,7 @@ package com.vadim.sneakerstore.controller;
 import com.vadim.sneakerstore.dto.CustomerDto;
 import com.vadim.sneakerstore.model.AuthorizationRequestDto;
 import com.vadim.sneakerstore.model.RegistrationRequestDto;
-import com.vadim.sneakerstore.model.ResetPasswordRequestDto;
+
 import com.vadim.sneakerstore.service.AuthorizationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +32,9 @@ public class AuthorizationController {
         return service.registerCustomer(requestDto);
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.OK)
-    public CustomerDto resetPassword(@Valid @RequestBody ResetPasswordRequestDto requestDto) {
-        return null;
-    }
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.OK)
+//    public CustomerDto resetPassword(@Valid @RequestBody ResetPasswordRequestDto requestDto) {
+//        return null;
+//    }
 }

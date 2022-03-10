@@ -23,6 +23,6 @@ public class CustomerDetailsServiceImpl implements UserDetailsService {
         Customer customer = repository.findByEmail(email).orElseThrow(() ->
                 new UsernameNotFoundException("Customer with email = " + email + " is not found")
         );
-        return SecurityUser.toCustomerDetails(customer);
+        return SecurityCustomer.toCustomerDetails(customer);
     }
 }

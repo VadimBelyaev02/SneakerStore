@@ -1,34 +1,26 @@
 package com.vadim.sneakerstore.config;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final ClientRegistrationRepository clientRegistrationRepository;
-    private final UserDetailsService userDetailsService;
+   // private final UserDetailsService userDetailsService;
 
-    public SecurityConfig(ClientRegistrationRepository clientRegistrationRepository,
-                          @Qualifier("customerDetailsServiceImpl") UserDetailsService userDetailsService) {
-        this.clientRegistrationRepository = clientRegistrationRepository;
-        this.userDetailsService = userDetailsService;
-    }
+//    public SecurityConfig(@Qualifier("customerDetailsServiceImpl") UserDetailsService userDetailsService) {
+//        this.userDetailsService = userDetailsService;
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -49,35 +41,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .and()
                 .httpBasic()
                 .and()
-                .oauth2Client();
-               // .clientRegistrationRepository(clientRegistrationRepository);
-               // .apply(jwtConfigurer);
+                .oauth2Client();;
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) {
-        authenticationManagerBuilder.authenticationProvider(daoAuthenticationProvider());
-    }
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) {
+//        authenticationManagerBuilder.authenticationProvider(daoAuthenticationProvider());
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
     }
 
-    @Bean
-    protected DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
-        return daoAuthenticationProvider;
-    }
+//    @Bean
+//    protected DaoAuthenticationProvider daoAuthenticationProvider() {
+//        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+//        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+//        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+//        return daoAuthenticationProvider;
+//    }
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedMethods("POST", "GET", "PUT", "DELETE")
-                .allowedHeaders("Access-Control-Allow-Origin", "Content-Type", "Authorization")
-                .exposedHeaders("Access-Control-Allow-Origin", "Content-Type", "Authorization")
-                .allowedOrigins("*");
-    }
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**")
+//                .allowedMethods("POST", "GET", "PUT", "DELETE")
+//                .allowedHeaders("Access-Control-Allow-Origin", "Content-Type", "Authorization")
+//                .exposedHeaders("Access-Control-Allow-Origin", "Content-Type", "Authorization")
+//                .allowedOrigins("*");
+//    }
 }

@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
-public class SecurityUser implements UserDetails {
+public class SecurityCustomer implements UserDetails {
 
     private final String username;
     private final String password;

@@ -19,12 +19,12 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     private final CustomerRepository repository;
     private final CustomerConverter converter;
-    private final PasswordEncoder encoder;
+   // private final PasswordEncoder encoder;
 
-    public AuthorizationServiceImpl(CustomerRepository repository, CustomerConverter converter, PasswordEncoder encoder) {
+    public AuthorizationServiceImpl(CustomerRepository repository, CustomerConverter converter) {
         this.repository = repository;
         this.converter = converter;
-        this.encoder = encoder;
+   //     this.encoder = encoder;
     }
 
     @Override
@@ -33,9 +33,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         Customer customer = repository.findByEmail(requestDto.getEmail()).orElseThrow(() ->
                 new NotFoundException("Customer with email = " + requestDto.getEmail() + " is not found")
         );
-        if (!customer.getPassword().equals(encoder.encode(requestDto.getPassword()))) {
-            throw new AccessDeniedException("Wrong password");
-        }
+//        if (!customer.getPassword().equals(encoder.encode(requestDto.getPassword()))) {
+//            throw new AccessDeniedException("Wrong password");
+//        }
 
     }
 
