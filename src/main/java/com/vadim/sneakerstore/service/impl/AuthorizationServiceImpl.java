@@ -3,6 +3,7 @@ package com.vadim.sneakerstore.service.impl;
 import com.vadim.sneakerstore.dto.CustomerDto;
 import com.vadim.sneakerstore.dto.converter.CustomerConverter;
 import com.vadim.sneakerstore.entity.Customer;
+import com.vadim.sneakerstore.exception.AccessDeniedException;
 import com.vadim.sneakerstore.exception.AlreadyExistsException;
 import com.vadim.sneakerstore.exception.NotFoundException;
 import com.vadim.sneakerstore.model.AuthorizationRequestDto;
@@ -29,14 +30,14 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     @Transactional
-    public void authorize(AuthorizationRequestDto requestDto) {
+    public CustomerDto authorize(AuthorizationRequestDto requestDto) {
         Customer customer = repository.findByEmail(requestDto.getEmail()).orElseThrow(() ->
                 new NotFoundException("Customer with email = " + requestDto.getEmail() + " is not found")
         );
-//        if (!customer.getPassword().equals(encoder.encode(requestDto.getPassword()))) {
-//            throw new AccessDeniedException("Wrong password");
-//        }
-
+        if (!customer.getPassword().equals(encoder.encode(requestDto.getPassword()))) {
+            throw new AccessDeniedException("Wrong password");
+        }
+        return converter.convertToDto(customer);
     }
 
     @Override

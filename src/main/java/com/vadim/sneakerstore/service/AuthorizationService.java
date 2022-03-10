@@ -6,7 +6,7 @@ import com.vadim.sneakerstore.model.RegistrationRequestDto;
 
 public interface AuthorizationService {
 
-    void authorize(AuthorizationRequestDto requestDto);
+    CustomerDto authorize(AuthorizationRequestDto requestDto);
 
     CustomerDto registerCustomer(RegistrationRequestDto requestDto);
 }
