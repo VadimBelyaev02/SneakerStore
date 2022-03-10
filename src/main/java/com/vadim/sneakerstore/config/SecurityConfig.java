@@ -67,16 +67,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return daoAuthenticationProvider;
     }
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("*");
-                      //  .allowedMethods("POST", "GET", "PUT", "DELETE");
-            }
-        };
-    }
+//    @Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//        return new WebMvcConfigurer() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping("/**").allowedOrigins("*");
+//                      //  .allowedMethods("POST", "GET", "PUT", "DELETE");
+//            }
+//        };
+//    }
 
 //    @Override
 //    public void addCorsMappings(CorsRegistry registry) {
