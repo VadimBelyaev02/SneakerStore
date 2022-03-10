@@ -42,7 +42,6 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     @Transactional
     public CustomerDto registerCustomer(RegistrationRequestDto requestDto) {
-        requestDto.setPassword(encoder.encode(requestDto.getPassword()));
         if (repository.existsByPhoneAndEmail(requestDto.getPhone(), requestDto.getEmail())) {
             throw new AlreadyExistsException("Customer with phone  = " + requestDto.getPhone()
                     + " and email = " + requestDto.getEmail() + " already exists");
@@ -53,6 +52,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         if (repository.existsByEmail(requestDto.getEmail())) {
             throw new AlreadyExistsException("Customer with email = " + requestDto.getEmail() + " already exists");
         }
+        requestDto.setPassword(encoder.encode(requestDto.getPassword()));
         Customer customer = repository.save(converter.convertToEntity(requestDto));
         return converter.convertToDto(customer);
     }

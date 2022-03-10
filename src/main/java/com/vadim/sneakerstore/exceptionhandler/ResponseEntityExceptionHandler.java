@@ -1,5 +1,7 @@
 package com.vadim.sneakerstore.exceptionhandler;
 
+import com.vadim.sneakerstore.exception.AlreadyExistsException;
+import com.vadim.sneakerstore.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,11 +29,11 @@ public class ResponseEntityExceptionHandler {
 //        return new ResponseEntity<>(info, HttpStatus.FORBIDDEN);
 //    }
 //
-//    @ExceptionHandler(AlreadyExistsException.class)
-//    public ResponseEntity<?> handleAlreadyExistsException(AlreadyExistsException e) {
-//        ExceptionInfo info = new ExceptionInfo(e.getMessage(), HttpStatus.CONFLICT.value());
-//        return new ResponseEntity<>(info, HttpStatus.CONFLICT);
-//    }
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity<?> handleAlreadyExistsException(AlreadyExistsException e) {
+        ExceptionInfo info = new ExceptionInfo(e.getMessage(), HttpStatus.CONFLICT.value());
+        return new ResponseEntity<>(info, HttpStatus.CONFLICT);
+    }
 //
 //    @ExceptionHandler({JwtAuthenticationException.class, JwtException.class, UsernameNotFoundException.class})
 //    public ResponseEntity<?> handleJwtAuthenticationException(JwtAuthenticationException e) {
@@ -51,9 +53,9 @@ public class ResponseEntityExceptionHandler {
 //        return new ResponseEntity<>(info, HttpStatus.FORBIDDEN);
 //    }
 //
-//    @ExceptionHandler(NotFoundException.class)
-//    public ResponseEntity<?> handleNotFoundException(NotFoundException e) {
-//        ExceptionInfo info = new ExceptionInfo(e.getMessage(), HttpStatus.NOT_FOUND.value());
-//        return new ResponseEntity<>(info, HttpStatus.NOT_FOUND);
-//    }
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<?> handleNotFoundException(NotFoundException e) {
+        ExceptionInfo info = new ExceptionInfo(e.getMessage(), HttpStatus.NOT_FOUND.value());
+        return new ResponseEntity<>(info, HttpStatus.NOT_FOUND);
+    }
 }
