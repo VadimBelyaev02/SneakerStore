@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -29,6 +30,7 @@ public class CommentDto {
 
     @Schema(description = "Number of points")
     @NotNull
+    @Size(min = 1, max = 5)
     private Integer rate;
 
     @Schema(description = "Product's id which is commented")
