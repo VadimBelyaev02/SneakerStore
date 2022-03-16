@@ -62,8 +62,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional
     public CustomerDto updateCustomer(CustomerDto customerDto) {
-        if (!repository.existsByEmail(customerDto.getEmail())) {
-            throw new NotFoundException("Customer is not found");
+        if (!repository.existsById(customerDto.getId())) {
+            throw new NotFoundException("Customer with id " + customerDto.getId() + " is not found");
         }
         Customer customer = repository.save(converter.convertToEntity(customerDto));
         return converter.convertToDto(customer);
