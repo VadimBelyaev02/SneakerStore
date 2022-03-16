@@ -1,5 +1,6 @@
 package com.vadim.sneakerstore.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
+@Schema(name = "Size", description = "Product's size and amount data")
 @Data
 @Builder
 @AllArgsConstructor
@@ -18,11 +20,14 @@ public class SizeDto {
     @NotNull
     private UUID id;
 
+    @Schema(description = "Amount of products with this size")
     @NotNull
     private Integer amount;
 
+    @Schema(description = "Product's size")
     @NotNull
     private Integer size;
 
+    @Schema(description = "Ids of products that have this amount of the size")
     private List<UUID> productIds;
 }

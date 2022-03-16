@@ -60,9 +60,9 @@ public class Customer {
     @OneToOne(mappedBy = "customer")
     private Confirmation confirmation;
 
-    @OneToMany
+    @OneToMany(mappedBy = "customer")
     private List<Card> cards;
 
-    @OneToMany
+    @OneToMany(mappedBy = "customer")
     private List<Comment> comments;
 }
