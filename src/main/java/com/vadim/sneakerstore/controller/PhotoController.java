@@ -3,6 +3,7 @@ package com.vadim.sneakerstore.controller;
 import com.vadim.sneakerstore.dto.PhotoDto;
 import com.vadim.sneakerstore.service.PhotoService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,8 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+@Tag(name = "Photo Controller", description = "Photo CRUD operations")
 @RestController
 @RequestMapping("/api")
 public class PhotoController {

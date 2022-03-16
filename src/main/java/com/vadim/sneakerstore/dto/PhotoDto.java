@@ -1,6 +1,7 @@
 package com.vadim.sneakerstore.dto;
 
 import com.vadim.sneakerstore.entity.Product;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
+@Schema(name = "Photo", description = "Product's photos data")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,9 +26,11 @@ public class PhotoDto {
     @NotNull
     private UUID id;
 
+    @Schema(description = "Url of a photo of product")
     @NotBlank
     private String url;
 
+    @Schema(description = "Id of product that has the photo")
     @NotNull
     private UUID productId;
 }
