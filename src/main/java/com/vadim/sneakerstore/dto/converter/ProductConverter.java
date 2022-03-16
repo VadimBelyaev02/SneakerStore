@@ -5,8 +5,7 @@ import com.vadim.sneakerstore.entity.*;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -59,14 +58,34 @@ public class ProductConverter {
         final String description = product.getDescription();
         final String material = product.getMaterial();
         final String preview = product.getPreview();
-        final List<UUID> sizeIds = product.getSizes().stream()
-                .map(Size::getId).collect(Collectors.toList());
-        final List<UUID> photoIds = product.getPhotos().stream()
-                .map(Photo::getId).collect(Collectors.toList());;
-        final List<UUID> customerIds = product.getCustomers().stream()
-                .map(Customer::getId).collect(Collectors.toList());;
-        final List<UUID> commentIds = product.getComments().stream()
-                .map(Comment::getId).collect(Collectors.toList());;
+
+        List<UUID> sizeIds = new ArrayList<>();
+        if (Objects.nonNull(product.getSizes())) {
+            sizeIds = product.getSizes().stream()
+                    .map(Size::getId)
+                    .collect(Collectors.toList());
+        }
+
+        List<UUID> photoIds = new ArrayList<>();
+        if (Objects.nonNull(product.getPhotos())) {
+             photoIds = product.getPhotos().stream()
+                    .map(Photo::getId)
+                     .collect(Collectors.toList());
+        }
+
+        List<UUID> customerIds = new ArrayList<>();
+        if (Objects.nonNull(product.getCustomers())) {
+            customerIds = product.getCustomers().stream()
+                    .map(Customer::getId)
+                    .collect(Collectors.toList());
+        }
+
+        List<UUID> commentIds = new ArrayList<>();
+        if (Objects.nonNull(product.getComments())) {
+            commentIds = product.getComments().stream()
+                    .map(Comment::getId)
+                    .collect(Collectors.toList());
+        }
 
         return ProductDto.builder()
                 .id(id)

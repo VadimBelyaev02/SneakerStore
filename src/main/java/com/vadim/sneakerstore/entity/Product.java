@@ -65,13 +65,13 @@ public class Product {
     @Column(name = "preview")
     private String preview;
 
-    @OneToMany
+    @OneToMany(mappedBy = "product")
     private List<Photo> photos;
 
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Customer> customers;
 
-    @OneToMany
+    @OneToMany(mappedBy = "product")
     private List<Comment> comments;
 
 }
