@@ -2,7 +2,10 @@ package com.vadim.sneakerstore.dto.converter;
 
 import com.vadim.sneakerstore.dto.CommentDto;
 import com.vadim.sneakerstore.entity.Comment;
+import com.vadim.sneakerstore.entity.Customer;
 import com.vadim.sneakerstore.entity.Product;
+import com.vadim.sneakerstore.exception.NotFoundException;
+import com.vadim.sneakerstore.repository.CustomerRepository;
 import com.vadim.sneakerstore.repository.ProductRepository;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +17,11 @@ import java.util.UUID;
 public class CommentConverter {
 
     private final ProductRepository productRepository;
+    private final CustomerRepository customerRepository;
 
-    public CommentConverter(ProductRepository productRepository) {
+    public CommentConverter(ProductRepository productRepository, CustomerRepository customerRepository) {
         this.productRepository = productRepository;
+        this.customerRepository = customerRepository;
     }
 
     public Comment convertToEntity(CommentDto comment) {
@@ -25,7 +30,15 @@ public class CommentConverter {
         final Integer rate = comment.getRate();
         final LocalDate createdDate = comment.getDate();
         final String username = comment.getCustomer();
-        final Product product = Objects.requireNonNull(productRepository.getById(comment.getProductId()));
+
+        final Product product = productRepository.findById(comment.getProductId()).orElseThrow(() ->
+                new NotFoundException("Product with id = " + comment.getProductId() + " is not found")
+        );
+
+        final Customer customer = customerRepository.findById(comment.getCustomerId()).orElseThrow(() ->
+                new NotFoundException("Customer with id = " + comment.getCustomerId() + " is not found")
+        );
+
         return Comment.builder()
                 .id(id)
                 .message(message)
@@ -33,6 +46,7 @@ public class CommentConverter {
                 .createdDate(createdDate)
                 .username(username)
                 .product(product)
+                .customer(customer)
                 .build();
     }
 
@@ -43,6 +57,7 @@ public class CommentConverter {
         final String message = comment.getMessage();
         final Integer rate = comment.getRate();
         final String username = comment.getUsername();
+        final UUID customerId = comment.getCustomer().getId();
         return CommentDto.builder()
                 .id(id)
                 .productId(productId)
@@ -50,6 +65,7 @@ public class CommentConverter {
                 .message(message)
                 .rate(rate)
                 .customer(username)
+                .customerId(customerId)
                 .build();
     }
 }

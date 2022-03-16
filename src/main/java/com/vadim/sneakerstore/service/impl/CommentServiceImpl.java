@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -46,7 +47,7 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public CommentDto saveComment(CommentDto commentDto) {
         if (repository.existsById(commentDto.getId())) {
-            throw new AlreadyExistsException("Comment with id=" + commentDto.getId() + " already exists");
+            throw new AlreadyExistsException("Comment with id = " + commentDto.getId() + " already exists");
         }
         Comment comment = repository.save(converter.convertToEntity(commentDto));
         return converter.convertToDto(comment);
@@ -55,8 +56,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public CommentDto updateComment(CommentDto commentDto) {
-        if (!repository.existsById(commentDto.getId())) {
-            throw new NotFoundException("Comment with id=" + commentDto.getId() + " is not found");
+        if (Objects.isNull(commentDto.getId()) || !repository.existsById(commentDto.getId())) {
+            throw new NotFoundException("Comment with id = " + commentDto.getId() + " is not found");
         }
         Comment comment = repository.save(converter.convertToEntity(commentDto));
         return converter.convertToDto(comment);
