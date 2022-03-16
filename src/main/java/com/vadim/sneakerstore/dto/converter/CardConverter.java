@@ -2,6 +2,9 @@ package com.vadim.sneakerstore.dto.converter;
 
 import com.vadim.sneakerstore.dto.CardDto;
 import com.vadim.sneakerstore.entity.Card;
+import com.vadim.sneakerstore.entity.Customer;
+import com.vadim.sneakerstore.exception.NotFoundException;
+import com.vadim.sneakerstore.repository.CustomerRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -9,6 +12,12 @@ import java.util.UUID;
 
 @Component
 public class CardConverter {
+
+    private final CustomerRepository customerRepository;
+
+    public CardConverter(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
 
     public CardDto convertToDto(Card card) {
         final UUID id = card.getId();
@@ -34,7 +43,9 @@ public class CardConverter {
         final LocalDate date = cardDto.getValidityDate();
         final String owner = cardDto.getOwner();
 
-        final UUID customerId = cardDto.getCustomerId();
+        final Customer customer = customerRepository.findById(cardDto.getCustomerId()).orElseThrow(() ->
+                new NotFoundException("Customer with id " + cardDto.getCustomerId() + " is not found")
+        );
 
         return Card.builder()
                 .id(id)
@@ -42,6 +53,7 @@ public class CardConverter {
                 .number(number)
                 .validityDate(date)
                 .owner(owner)
+                .customer(customer)
                 .build();
     }
 }

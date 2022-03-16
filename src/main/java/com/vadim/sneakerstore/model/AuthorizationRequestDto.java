@@ -16,7 +16,7 @@ public class AuthorizationRequestDto {
     @Email
     private String email;
 
-    @NotBlank
+   // @NotBlank
     @Size(min = 4, max = 20)
     private String password;
 }
