@@ -48,9 +48,12 @@ public class CustomerDto {
     private String avatar;
 
     @Schema(description = "List of person's cards")
-    private List<UUID> cards;
+    private List<UUID> cardIds;
 
     @Schema(description = "List of person's favorite products")
-    private List<ProductDto> favorite;
+    private List<UUID> favoriteIds;
+
+    @Schema(description = "Comment's ids left by the user")
+    private List<UUID> commentIds;
 
 }

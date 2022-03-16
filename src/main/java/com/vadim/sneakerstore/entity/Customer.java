@@ -39,6 +39,15 @@ public class Customer {
     @Column(name = "role")
     private Role role;
 
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "country")
+    private String country;
+
+    @Column(name = "address")
+    private String address;
+
     @OneToMany
     private List<Order> orders;
 
@@ -48,14 +57,8 @@ public class Customer {
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
     private List<Product> favorites;
 
-    @Column(name = "city")
-    private String city;
-
-    @Column(name = "country")
-    private String country;
-
-    @Column(name = "address")
-    private String address;
+    @OneToOne(mappedBy = "customer")
+    private Confirmation confirmation;
 
     @OneToMany
     private List<Card> cards;

@@ -1,15 +1,21 @@
 package com.vadim.sneakerstore.dto.converter;
 
 import com.vadim.sneakerstore.dto.CustomerDto;
+import com.vadim.sneakerstore.entity.Card;
+import com.vadim.sneakerstore.entity.Comment;
 import com.vadim.sneakerstore.entity.Customer;
+import com.vadim.sneakerstore.entity.Product;
 import com.vadim.sneakerstore.entity.enums.Role;
 import com.vadim.sneakerstore.model.RegistrationRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class CustomerConverter {
@@ -47,6 +53,28 @@ public class CustomerConverter {
         final String country = customer.getCountry();
         final String address = customer.getAddress();
         final String role = customer.getRole().name();
+
+        List<UUID> cardIds = new ArrayList<>();
+        if (Objects.nonNull(customer.getCards())) {
+            cardIds = customer.getCards().stream()
+                    .map(Card::getId)
+                    .collect(Collectors.toList());
+        }
+
+        List<UUID> commentIds = new ArrayList<>();
+        if (Objects.nonNull(customer.getComments())) {
+            commentIds = customer.getComments().stream()
+                    .map(Comment::getId)
+                    .collect(Collectors.toList());
+        }
+
+        List<UUID> favoriteIds = new ArrayList<>();
+        if (Objects.nonNull(customer.getFavorites())) {
+            favoriteIds = customer.getFavorites().stream()
+                    .map(Product::getId)
+                    .collect(Collectors.toList());
+        }
+
         return CustomerDto.builder()
                 .id(id)
                 .email(email)
@@ -57,6 +85,9 @@ public class CustomerConverter {
                 .role(role)
                 .phone(phone)
                 .lastName(lastName)
+                .favoriteIds(favoriteIds)
+                .cardIds(cardIds)
+                .commentIds(commentIds)
                 .build();
     }
 
