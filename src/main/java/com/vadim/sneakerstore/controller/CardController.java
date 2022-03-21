@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+@CrossOrigin(origins = "https://sneakerstore.vercel.app", maxAge = 3600)
 @Tag(name = "Card Controller", description = "Card CRUD operations")
 @RestController
 @RequestMapping("/api")
