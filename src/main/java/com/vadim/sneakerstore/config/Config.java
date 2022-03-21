@@ -8,11 +8,4 @@ import org.springframework.stereotype.Component;
 @ComponentScan(basePackages = "com.vadim.sneakerstore")
 public class Config {
 
-//    @Bean
-//    public SpringLiquibase liquibase() {
-//        SpringLiquibase liquibase = new SpringLiquibase();
-//        liquibase.setChangeLog("classpath:liquibase-changeLog.xml");
-//        liquibase.setDataSource(dataSource());
-//        return liquibase;
-//    }
 }

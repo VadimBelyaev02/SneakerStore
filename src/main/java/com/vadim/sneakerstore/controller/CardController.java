@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.UUID;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
@@ -35,5 +36,11 @@ public class CardController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCard(@PathVariable("id") UUID id) {
         cardService.deleteCard(id);
+    }
+
+    @GetMapping("/users/{userId}/cards")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CardDto> getCustomerCards(@PathVariable("userId") UUID userId) {
+        return cardService.getCardByUserId(userId);
     }
 }

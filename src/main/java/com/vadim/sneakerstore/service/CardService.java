@@ -14,7 +14,10 @@ public interface CardService {
     List<CardDto> getCards();
 
     CardDto saveCard(CardDto cardDto);
+
     CardDto updateCard(CardDto cardDto);
 
     void deleteCard(UUID id);
+
+    List<CardDto> getCardByUserId(UUID userId);
 }

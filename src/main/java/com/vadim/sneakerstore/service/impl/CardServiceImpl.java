@@ -70,4 +70,12 @@ public class CardServiceImpl implements CardService {
         }
         repository.deleteById(id);
     }
+
+    @Override
+    @Transactional
+    public List<CardDto> getCardByUserId(UUID customerId) {
+        return repository.findAllByCustomerId(customerId).stream()
+                .map(converter::convertToDto)
+                .collect(Collectors.toList());
+    }
 }
