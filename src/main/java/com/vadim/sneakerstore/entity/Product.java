@@ -62,8 +62,8 @@ public class Product {
             inverseJoinColumns = @JoinColumn(name = "size_id", referencedColumnName = "id"))
     private List<Size> sizes;
 
-    @Column(name = "preview")
-    private String preview;
+//    @Column(name = "preview")
+//    private String preview;
 
     @OneToMany(mappedBy = "product")
     private List<Photo> photos;

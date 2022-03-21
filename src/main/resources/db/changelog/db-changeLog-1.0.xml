@@ -1,0 +1,192 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!--    <changeSet id="17-03-2022" author="Vadim">-->
+    <!--        -->
+    <!--    </changeSet>-->
+
+    <changeSet id="1" author="Vadim">
+        <createTable tableName="customers">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="first_name" type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone" type="varchar(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(128)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="varchar(64)"/>
+            <column name="address" type="varchar(64)"/>
+            <column name="country" type="varchar(64)"/>
+            <column name="avatar" type="varchar(128)"/>
+<!--            <column name="avatar" type="uuid">-->
+<!--                <constraints references="pictures(64)"/>-->
+<!--            </column>-->
+            <column name="role" type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="confirmations">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="customer_id" type="uuid">
+                <constraints references="customers(id)"/>
+            </column>
+            <column name="code" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="pictures">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="link" type="varchar(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="uuid">
+                <constraints references="products(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="products">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="brand" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="season" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sex" type="varchar(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(256)"/>
+            <column name="destiny" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="color" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="origin_country" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="material" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="comments">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="message" type="varchar(256)"/>
+            <column name="rate" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="customer_id" type="uuid">
+                <constraints references="customers(id)"/>
+            </column>
+            <column name="product_id" type="uuid">
+                <constraints references="products(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="orders">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="status" type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ordered_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="customer_id" type="uuid">
+                <constraints references="customers(id)"/>
+            </column>
+            <column name="product_id" type="uuid">
+                <constraints references="products(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="sizes">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="amount" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="size" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="products_sizes">
+            <column name="product_id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="size_id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="products_customers">
+            <column name="product_id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="customer_id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="cards">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="cvv" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="owner" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="validity_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="number" type="varchar(32)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="customer_id" type="uuid">
+                <constraints references="customers(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
