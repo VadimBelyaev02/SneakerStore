@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
-@CrossOrigin(origins = "https://sneakerstore.vercel.app", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Slf4j
 @Tag(name = "Customer Controller", description = "Customer CRUD operations")
 @RestController
