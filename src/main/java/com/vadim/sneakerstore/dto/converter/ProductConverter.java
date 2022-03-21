@@ -38,7 +38,7 @@ public class ProductConverter {
                 .description(description)
                 .destiny(destiny)
                 .material(material)
-                .preview(preview)
+                //.preview(preview)
                 .color(color)
                 .brand(brand)
                 .originCountry(originCountry)
@@ -57,7 +57,7 @@ public class ProductConverter {
         final String originCountry = product.getOriginCountry();
         final String description = product.getDescription();
         final String material = product.getMaterial();
-        final String preview = product.getPreview();
+      //  final String preview = product.getPreview();
 
         List<UUID> sizeIds = new ArrayList<>();
         if (Objects.nonNull(product.getSizes())) {
@@ -96,7 +96,7 @@ public class ProductConverter {
                 .description(description)
                 .destiny(destiny)
                 .material(material)
-                .preview(preview)
+            //    .preview(preview)
                 .color(color)
                 .brand(brand)
                 .originCountry(originCountry)
