@@ -12,8 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
-@CrossOrigin(origins = "https://sneakerstore.vercel.app", maxAge = 3600, allowedHeaders = {"Authorization", "Access-Control-Allow-Origin"})
+//, allowedHeaders = {"Authorization", "Access-Control-Allow-Origin"}
+@CrossOrigin(origins = "https://sneakerstore.vercel.app/authorization", maxAge = 3600)
 @RestController
 @RequestMapping("/api")
 public class AuthorizationController {
