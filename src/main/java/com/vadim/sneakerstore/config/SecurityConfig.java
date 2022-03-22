@@ -19,7 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer{
 
     private final UserDetailsService userDetailsService;
 
@@ -78,11 +78,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        };
 //    }
 
-//    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**")
-//                .allowedMethods("POST", "GET", "PUT", "DELETE")
-//                .allowedHeaders("Access-Control-Allow-Origin", "Content-Type", "Authorization")
-//                .exposedHeaders("Access-Control-Allow-Origin", "Content-Type", "Authorization")
-//                .allowedOrigins("*");
-//    }
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedMethods("POST", "GET", "PUT", "DELETE")
+                .allowedHeaders("Access-Control-Allow-Origin", "Content-Type", "Authorization")
+                .exposedHeaders("Access-Control-Allow-Origin", "Content-Type", "Authorization")
+                .allowedOrigins("*");
+    }
 }
