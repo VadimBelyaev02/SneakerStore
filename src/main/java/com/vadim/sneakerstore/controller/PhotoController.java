@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
-@CrossOrigin(origins = "https://sneakerstore.vercel.app", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Photo Controller", description = "Photo CRUD operations")
 @RestController
 @RequestMapping("/api")
