@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@CrossOrigin(origins = "https://sneakerstore.vercel.app", maxAge = 3600, allowedHeaders = {"Authorization", "Access-Control-Allow-Origin"})
 @RestController
 @RequestMapping("/api")
 public class AuthorizationController {
@@ -25,21 +26,18 @@ public class AuthorizationController {
         this.senderService = senderService;
     }
 
-    @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = {"Authorization", "Access-Control-Allow-Origin"})
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public CustomerDto login(@Valid @RequestBody AuthorizationRequestDto requestDto) {
         return authorizationService.authorize(requestDto);
     }
 
-    @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = {"Authorization", "Access-Control-Allow-Origin"})
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerDto register(@Valid @RequestBody RegistrationRequestDto requestDto) {
         return authorizationService.registerCustomer(requestDto);
     }
 
-    @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = {"Authorization", "Access-Control-Allow-Origin"})
     @PostMapping("/forgot_password")
     @ResponseStatus(HttpStatus.OK)
     public void forgotPassword(@RequestParam String email) {
@@ -47,7 +45,6 @@ public class AuthorizationController {
         senderService.sendMessage(email, String.valueOf(code), null);
     }
 
-    @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = {"Authorization", "Access-Control-Allow-Origin"})
     @PostMapping("/reset_password")
     @ResponseStatus(HttpStatus.OK)
     public CustomerDto resetPassword(@Valid @RequestBody ResetPasswordRequestDto requestDto) {
