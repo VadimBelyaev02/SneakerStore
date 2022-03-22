@@ -7,6 +7,6 @@
 <!--        -->
 <!--    </changeSet>-->
 
-    <include file=""
+    <includeAll path="db"/>
 
 </databaseChangeLog>
