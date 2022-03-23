@@ -25,7 +25,7 @@ public class RegistrationRequestDto {
     @Email
     private String email;
 
-    @NotBlank
+  //  @NotBlank
     private String country;
 
     private String city;
