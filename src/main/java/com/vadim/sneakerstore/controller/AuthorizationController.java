@@ -8,6 +8,7 @@ import com.vadim.sneakerstore.model.RegistrationRequestDto;
 import com.vadim.sneakerstore.model.ResetPasswordRequestDto;
 import com.vadim.sneakerstore.service.AuthorizationService;
 import com.vadim.sneakerstore.service.MailSenderService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,8 @@ import javax.validation.Valid;
 //, allowedHeaders = {"Authorization", "Access-Control-Allow-Origin"}
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api")
+//@RequestMapping("/api")
+@Slf4j
 public class AuthorizationController {
 
     private final AuthorizationService authorizationService;
@@ -56,5 +58,10 @@ public class AuthorizationController {
     @ResponseStatus(HttpStatus.OK)
     public CustomerDto changePassword(@Valid @RequestBody ChangePasswordRequestDto requestDto) {
         return authorizationService.changePassword(requestDto);
+    }
+
+    @GetMapping("/login")
+    public void loggin() {
+        log.info("dflkgj");
     }
 }
