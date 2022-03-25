@@ -8,7 +8,9 @@ import com.vadim.sneakerstore.repository.CustomerRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class CardConverter {
@@ -21,18 +23,22 @@ public class CardConverter {
 
     public CardDto convertToDto(Card card) {
         final UUID id = card.getId();
-        final UUID customerId = card.getCustomer().getId();
         final Integer cvv = card.getCvv();
         final String number = card.getNumber();
         final LocalDate date = card.getValidityDate();
         final String owner = card.getOwner();
+
+        final List<UUID> customersIds = card.getCustomers().stream()
+                .map(Customer::getId)
+                .collect(Collectors.toList());
+
         return CardDto.builder()
                 .id(id)
-                .customerId(customerId)
                 .cvv(cvv)
                 .number(number)
                 .validityDate(date)
                 .owner(owner)
+                .customersIds(customersIds)
                 .build();
     }
 
@@ -43,9 +49,7 @@ public class CardConverter {
         final LocalDate date = cardDto.getValidityDate();
         final String owner = cardDto.getOwner();
 
-        final Customer customer = customerRepository.findById(cardDto.getCustomerId()).orElseThrow(() ->
-                new NotFoundException("Customer with id " + cardDto.getCustomerId() + " is not found")
-        );
+        final List<Customer> customers = customerRepository.findAllById(cardDto.getCustomersIds());
 
         return Card.builder()
                 .id(id)
@@ -53,7 +57,7 @@ public class CardConverter {
                 .number(number)
                 .validityDate(date)
                 .owner(owner)
-                .customer(customer)
+                .customers(customers)
                 .build();
     }
 }

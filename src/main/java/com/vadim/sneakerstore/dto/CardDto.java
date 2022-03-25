@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Schema(name = "Card", description = "Transfer card data")
@@ -41,7 +42,6 @@ public class CardDto {
     @NotNull
     private Integer cvv;
 
-    @Schema(description = "Owner id")
-    @NotNull
-    private UUID customerId;
+    @Schema(description = "Ids of people that have this card in their accounts")
+    private List<UUID> customersIds;
 }

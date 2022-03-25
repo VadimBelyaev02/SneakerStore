@@ -60,7 +60,6 @@ public class ProductDto {
     private String originCountry;
 
     @Schema(description = "Product's description")
-    @NotBlank
     private String description;
 
     @Schema(description = "What it's made of")
@@ -73,9 +72,9 @@ public class ProductDto {
     @Schema(description = "List of size ids")
     private List<UUID> sizeIds;
 
-    @Schema(description = "Main photo of product")
-    @NotBlank
-    private String preview;
+//    @Schema(description = "Main photo of product")
+//    @NotBlank
+//    private String preview;
 
     @Schema(description = "List of photo ids")
     private List<UUID> photoIds;

@@ -38,6 +38,7 @@ public class Customer {
     private String password;
 
     @Column(name = "role")
+    @Enumerated(value = EnumType.STRING)
     private Role role;
 
     @Column(name = "city")
@@ -52,7 +53,7 @@ public class Customer {
     @OneToMany
     private List<Order> orders;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "products_customers",
             joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
@@ -61,7 +62,10 @@ public class Customer {
     @OneToOne(mappedBy = "customer")
     private Confirmation confirmation;
 
-    @OneToMany(mappedBy = "customer")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "cards_customers",
+            joinColumns = @JoinColumn(name = "card_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"))
     private List<Card> cards;
 
     @OneToMany(mappedBy = "customer")

@@ -57,11 +57,6 @@ public class ProductConverter {
         final String description = product.getDescription();
         final String material = product.getMaterial();
 
-        Integer sum = product.getComments().stream()
-                .mapToInt(Comment::getRate).sum();
-        Integer count = product.getComments().size();
-        final Double averageRate = (double) (sum / count);
-
         List<UUID> sizeIds = new ArrayList<>();
         if (Objects.nonNull(product.getSizes())) {
             sizeIds = product.getSizes().stream()
@@ -83,11 +78,19 @@ public class ProductConverter {
                     .collect(Collectors.toList());
         }
 
+        double averageRate = 0D;
         List<UUID> commentIds = new ArrayList<>();
         if (Objects.nonNull(product.getComments())) {
             commentIds = product.getComments().stream()
                     .map(Comment::getId)
                     .collect(Collectors.toList());
+            Integer sum = product.getComments().stream()
+                    .mapToInt(Comment::getRate).sum();
+
+            if (!sum.equals(0)) {
+                Integer count = product.getComments().size();
+                averageRate = (double) sum / count;
+            }
         }
 
         return ProductDto.builder()

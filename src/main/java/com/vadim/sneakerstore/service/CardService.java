@@ -19,5 +19,5 @@ public interface CardService {
 
     void deleteCard(UUID id);
 
-    List<CardDto> getCardByUserId(UUID userId);
+    List<CardDto> getCardsByCustomerId(UUID userId);
 }

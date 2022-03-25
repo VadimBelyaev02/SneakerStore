@@ -9,6 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -36,7 +37,9 @@ public class Card {
     @Column(name = "cvv")
     private Integer cvv;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "cards_customers",
+            joinColumns = @JoinColumn(name = "card_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"))
+    private List<Customer> customers;
 }

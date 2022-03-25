@@ -73,9 +73,11 @@ public class CardServiceImpl implements CardService {
 
     @Override
     @Transactional
-    public List<CardDto> getCardByUserId(UUID customerId) {
-        return repository.findAllByCustomerId(customerId).stream()
-                .map(converter::convertToDto)
-                .collect(Collectors.toList());
+    public List<CardDto> getCardsByCustomerId(UUID customerId) {
+//        return repository.findAll().stream()
+//                .filter(card -> card.getCustomers().)
+//                .map(converter::convertToDto)
+//                .collect(Collectors.toList());
+        return null;
     }
 }

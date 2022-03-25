@@ -44,7 +44,7 @@ public class CardController {
     @GetMapping("/users/{userId}/cards")
     @ResponseStatus(HttpStatus.OK)
     public List<CardDto> getCustomerCards(@PathVariable("userId") UUID userId) {
-        return cardService.getCardByUserId(userId);
+        return cardService.getCardsByCustomerId(userId);
     }
 
     @Operation(description = "Updated existed card")

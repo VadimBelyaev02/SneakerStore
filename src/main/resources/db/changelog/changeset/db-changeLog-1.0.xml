@@ -48,18 +48,6 @@
             </column>
         </createTable>
 
-        <createTable tableName="pictures">
-            <column name="id" type="uuid">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="link" type="varchar(128)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="product_id" type="uuid">
-                <constraints foreignKeyName="pictures_product_id_fkey" references="products(id)"/>
-            </column>
-        </createTable>
-
         <createTable tableName="products">
             <column name="id" type="uuid">
                 <constraints primaryKey="true"/>
@@ -94,6 +82,18 @@
             </column>
         </createTable>
 
+        <createTable tableName="pictures">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="link" type="varchar(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="uuid">
+                <constraints foreignKeyName="pictures_product_id_fkey" references="products(id)"/>
+            </column>
+        </createTable>
+
         <createTable tableName="comments">
             <column name="id" type="uuid">
                 <constraints primaryKey="true"/>
@@ -109,7 +109,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="customer_id" type="uuid">
-                <constraints references="customers(id)"/>
+                <constraints foreignKeyName="comments_customers_id_fkey" references="customers(id)"/>
             </column>
             <column name="product_id" type="uuid">
                 <constraints foreignKeyName="comments_products_id_fkey" references="products(id)"/>
