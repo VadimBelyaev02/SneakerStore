@@ -26,9 +26,9 @@ public class PhotoDto {
     @NotNull
     private UUID id;
 
-    @Schema(description = "Url of a photo of product")
+    @Schema(description = "Link of a photo of product")
     @NotBlank
-    private String url;
+    private String link;
 
     @Schema(description = "Id of product that has the photo")
     @NotNull

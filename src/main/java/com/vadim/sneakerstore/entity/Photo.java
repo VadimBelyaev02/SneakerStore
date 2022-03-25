@@ -22,8 +22,8 @@ public class Photo {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    @Column(name = "url")
-    private String url;
+    @Column(name = "link")
+    private String link;
 
     @ManyToOne
     private Product product;

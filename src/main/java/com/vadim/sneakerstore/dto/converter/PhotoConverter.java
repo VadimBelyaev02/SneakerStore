@@ -20,24 +20,24 @@ public class PhotoConverter {
 
     public Photo convertToEntity(PhotoDto photoDto) {
         final UUID id = photoDto.getId();
-        final String url = photoDto.getUrl();
+        final String link = photoDto.getLink();
         final Product product = productRepository.findById(photoDto.getProductId()).orElseThrow(() ->
                 new NotFoundException("Product with id = " + photoDto.getProductId() + " is not found")
         );
         return Photo.builder()
                 .id(id)
-                .url(url)
+                .link(link)
                 .product(product)
                 .build();
     }
 
     public PhotoDto convertToDto(Photo photo) {
         final UUID id = photo.getId();
-        final String url = photo.getUrl();
+        final String link = photo.getLink();
         final UUID productId = photo.getProduct().getId();
         return PhotoDto.builder()
                 .id(id)
-                .url(url)
+                .link(link)
                 .productId(productId)
                 .build();
     }

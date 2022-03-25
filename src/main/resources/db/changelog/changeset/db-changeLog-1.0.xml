@@ -31,9 +31,6 @@
             <column name="address" type="varchar(64)"/>
             <column name="country" type="varchar(64)"/>
             <column name="avatar" type="varchar(128)"/>
-<!--            <column name="avatar" type="uuid">-->
-<!--                <constraints references="pictures(64)"/>-->
-<!--            </column>-->
             <column name="role" type="varchar(32)">
                 <constraints nullable="false"/>
             </column>
@@ -44,7 +41,7 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="customer_id" type="uuid">
-                <constraints references="customers(id)"/>
+                <constraints foreignKeyName="confirmation_customer_id_fkey" references="customers(id)"/>
             </column>
             <column name="code" type="int">
                 <constraints nullable="false"/>
@@ -59,7 +56,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="product_id" type="uuid">
-                <constraints references="products(id)"/>
+                <constraints foreignKeyName="pictures_product_id_fkey" references="products(id)"/>
             </column>
         </createTable>
 
@@ -115,7 +112,7 @@
                 <constraints references="customers(id)"/>
             </column>
             <column name="product_id" type="uuid">
-                <constraints references="products(id)"/>
+                <constraints foreignKeyName="comments_products_id_fkey" references="products(id)"/>
             </column>
         </createTable>
 
@@ -130,10 +127,10 @@
                 <constraints nullable="false"/>
             </column>
             <column name="customer_id" type="uuid">
-                <constraints references="customers(id)"/>
+                <constraints foreignKeyName="orders_customers_id_fkey" references="customers(id)"/>
             </column>
             <column name="product_id" type="uuid">
-                <constraints references="products(id)"/>
+                <constraints foreignKeyName="orders_products_id_fkey" references="products(id)"/>
             </column>
         </createTable>
 
@@ -183,8 +180,17 @@
             <column name="number" type="varchar(32)">
                 <constraints nullable="false" unique="true"/>
             </column>
+<!--            <column name="customer_id" type="uuid">-->
+<!--                <constraints foreignKeyName="cards_customers" references="customers(id)"/>-->
+<!--            </column>-->
+        </createTable>
+
+        <createTable tableName="cards_customers">
+            <column name="card_id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
             <column name="customer_id" type="uuid">
-                <constraints references="customers(id)"/>
+                <constraints primaryKey="true"/>
             </column>
         </createTable>
     </changeSet>

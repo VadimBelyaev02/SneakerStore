@@ -39,8 +39,8 @@ public class ProductController {
     @Operation(description = "Get all products")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ProductDto> findAllTest(@RequestParam("size") int size,
-                                        @RequestParam("page") int page) {
+    public List<ProductDto> findAllTest(@RequestParam(value = "size", defaultValue = "21") int size,
+                                        @RequestParam(value = "page", defaultValue = "0") int page) {
         Pageable pageable = PageRequest.of(page, size);
         return productService.findAllPaging(pageable);
     }
