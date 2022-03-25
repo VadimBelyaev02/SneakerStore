@@ -3,6 +3,7 @@ package com.vadim.sneakerstore.dto.converter;
 import com.vadim.sneakerstore.dto.SizeDto;
 import com.vadim.sneakerstore.entity.Product;
 import com.vadim.sneakerstore.entity.Size;
+import com.vadim.sneakerstore.exception.NotFoundException;
 import com.vadim.sneakerstore.repository.ProductRepository;
 import org.springframework.stereotype.Component;
 
@@ -25,18 +26,11 @@ public class SizeConverter {
         UUID id = size.getId();
         Integer productSize = size.getSize();
         Integer amount = size.getAmount();
-
-        List<UUID> productIds = new ArrayList<>();
-
-        if (Objects.nonNull(size.getProducts())) {
-            productIds = size.getProducts().stream()
-                    .map(Product::getId)
-                    .collect(Collectors.toList());
-        }
+        UUID productId = size.getProduct().getId();
 
         return SizeDto.builder()
                 .id(id)
-                .productIds(productIds)
+                .productId(productId)
                 .size(productSize)
                 .amount(amount)
                 .build();
@@ -47,13 +41,15 @@ public class SizeConverter {
         Integer productSize = sizeDto.getSize();
         Integer amount = sizeDto.getAmount();
 
-        List<Product> products = productRepository.findAllById(sizeDto.getProductIds());
+        Product product = productRepository.findById(sizeDto.getProductId()).orElseThrow(() ->
+                new NotFoundException("Product with id = " + sizeDto.getProductId() + " is not found")
+        );
 
         return Size.builder()
                 .id(id)
                 .size(productSize)
                 .amount(amount)
-                .products(products)
+                .product(product)
                 .build();
     }
 }

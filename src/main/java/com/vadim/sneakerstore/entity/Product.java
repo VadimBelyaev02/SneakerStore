@@ -57,11 +57,11 @@ public class Product {
     @Column(name = "material")
     private String material;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "products_sizes",
-            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "size_id", referencedColumnName = "id"))
-    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "products_sizes",
+//            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "size_id", referencedColumnName = "id"))
+//    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<Size> sizes;
 
 

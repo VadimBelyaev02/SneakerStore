@@ -1,0 +1,24 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!--    <changeSet id="17-03-2022" author="Vadim">-->
+    <!--        -->
+    <!--    </changeSet>-->
+    <!--    <changeSet id="3" author="Vadim">-->
+    <!--        <dropTable tableName="cards"-->
+    <!--    </changeSet>-->
+
+    <changeSet id="4" author="Vadim">
+        <dropTable tableName="products_sizes"/>
+
+        <addColumn tableName="sizes">
+            <column name="products_id">
+                <constraints foreignKeyName="sizes_products_id_fkey" references="products(id)"/>
+            </column>
+        </addColumn>
+        
+    </changeSet>
+
+</databaseChangeLog>

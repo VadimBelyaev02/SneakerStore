@@ -1,5 +1,6 @@
 package com.vadim.sneakerstore.dto;
 
+import com.vadim.sneakerstore.entity.Product;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +29,6 @@ public class SizeDto {
     @NotNull
     private Integer size;
 
-    @Schema(description = "Ids of products that have this amount of the size")
-    private List<UUID> productIds;
+    @Schema(description = "Id of product that has this amount of the size")
+    private UUID productId;
 }

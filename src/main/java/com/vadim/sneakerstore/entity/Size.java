@@ -30,10 +30,10 @@ public class Size {
     @Column(name = "size")
     private Integer size;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "products_sizes",
-            joinColumns = @JoinColumn(name = "size_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
-    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    private List<Product> products;
+    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinTable(name = "products_sizes",
+//            joinColumns = @JoinColumn(name = "size_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
+//    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    private Product product;
 }

@@ -70,18 +70,18 @@ public class ProductDto {
     private Double averageRate;
 
     @Schema(description = "List of size ids")
-    private List<UUID> sizeIds;
+    private List<UUID> sizesIds;
 
 //    @Schema(description = "Main photo of product")
 //    @NotBlank
 //    private String preview;
 
     @Schema(description = "List of photo ids")
-    private List<UUID> photoIds;
+    private List<UUID> photosIds;
 
     @Schema(description = "List of who liked it")
-    private List<UUID> customerIds;
+    private List<UUID> customersIds;
 
     @Schema(description = "List of product's comments")
-    private List<UUID> commentIds;
+    private List<UUID> commentsIds;
 }
