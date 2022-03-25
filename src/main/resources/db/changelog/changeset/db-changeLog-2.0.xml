@@ -6,8 +6,8 @@
     <!--    <changeSet id="17-03-2022" author="Vadim">-->
     <!--        -->
     <!--    </changeSet>-->
-    <changeSet id="3" author="Vadim">
-        <dropTable tableName="cards"
-    </changeSet>
+<!--    <changeSet id="3" author="Vadim">-->
+<!--        <dropTable tableName="cards"-->
+<!--    </changeSet>-->
 
 </databaseChangeLog>
