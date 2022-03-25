@@ -9,6 +9,5 @@
 
  <!--   <includeAll path="db"/>-->
 
-    <include file="db/changelog/changeset/db-changeLog-1.0.xml"/>
 
 </databaseChangeLog>

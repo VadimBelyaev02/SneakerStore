@@ -37,9 +37,8 @@ public class OrderDto {
     @NotBlank
     private String email;
 
-    @Schema(description = "Id product that is ordered")
-    @NotNull
-    private UUID productId;
+    @Schema(description = "Ids of products that are ordered")
+    private List<UUID> productsIds;
 
     @Schema(description = "Amount of ordered products")
     @NotNull
