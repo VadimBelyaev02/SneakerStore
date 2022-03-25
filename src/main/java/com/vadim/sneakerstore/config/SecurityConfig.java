@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {//} implements
     public SecurityConfig(@Qualifier("customerDetailsServiceImpl") UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
-
+  
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -43,8 +43,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {//} implements
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/customers").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/products").authenticated()
-                .antMatchers(HttpMethod.POST, "/api/**").hasAuthority(Permission.READ.getPermission())
+                .antMatchers(HttpMethod.GET, "/api/products").permitAll()
+                //   .antMatchers(HttpMethod.POST, "/api/**").hasAuthorityhasAuthority(Permission.READ.getPermission())
+                .antMatchers(HttpMethod.POST, "/api/**").permitAll()
                 .antMatchers(HttpMethod.PUT, "/api/**").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/api/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/**").permitAll()
@@ -59,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {//} implements
                 .oauth2Login()
                 .and()
 //               // .logout(l -> l.logoutSuccessUrl()).
-                   .oauth2Client();
+                    .oauth2Client();
     }
 
     @Override

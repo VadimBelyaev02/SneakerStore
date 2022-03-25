@@ -26,7 +26,6 @@ public class CommentDto {
     private String message;
 
     @Schema(description = "Number of points")
-   // @NotNull
     @Min(1)
     @Max(5)
     private Integer rate;

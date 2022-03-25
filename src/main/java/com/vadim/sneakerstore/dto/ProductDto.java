@@ -67,6 +67,9 @@ public class ProductDto {
     @NotBlank
     private String material;
 
+    @Schema(description = "Average rate by all comments")
+    private Double averageRate;
+
     @Schema(description = "List of size ids")
     private List<UUID> sizeIds;
 

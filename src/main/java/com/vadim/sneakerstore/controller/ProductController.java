@@ -6,6 +6,8 @@ import com.vadim.sneakerstore.entity.Product;
 import com.vadim.sneakerstore.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,8 +39,10 @@ public class ProductController {
     @Operation(description = "Get all products")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ProductDto> getAllProducts() {
-        return productService.getAllProducts();
+    public List<ProductDto> findAllTest(@RequestParam("size") int size,
+                                        @RequestParam("page") int page) {
+        Pageable pageable = PageRequest.of(page, size);
+        return productService.findAllPaging(pageable);
     }
 
     @Operation(description = "Add a new product")

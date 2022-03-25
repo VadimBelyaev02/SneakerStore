@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 
 @Component
 public class ProductConverter {
@@ -23,7 +24,6 @@ public class ProductConverter {
         final String description = productDto.getDescription();
         final String material = productDto.getMaterial();
         final BigDecimal price = productDto.getPrice();
-        final String preview = productDto.getPreview();
         final List<Size> sizes;
         final List<Photo> photos;
         final List<Customer> customers;
@@ -38,7 +38,6 @@ public class ProductConverter {
                 .description(description)
                 .destiny(destiny)
                 .material(material)
-                //.preview(preview)
                 .color(color)
                 .brand(brand)
                 .originCountry(originCountry)
@@ -57,7 +56,11 @@ public class ProductConverter {
         final String originCountry = product.getOriginCountry();
         final String description = product.getDescription();
         final String material = product.getMaterial();
-      //  final String preview = product.getPreview();
+
+        Integer sum = product.getComments().stream()
+                .mapToInt(Comment::getRate).sum();
+        Integer count = product.getComments().size();
+        final Double averageRate = (double) (sum / count);
 
         List<UUID> sizeIds = new ArrayList<>();
         if (Objects.nonNull(product.getSizes())) {
@@ -96,7 +99,6 @@ public class ProductConverter {
                 .description(description)
                 .destiny(destiny)
                 .material(material)
-            //    .preview(preview)
                 .color(color)
                 .brand(brand)
                 .originCountry(originCountry)
@@ -104,6 +106,7 @@ public class ProductConverter {
                 .customerIds(customerIds)
                 .photoIds(photoIds)
                 .sizeIds(sizeIds)
+                .averageRate(averageRate)
                 .build();
     }
 }
