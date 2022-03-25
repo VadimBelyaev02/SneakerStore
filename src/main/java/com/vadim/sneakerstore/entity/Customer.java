@@ -70,4 +70,10 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private List<Comment> comments;
+
+    @OneToMany
+    private List<Product> favorite;
+
+    @OneToMany
+    private List<Product> inCart;
 }

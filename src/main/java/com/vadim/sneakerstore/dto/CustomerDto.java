@@ -57,4 +57,10 @@ public class CustomerDto {
     @Schema(description = "Comment's ids left by the user")
     private List<UUID> commentIds;
 
+    @Schema(description = "Products what customers added in favorites")
+    private List<UUID> favoritesIds;
+
+    @Schema(description = "Products ids that are in a customer's cart")
+    private List<UUID> inCartIds;
+
 }
