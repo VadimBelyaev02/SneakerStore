@@ -57,23 +57,23 @@ public class ProductConverter {
         final String description = product.getDescription();
         final String material = product.getMaterial();
 
-        List<UUID> sizeIds = new ArrayList<>();
+        List<UUID> sizesIds = new ArrayList<>();
         if (Objects.nonNull(product.getSizes())) {
-            sizeIds = product.getSizes().stream()
+            sizesIds = product.getSizes().stream()
                     .map(Size::getId)
                     .collect(Collectors.toList());
         }
 
-        List<UUID> photoIds = new ArrayList<>();
+        List<UUID> photosIds = new ArrayList<>();
         if (Objects.nonNull(product.getPhotos())) {
-             photoIds = product.getPhotos().stream()
+             photosIds = product.getPhotos().stream()
                     .map(Photo::getId)
                      .collect(Collectors.toList());
         }
 
-        List<UUID> customerIds = new ArrayList<>();
+        List<UUID> customersIds = new ArrayList<>();
         if (Objects.nonNull(product.getCustomers())) {
-            customerIds = product.getCustomers().stream()
+            customersIds = product.getCustomers().stream()
                     .map(Customer::getId)
                     .collect(Collectors.toList());
         }
@@ -105,10 +105,10 @@ public class ProductConverter {
                 .color(color)
                 .brand(brand)
                 .originCountry(originCountry)
-                .commentIds(commentIds)
-                .customerIds(customerIds)
-                .photoIds(photoIds)
-                .sizeIds(sizeIds)
+                .commentsIds(commentIds)
+                .customersIds(customersIds)
+                .photosIds(photosIds)
+                .sizesIds(sizesIds)
                 .averageRate(averageRate)
                 .build();
     }
