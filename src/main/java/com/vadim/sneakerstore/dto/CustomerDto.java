@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
-@Schema
+@Schema(name = "Customer", description = "Information about service's users")
 @Builder
 @Data
 public class CustomerDto {

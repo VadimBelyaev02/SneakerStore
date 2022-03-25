@@ -1,6 +1,7 @@
 package com.vadim.sneakerstore.entity;
 
 import com.vadim.sneakerstore.entity.enums.Role;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 

@@ -5,6 +5,7 @@ import com.vadim.sneakerstore.service.CardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import liquibase.pro.packaged.O;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,8 @@ public class CardController {
     @Operation(description = "Add a new card")
     @PostMapping("/cards")
     @ResponseStatus(HttpStatus.CREATED)
-    public CardDto postCard(@Parameter(description = "Contains ") @Valid @RequestBody CardDto cardDto) {
+    public CardDto postCard(@Parameter(description = "Contains info about card")
+                            @Valid @RequestBody CardDto cardDto) {
         return cardService.saveCard(cardDto);
     }
 
@@ -38,9 +40,18 @@ public class CardController {
         cardService.deleteCard(id);
     }
 
+    @Operation(description = "Get user's card by user's id")
     @GetMapping("/users/{userId}/cards")
     @ResponseStatus(HttpStatus.OK)
     public List<CardDto> getCustomerCards(@PathVariable("userId") UUID userId) {
         return cardService.getCardByUserId(userId);
+    }
+
+    @Operation(description = "Updated existed card")
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public CardDto putCard(@Parameter(description = "Contains info about card")
+                           @Valid @RequestBody CardDto cardDto) {
+        return cardService.updateCard(cardDto);
     }
 }
