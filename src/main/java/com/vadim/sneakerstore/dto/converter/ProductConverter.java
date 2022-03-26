@@ -71,12 +71,12 @@ public class ProductConverter {
                      .collect(Collectors.toList());
         }
 
-        List<UUID> customersIds = new ArrayList<>();
-        if (Objects.nonNull(product.getCustomers())) {
-            customersIds = product.getCustomers().stream()
-                    .map(Customer::getId)
-                    .collect(Collectors.toList());
-        }
+//        List<UUID> customersIds = new ArrayList<>();
+//        if (Objects.nonNull(product.getCustomers())) {
+//            customersIds = product.getCustomers().stream()
+//                    .map(Customer::getId)
+//                    .collect(Collectors.toList());
+//        }
 
         double averageRate = 0D;
         List<UUID> commentIds = new ArrayList<>();
@@ -106,7 +106,7 @@ public class ProductConverter {
                 .brand(brand)
                 .originCountry(originCountry)
                 .commentsIds(commentIds)
-                .customersIds(customersIds)
+          //      .customersIds(customersIds)
                 .photosIds(photosIds)
                 .sizesIds(sizesIds)
                 .averageRate(averageRate)
