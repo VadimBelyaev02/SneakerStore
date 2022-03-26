@@ -82,6 +82,9 @@ public class ProductDto {
     @Schema(description = "List of who liked it")
     private List<UUID> customersIds;
 
+    @Schema(description = ":(")
+    private List<UUID> inCustomersCarts;
+
     @Schema(description = "List of product's comments")
     private List<UUID> commentsIds;
 }

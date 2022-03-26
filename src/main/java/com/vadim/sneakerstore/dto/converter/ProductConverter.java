@@ -88,9 +88,23 @@ public class ProductConverter {
                     .mapToInt(Comment::getRate).sum();
 
             if (!sum.equals(0)) {
-                Integer count = product.getComments().size();
+                int count = product.getComments().size();
                 averageRate = (double) sum / count;
             }
+        }
+
+        List<UUID> customersFavoritesIds = new ArrayList<>();
+        if (Objects.nonNull(product.getCustomers())) {
+            customersFavoritesIds = product.getCustomers().stream()
+                    .map(Customer::getId)
+                    .collect(Collectors.toList());
+        }
+
+        List<UUID> inCustomersCartsIds = new ArrayList<>();
+        if (Objects.nonNull(product.getInCustomersCarts())) {
+            inCustomersCartsIds = product.getInCustomersCarts().stream()
+                    .map(Customer::getId)
+                    .collect(Collectors.toList());
         }
 
         return ProductDto.builder()
@@ -106,7 +120,8 @@ public class ProductConverter {
                 .brand(brand)
                 .originCountry(originCountry)
                 .commentsIds(commentIds)
-          //      .customersIds(customersIds)
+                .customersIds(customersFavoritesIds)
+                .inCustomersCarts(inCustomersCartsIds)
                 .photosIds(photosIds)
                 .sizesIds(sizesIds)
                 .averageRate(averageRate)

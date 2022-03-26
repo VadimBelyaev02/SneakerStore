@@ -54,11 +54,11 @@ public class Customer {
     @OneToMany
     private List<Order> orders;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "products_customers",
-            joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
-    private List<Product> favorites;
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "products_customers",
+//            joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
+//    private List<Product> favorites;
 
     @OneToOne(mappedBy = "customer")
     private Confirmation confirmation;
@@ -78,7 +78,7 @@ public class Customer {
             joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
     @ToString.Exclude
-    private List<Product> favorite;
+    private List<Product> favorites;
 
     @ManyToMany
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST})

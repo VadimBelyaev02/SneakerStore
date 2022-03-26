@@ -116,6 +116,9 @@ public class CustomerConverter {
         final String phone = requestDto.getPhone();
         final String lastName = requestDto.getLastName();
         final Role role = Role.USER;
+
+
+
         return Customer.builder()
                 .city(city)
                 .address(address)
