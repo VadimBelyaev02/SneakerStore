@@ -1,10 +1,7 @@
 package com.vadim.sneakerstore.entity;
 
 import com.vadim.sneakerstore.entity.enums.Currency;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.GenericGenerator;
@@ -68,8 +65,21 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<Photo> photos;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Customer> customers;
+    @ManyToMany
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST})
+    @JoinTable(name = "cart",
+            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"))
+    @ToString.Exclude
+    private List<Customer> inCustomerCart;
+
+    @ManyToMany
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST})
+    @JoinTable(name = "favorites",
+            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"))
+    @ToString.Exclude
+    private List<Customer> customersFavorites;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<Comment> comments;

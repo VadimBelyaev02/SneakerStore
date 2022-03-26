@@ -3,6 +3,7 @@ package com.vadim.sneakerstore.entity;
 import com.vadim.sneakerstore.entity.enums.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -71,9 +72,19 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Comment> comments;
 
-    @OneToMany
+    @ManyToMany
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST})
+    @JoinTable(name = "favorites",
+            joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
+    @ToString.Exclude
     private List<Product> favorite;
 
-    @OneToMany
+    @ManyToMany
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST})
+    @JoinTable(name = "cart",
+            joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
+    @ToString.Exclude
     private List<Product> inCart;
 }
