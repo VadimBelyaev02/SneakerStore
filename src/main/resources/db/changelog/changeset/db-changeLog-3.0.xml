@@ -14,11 +14,11 @@
         <dropTable tableName="products_sizes"/>
 
         <addColumn tableName="sizes">
-            <column name="products_id">
+            <column name="products_id" type="uuid">
                 <constraints foreignKeyName="sizes_products_id_fkey" references="products(id)"/>
             </column>
         </addColumn>
-        
+
     </changeSet>
 
 </databaseChangeLog>
