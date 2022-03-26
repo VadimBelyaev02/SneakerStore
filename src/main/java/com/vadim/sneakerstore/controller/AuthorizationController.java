@@ -60,8 +60,4 @@ public class AuthorizationController {
         return authorizationService.changePassword(requestDto);
     }
 
-    @GetMapping("/login")
-    public void loggin() {
-        log.info("dflkgj");
-    }
 }
