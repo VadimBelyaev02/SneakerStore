@@ -36,19 +36,21 @@ public class CardController {
     @Operation(description = "Delete a card by id")
     @DeleteMapping("/cards/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCard(@PathVariable("id") UUID id) {
+    public void deleteCard(@Parameter(description = "Id of deleted card")
+                           @PathVariable("id") UUID id) {
         cardService.deleteCard(id);
     }
 
-    @Operation(description = "Get user's card by user's id")
-    @GetMapping("/users/{userId}/cards")
+    @Operation(description = "Get customer's cards by his id")
+    @GetMapping("/customers/{customerId}/cards")
     @ResponseStatus(HttpStatus.OK)
-    public List<CardDto> getCustomerCards(@PathVariable("userId") UUID userId) {
+    public List<CardDto> getCustomerCards(@Parameter(description = "Id of a customer that has this card")
+                                          @PathVariable("customerId") UUID userId) {
         return cardService.getCardsByCustomerId(userId);
     }
 
-    @Operation(description = "Updated existed card")
-    @PutMapping
+    @Operation(description = "Update existed card")
+    @PutMapping("/cards")
     @ResponseStatus(HttpStatus.OK)
     public CardDto putCard(@Parameter(description = "Contains info about card")
                            @Valid @RequestBody CardDto cardDto) {

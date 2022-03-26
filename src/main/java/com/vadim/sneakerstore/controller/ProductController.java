@@ -1,8 +1,6 @@
 package com.vadim.sneakerstore.controller;
 
-import com.vadim.sneakerstore.dto.CustomerDto;
 import com.vadim.sneakerstore.dto.ProductDto;
-import com.vadim.sneakerstore.entity.Product;
 import com.vadim.sneakerstore.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

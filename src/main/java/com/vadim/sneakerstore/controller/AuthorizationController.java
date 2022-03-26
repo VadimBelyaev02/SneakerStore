@@ -17,7 +17,7 @@ import javax.validation.Valid;
 //, allowedHeaders = {"Authorization", "Access-Control-Allow-Origin"}
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-//@RequestMapping("/api")
+@RequestMapping("/api")
 @Slf4j
 public class AuthorizationController {
 

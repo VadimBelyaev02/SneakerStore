@@ -1,8 +1,10 @@
 package com.vadim.sneakerstore.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -13,6 +15,8 @@ import java.util.UUID;
 @Schema(name = "Customer", description = "Information about service's users")
 @Builder
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CustomerDto {
 
     private UUID id;

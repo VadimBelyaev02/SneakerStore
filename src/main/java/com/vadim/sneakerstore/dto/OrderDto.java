@@ -43,4 +43,6 @@ public class OrderDto {
     @Schema(description = "Amount of ordered products")
     @NotNull
     private Integer amount;
+
+    // private List<UUID> sizesIds;
 }
