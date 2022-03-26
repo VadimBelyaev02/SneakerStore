@@ -40,7 +40,6 @@ public class CommentDto {
     private LocalDate date;
 
     @Schema(description = "Full name who commented a product")
-    @NotBlank
     private String customer;
 
     @Schema(description = "Man's id who commented")

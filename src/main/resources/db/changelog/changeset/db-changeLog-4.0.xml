@@ -1,0 +1,32 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!--    <changeSet id="17-03-2022" author="Vadim">-->
+    <!--        -->
+    <!--    </changeSet>-->
+    <!--    <changeSet id="3" author="Vadim">-->
+    <!--        <dropTable tableName="cards"-->
+    <!--    </changeSet>-->
+
+    <changeSet id="4" author="Vadim">
+        <addColumn tableName="orders">
+            <column name="payment" type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="orders">
+            <column name="group_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="orders">
+            <column name="amount" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+    </changeSet>
+
+</databaseChangeLog>

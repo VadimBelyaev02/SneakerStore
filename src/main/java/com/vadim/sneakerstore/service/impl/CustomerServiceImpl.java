@@ -27,7 +27,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public List<CustomerDto> getAllCustomers() {
+    public List<CustomerDto> getAll() {
         return repository.findAll().stream()
                 .map(converter::convertToDto)
                 .collect(Collectors.toList());
@@ -35,7 +35,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public CustomerDto getCustomer(UUID id) {
+    public CustomerDto getById(UUID id) {
         Customer customer = repository.findById(id).orElseThrow(() ->
                 new NotFoundException("Customer with id=" + id + " is not found")
         );
@@ -44,7 +44,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public CustomerDto saveCustomer(CustomerDto customerDto) {
+    public CustomerDto save(CustomerDto customerDto) {
         if (repository.existsByPhoneAndEmail(customerDto.getPhone(), customerDto.getEmail())) {
             throw new AlreadyExistsException("Customer with phone  = " + customerDto.getPhone()
                     + " and email = " + customerDto.getEmail() + " already exists");
@@ -61,7 +61,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public CustomerDto updateCustomer(CustomerDto customerDto) {
+    public CustomerDto update(CustomerDto customerDto) {
         if (!repository.existsById(customerDto.getId())) {
             throw new NotFoundException("Customer with id " + customerDto.getId() + " is not found");
         }
@@ -71,7 +71,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public void deleteCustomer(UUID id) {
+    public void deleteById(UUID id) {
         if (!repository.existsById(id)) {
             throw new NotFoundException("Customer with id=" + id + " is not found");
         }

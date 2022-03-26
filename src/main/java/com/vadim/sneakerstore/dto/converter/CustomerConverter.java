@@ -54,6 +54,20 @@ public class CustomerConverter {
         final String address = customer.getAddress();
         final String role = customer.getRole().name();
 
+        List<UUID> favoritesIds = new ArrayList<>();
+        if (Objects.nonNull(customer.getFavorites())) {
+            favoritesIds = customer.getFavorites().stream()
+                    .map(Product::getId)
+                    .collect(Collectors.toList());
+        }
+
+        List<UUID> inCartIds = new ArrayList<>();
+        if (Objects.nonNull(customer.getInCart())) {
+            inCartIds = customer.getInCart().stream()
+                    .map(Product::getId)
+                    .collect(Collectors.toList());
+        }
+
         List<UUID> cardIds = new ArrayList<>();
         if (Objects.nonNull(customer.getCards())) {
             cardIds = customer.getCards().stream()
@@ -68,12 +82,12 @@ public class CustomerConverter {
                     .collect(Collectors.toList());
         }
 
-        List<UUID> favoriteIds = new ArrayList<>();
-        if (Objects.nonNull(customer.getFavorites())) {
-            favoriteIds = customer.getFavorites().stream()
-                    .map(Product::getId)
-                    .collect(Collectors.toList());
-        }
+//        List<UUID> favoriteIds = new ArrayList<>();
+//        if (Objects.nonNull(customer.getFavorites())) {
+//            favoriteIds = customer.getFavorites().stream()
+//                    .map(Product::getId)
+//                    .collect(Collectors.toList());
+//        }
 
         return CustomerDto.builder()
                 .id(id)
@@ -85,9 +99,10 @@ public class CustomerConverter {
                 .role(role)
                 .phone(phone)
                 .lastName(lastName)
-                .favoriteIds(favoriteIds)
-                .cardIds(cardIds)
-                .commentIds(commentIds)
+                .cardsIds(cardIds)
+                .commentsIds(commentIds)
+                .inCartIds(inCartIds)
+                .favoritesIds(favoritesIds)
                 .build();
     }
 

@@ -27,7 +27,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     @Transactional
-    public CardDto getCard(UUID id) {
+    public CardDto getById(UUID id) {
         Card card = repository.findById(id).orElseThrow(() ->
                 new NotFoundException("Card with id = " + id + " is not found")
         );
@@ -36,7 +36,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     @Transactional
-    public List<CardDto> getCards() {
+    public List<CardDto> getAll() {
         return repository.findAll().stream()
                 .map(converter::convertToDto)
                 .collect(Collectors.toList());
@@ -44,7 +44,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     @Transactional
-    public CardDto saveCard(CardDto cardDto) {
+    public CardDto save(CardDto cardDto) {
         if (repository.existsByNumber(cardDto.getNumber())) {
             throw new AlreadyExistsException("Card with number = " + cardDto.getNumber() + " already exists");
         }
@@ -54,7 +54,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     @Transactional
-    public CardDto updateCard(CardDto cardDto) {
+    public CardDto update(CardDto cardDto) {
         if (!repository.existsById(cardDto.getId())) {
             throw new NotFoundException("Card with id = " + cardDto.getId() + " is not found");
         }
@@ -64,7 +64,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     @Transactional
-    public void deleteCard(UUID id) {
+    public void deleteById(UUID id) {
         if (!repository.existsById(id)) {
             throw new NotFoundException("Card with id = " + id + " is not found");
         }
@@ -73,7 +73,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     @Transactional
-    public List<CardDto> getCardsByCustomerId(UUID customerId) {
+    public List<CardDto> getByCustomerId(UUID customerId) {
 //        return repository.findAll().stream()
 //                .filter(card -> card.getCustomers().)
 //                .map(converter::convertToDto)

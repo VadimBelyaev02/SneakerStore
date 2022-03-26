@@ -53,13 +53,10 @@ public class CustomerDto {
     private String avatar;
 
     @Schema(description = "List of person's cards")
-    private List<UUID> cardIds;
-
-    @Schema(description = "List of person's favorite products")
-    private List<UUID> favoriteIds;
+    private List<UUID> cardsIds;
 
     @Schema(description = "Comment's ids left by the user")
-    private List<UUID> commentIds;
+    private List<UUID> commentsIds;
 
     @Schema(description = "Products what customers added in favorites")
     private List<UUID> favoritesIds;
@@ -67,4 +64,6 @@ public class CustomerDto {
     @Schema(description = "Products ids that are in a customer's cart")
     private List<UUID> inCartIds;
 
+    @Schema(description = "Hui")
+    private List<UUID> ordersIds;
 }

@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public List<ProductDto> getAllProducts() {
+    public List<ProductDto> getAll() {
         return repository.findAll().stream()
                 .map(converter::convertToDto)
                 .collect(Collectors.toList());
@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ProductDto getProduct(UUID id) {
+    public ProductDto getById(UUID id) {
         Product product = repository.findById(id).orElseThrow(() ->
                 new NotFoundException("Product with id=" + id + " is not found")
         );
@@ -46,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ProductDto saveProduct(ProductDto productDto) {
+    public ProductDto save(ProductDto productDto) {
         if (repository.existsByName(productDto.getName())) {
             throw new AlreadyExistsException("Product with name = " + productDto.getName() + " already exists");
         }
@@ -56,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ProductDto updateProduct(ProductDto productDto) {
+    public ProductDto update(ProductDto productDto) {
         if (!repository.existsByName(productDto.getName())) {
             throw new NotFoundException("Product with name =" + productDto.getName() + " is not found");
         }
@@ -69,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public void deleteProduct(UUID id) {
+    public void deleteById(UUID id) {
         if (!repository.existsById(id)) {
             throw new NotFoundException("Product with id=" + id + " is not found");
         }
@@ -78,7 +78,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public List<ProductDto> findAllPaging(Pageable pageable) {
+    public List<ProductDto> getAllPaging(Pageable pageable) {
         return repository.findAll(pageable).stream()
                 .map(converter::convertToDto)
                 .collect(Collectors.toList());

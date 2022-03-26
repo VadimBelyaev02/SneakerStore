@@ -9,15 +9,15 @@ import java.util.UUID;
 
 public interface ProductService {
 
-    List<ProductDto> getAllProducts();
+    List<ProductDto> getAll();
 
-    ProductDto getProduct(UUID id);
+    ProductDto getById(UUID id);
 
-    ProductDto saveProduct(ProductDto productDto);
+    ProductDto save(ProductDto productDto);
 
-    ProductDto updateProduct(ProductDto productDto);
+    ProductDto update(ProductDto productDto);
 
-    void deleteProduct(UUID id);
+    void deleteById(UUID id);
 
-    List<ProductDto> findAllPaging(Pageable pageable);
+    List<ProductDto> getAllPaging(Pageable pageable);
 }

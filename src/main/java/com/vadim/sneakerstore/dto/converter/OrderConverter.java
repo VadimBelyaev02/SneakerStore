@@ -1,18 +1,15 @@
 package com.vadim.sneakerstore.dto.converter;
 
 import com.vadim.sneakerstore.dto.OrderDto;
-import com.vadim.sneakerstore.entity.Customer;
 import com.vadim.sneakerstore.entity.Order;
 import com.vadim.sneakerstore.entity.Product;
+import com.vadim.sneakerstore.exception.NotFoundException;
 import com.vadim.sneakerstore.repository.CustomerRepository;
 import com.vadim.sneakerstore.repository.ProductRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Component
 public class OrderConverter {
@@ -28,21 +25,44 @@ public class OrderConverter {
     public Order convertToEntity(OrderDto orderDto) {
         final LocalDate orderedDate = orderDto.getDate();
         final UUID id = orderDto.getId();
-        //final Customer customer = Objects.requireNonNull(customerRepository.getById(orderDto.getCustomerId()));
-        //final List<UUID> productsIds = orderDto.getProductIds();
-        //final List<Product> products = productRepository.findAll().stream()
-         //       .filter(product ->  productsIds.contains(product.getId()))
-          //      .collect(Collectors.toList());
+        final String status = orderDto.getStatus();
+        final String payment = orderDto.getPayment();
+        final Integer amount = orderDto.getAmount();
+        final UUID groupId = orderDto.getGroupId();
+        final Product product = productRepository.findById(orderDto.getProductId()).orElseThrow(() ->
+                new NotFoundException("Product with id = " + orderDto.getProductId() + " is not found")
+        );
+
         return Order.builder()
                 .id(id)
-              //  .customer(customer)
+                .status(status)
+                .product(product)
+                .payment(payment)
+                .groupId(groupId)
                 .orderedDate(orderedDate)
-            //    .products(products)
+                .amount(amount)
                 .build();
 
     }
 
     public OrderDto convertToDto(Order order) {
-        return null;
+        final UUID id = order.getId();
+        final LocalDate date = order.getOrderedDate();
+        final String status = order.getStatus();
+        final String payment = order.getPayment();
+        final Integer amount = order.getAmount();
+        final UUID groupId = order.getGroupId();
+        final UUID productId = order.getProduct().getId();
+
+
+        return OrderDto.builder()
+                .id(id)
+                .date(date)
+                .status(status)
+                .productId(productId)
+                .payment(payment)
+                .groupId(groupId)
+                .amount(amount)
+                .build();
     }
 }

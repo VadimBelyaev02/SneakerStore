@@ -9,15 +9,15 @@ import java.util.UUID;
 
 public interface CardService {
 
-    CardDto getCard(UUID id);
+    CardDto getById(UUID id);
 
-    List<CardDto> getCards();
+    List<CardDto> getAll();
 
-    CardDto saveCard(CardDto cardDto);
+    CardDto save(CardDto cardDto);
 
-    CardDto updateCard(CardDto cardDto);
+    CardDto update(CardDto cardDto);
 
-    void deleteCard(UUID id);
+    void deleteById(UUID id);
 
-    List<CardDto> getCardsByCustomerId(UUID userId);
+    List<CardDto> getByCustomerId(UUID userId);
 }

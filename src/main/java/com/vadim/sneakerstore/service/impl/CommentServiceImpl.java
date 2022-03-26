@@ -28,7 +28,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public List<CommentDto> getAllComments() {
+    public List<CommentDto> getAll() {
         return repository.findAll().stream()
                 .map(converter::convertToDto)
                 .collect(Collectors.toList());
@@ -36,7 +36,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public CommentDto getComment(UUID id) {
+    public CommentDto getById(UUID id) {
         Comment comment = repository.findById(id).orElseThrow(() ->
                 new NotFoundException("Comment with id=" + id + " is not found")
         );
@@ -45,7 +45,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public CommentDto saveComment(CommentDto commentDto) {
+    public CommentDto save(CommentDto commentDto) {
         if (repository.existsById(commentDto.getId())) {
             throw new AlreadyExistsException("Comment with id = " + commentDto.getId() + " already exists");
         }
@@ -55,7 +55,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public CommentDto updateComment(CommentDto commentDto) {
+    public CommentDto update(CommentDto commentDto) {
         if (Objects.isNull(commentDto.getId()) || !repository.existsById(commentDto.getId())) {
             throw new NotFoundException("Comment with id = " + commentDto.getId() + " is not found");
         }
@@ -65,7 +65,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public void deleteComment(UUID id) {
+    public void deleteById(UUID id) {
         if (!repository.existsById(id)) {
             throw new NotFoundException("Comment with id=" + id + " is not found");
         }

@@ -30,7 +30,7 @@ public class CardController {
     @ResponseStatus(HttpStatus.CREATED)
     public CardDto postCard(@Parameter(description = "Contains info about card")
                             @Valid @RequestBody CardDto cardDto) {
-        return cardService.saveCard(cardDto);
+        return cardService.save(cardDto);
     }
 
     @Operation(description = "Delete a card by id")
@@ -38,7 +38,7 @@ public class CardController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCard(@Parameter(description = "Id of deleted card")
                            @PathVariable("id") UUID id) {
-        cardService.deleteCard(id);
+        cardService.deleteById(id);
     }
 
     @Operation(description = "Get customer's cards by his id")
@@ -46,7 +46,7 @@ public class CardController {
     @ResponseStatus(HttpStatus.OK)
     public List<CardDto> getCustomerCards(@Parameter(description = "Id of a customer that has this card")
                                           @PathVariable("customerId") UUID userId) {
-        return cardService.getCardsByCustomerId(userId);
+        return cardService.getByCustomerId(userId);
     }
 
     @Operation(description = "Update existed card")
@@ -54,6 +54,6 @@ public class CardController {
     @ResponseStatus(HttpStatus.OK)
     public CardDto putCard(@Parameter(description = "Contains info about card")
                            @Valid @RequestBody CardDto cardDto) {
-        return cardService.updateCard(cardDto);
+        return cardService.update(cardDto);
     }
 }

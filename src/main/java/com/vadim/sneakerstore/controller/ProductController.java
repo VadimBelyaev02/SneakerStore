@@ -27,7 +27,7 @@ public class ProductController {
 
     @Operation(description = "Get product by id")
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK) //it should get it by string
+    @ResponseStatus(HttpStatus.OK)
     public ProductDto getProduct(@PathVariable("id") UUID id) {
         ProductDto productDto = new ProductDto();
         productDto.setId(id);
@@ -40,27 +40,27 @@ public class ProductController {
     public List<ProductDto> findAllTest(@RequestParam(value = "size", defaultValue = "21") int size,
                                         @RequestParam(value = "page", defaultValue = "0") int page) {
         Pageable pageable = PageRequest.of(page, size);
-        return productService.findAllPaging(pageable);
+        return productService.getAllPaging(pageable);
     }
 
     @Operation(description = "Add a new product")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProductDto postProduct(@Valid @RequestBody ProductDto productDto) {
-        return productService.saveProduct(productDto);
+        return productService.save(productDto);
     }
 
     @Operation(description = "Update existed product")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public ProductDto putProduct(@Valid @RequestBody ProductDto productDto) {
-        return productService.updateProduct(productDto);
+        return productService.update(productDto);
     }
 
     @Operation(description = "Delete product by id")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(@PathVariable("id") UUID id) {
-        productService.deleteProduct(id);
+        productService.deleteById(id);
     }
 }

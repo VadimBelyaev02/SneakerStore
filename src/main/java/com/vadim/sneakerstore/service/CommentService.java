@@ -7,13 +7,13 @@ import java.util.UUID;
 
 public interface CommentService {
 
-    List<CommentDto> getAllComments();
+    List<CommentDto> getAll();
 
-    CommentDto getComment(UUID id);
+    CommentDto getById(UUID id);
 
-    CommentDto saveComment(CommentDto commentDto);
+    CommentDto save(CommentDto commentDto);
 
-    CommentDto updateComment(CommentDto commentDto);
+    CommentDto update(CommentDto commentDto);
 
-    void deleteComment(UUID id);
+    void deleteById(UUID id);
 }

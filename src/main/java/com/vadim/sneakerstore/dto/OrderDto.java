@@ -35,14 +35,31 @@ public class OrderDto {
 
     @Schema(description = "Who ordered email")
     @NotBlank
-    private String email;
+    private String customerEmail;
 
-    @Schema(description = "Ids of products that are ordered")
-    private List<UUID> productsIds;
+    @NotBlank
+    private String payment;
 
-    @Schema(description = "Amount of ordered products")
+    @NotNull
+    private UUID productId;
+
     @NotNull
     private Integer amount;
+
+    @NotNull
+    private UUID groupId;
+
+
+
+//    @Schema(description = "Amount and sizes of ordered products")
+//    @NotNull
+//    private List<UUID> orderedSizes;
+//
+//    @Schema(description = "Ids of products that are ordered")
+//    private List<UUID> productsIds;
+
+
+
 
     // private List<UUID> sizesIds;
 }

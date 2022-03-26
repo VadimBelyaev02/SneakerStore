@@ -31,7 +31,7 @@ public class CommentController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<CommentDto> getAllComments() {
-        return commentService.getAllComments();
+        return commentService.getAll();
     }
 
     @Operation(description = "Get a comment by its id")
@@ -39,7 +39,7 @@ public class CommentController {
     @ResponseStatus(HttpStatus.OK)
     public CommentDto getComment(@Parameter(description = "Id of needed comment")
                                  @PathVariable("id") UUID id) {
-        return commentService.getComment(id);
+        return commentService.getById(id);
     }
 
     @Operation(description = "Add a new comment")
@@ -47,7 +47,7 @@ public class CommentController {
     @ResponseStatus(HttpStatus.CREATED)
     public CommentDto postComment(@Parameter(description = "Object that will be saved")
                                   @Valid @RequestBody CommentDto commentDto) {
-        return commentService.saveComment(commentDto);
+        return commentService.save(commentDto);
     }
 
     @Operation(description = "Update existed comment")
@@ -55,7 +55,7 @@ public class CommentController {
     @ResponseStatus(HttpStatus.OK)
     public CommentDto putComment(@Parameter(description = "Contains updated fields of existed comment")
                                  @Valid @RequestBody CommentDto commentDto) {
-        return commentService.updateComment(commentDto);
+        return commentService.update(commentDto);
     }
 
     @Operation(description = "Delete a comment by its id")
@@ -63,6 +63,6 @@ public class CommentController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteComment(@Parameter(description = "Id of object that will be deleted")
                               @PathVariable("id") UUID id) {
-        commentService.deleteComment(id);
+        commentService.deleteById(id);
     }
 }
