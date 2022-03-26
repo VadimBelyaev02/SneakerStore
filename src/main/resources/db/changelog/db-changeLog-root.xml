@@ -11,6 +11,9 @@
 
 <!--    <includeAll path="db/changelog/changeset"/>-->
 
-    <include file="db/changelog/changeset/db-changeLog-1.0.xml"/>
+    <include file="db/changelog/changeset/db-changeLog-1.5.xml"/>
+    <include file="db/changelog/changeset/db-changeLog-3.0.xml"/>
+
+<!--    <include file="db/changelog/changeset/db-changeLog-1.5.xml"/>-->
 
 </databaseChangeLog>
