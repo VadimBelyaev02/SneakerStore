@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.UUID;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
-@Slf4j
 @Tag(name = "Customer Controller", description = "Customer CRUD operations")
 @RestController
 @RequestMapping("/api/customers")
@@ -29,7 +28,6 @@ public class CustomerController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CustomerDto getCustomer(@PathVariable("id") UUID id) {
-        log.info("KJKJFDGKFJGKFDJGRTJROINVBM");
         return customerService.getCustomer(id);
     }
 

@@ -6,6 +6,7 @@ import com.vadim.sneakerstore.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Comment Controller", description = "Comment CRUD operations")
 @RestController

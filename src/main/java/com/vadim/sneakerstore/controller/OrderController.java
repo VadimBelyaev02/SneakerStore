@@ -1,7 +1,6 @@
 package com.vadim.sneakerstore.controller;
 
 import com.vadim.sneakerstore.dto.OrderDto;
-import com.vadim.sneakerstore.entity.Order;
 import com.vadim.sneakerstore.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,6 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Order Controller", description = "Order CRUD operations")
 @RestController
 @RequestMapping("/orders")
