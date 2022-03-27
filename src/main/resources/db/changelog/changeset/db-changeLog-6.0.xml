@@ -25,6 +25,13 @@
         <dropColumn tableName="customers" columnName="country"/>
         <dropColumn tableName="customers" columnName="city"/>
         <dropColumn tableName="customers" columnName="address"/>
+
+        <dropColumn tableName="cards" columnName="cvv"/>
+        <addColumn tableName="cards">
+            <column name="cvv" type="varchar(4)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
     </changeSet>
 
 </databaseChangeLog>

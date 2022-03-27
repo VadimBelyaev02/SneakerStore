@@ -1,16 +1,12 @@
 package com.vadim.sneakerstore.dto.converter;
 
 import com.vadim.sneakerstore.dto.CustomerDto;
-import com.vadim.sneakerstore.entity.Card;
-import com.vadim.sneakerstore.entity.Comment;
-import com.vadim.sneakerstore.entity.Customer;
-import com.vadim.sneakerstore.entity.Product;
+import com.vadim.sneakerstore.entity.*;
 import com.vadim.sneakerstore.entity.enums.Role;
 import com.vadim.sneakerstore.model.RegistrationRequestDto;
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.vadim.sneakerstore.repository.AddressRepository;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -20,26 +16,30 @@ import java.util.stream.Collectors;
 @Component
 public class CustomerConverter {
 
+    private final AddressRepository addressRepository;
+
+    public CustomerConverter(AddressRepository addressRepository) {
+        this.addressRepository = addressRepository;
+    }
+
     public Customer convertToEntity(CustomerDto customerDto) {
         final UUID id = customerDto.getId();
         final String email = customerDto.getEmail();
         final Role role = Role.valueOf(customerDto.getRole());
-        final String country = customerDto.getCountry();
-        final String city = customerDto.getCity();
-        final String address = customerDto.getAddress();
         final String firstName = customerDto.getFirstName();
         final String phone = customerDto.getPhone();
         final String lastName = customerDto.getLastName();
+
+        List<Address> addresses = addressRepository.findAllById(customerDto.getAddressesIds());
+
         return Customer.builder()
                 .id(id)
                 .email(email)
                 .firstName(firstName)
                 .role(role)
-          //      .city(city)
-           //     .country(country)
-            //    .address(address)
                 .phone(phone)
                 .lastName(lastName)
+                .addresses(addresses)
                 .build();
     }
 

@@ -30,8 +30,8 @@ public class Address {
     @Column(name = "country")
     private String country;
 
-    @Column(name = "address")
-    private String address;
+    @Column(name = "street")
+    private String street;
 
     @ManyToMany
     @JoinTable(name = "addresses_custoemrs",

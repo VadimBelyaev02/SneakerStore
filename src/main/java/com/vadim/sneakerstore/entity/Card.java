@@ -35,7 +35,7 @@ public class Card {
     private String owner;
 
     @Column(name = "cvv")
-    private Integer cvv;
+    private String cvv;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "cards_customers",

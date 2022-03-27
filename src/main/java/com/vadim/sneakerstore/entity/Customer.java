@@ -46,7 +46,7 @@ public class Customer {
     @JoinTable(name = "addresses_custoemrs",
             joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "address_id", referencedColumnName = "id"))
-    private List<Address> address;
+    private List<Address> addresses;
 
 //    @Column(name = "city")
 //    private String city;
