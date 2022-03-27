@@ -10,15 +10,11 @@ import java.util.UUID;
 
 public interface FavoriteRepository extends JpaRepository<Favorite, ProductCustomerId> {
 
-    List<Favorite> findAllByCustomerId(UUID customerId);
-
-   // boolean existsByCustomerIdAndProductId();
-
-    boolean existsByCustomerIdAndProductId(UUID customerId, UUID productId);
-
-    //   Favorite findByCustomerIdAndProductId();
-
-    Optional<Favorite> findByCustomerIdAndProductId(UUID customerId, UUID productId);
-
-    void deleteByCustomerIdAndProductId(UUID customerId, UUID productId);
+//    List<Favorite> findAllByCustomerId(UUID customerId);
+//
+//    boolean existsByCustomerIdAndProductId(UUID customerId, UUID productId);
+//
+//    Optional<Favorite> findByCustomerIdAndProductId(UUID customerId, UUID productId);
+//
+//    void deleteByCustomerIdAndProductId(UUID customerId, UUID productId);
 }
