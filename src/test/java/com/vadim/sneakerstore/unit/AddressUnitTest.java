@@ -58,4 +58,14 @@ public class AddressUnitTest {
 
     }
 
+    @Test
+    public void shouldReturnUpdatedAddress() {
+
+    }
+
+    @Test
+    public void shouldThrowNotFoundExceptionWhileDeleting() {
+
+    }
+
 }
