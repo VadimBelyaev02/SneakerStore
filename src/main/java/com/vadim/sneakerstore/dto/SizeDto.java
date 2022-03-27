@@ -1,6 +1,5 @@
 package com.vadim.sneakerstore.dto;
 
-import com.vadim.sneakerstore.entity.Product;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.UUID;
 
 @Schema(name = "Size", description = "Product's size and amount data")

@@ -2,24 +2,20 @@ package com.vadim.sneakerstore.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.vadim.sneakerstore.entity.Customer;
-import com.vadim.sneakerstore.entity.Product;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Schema(name = "Order", description = "Person's order data")
 @Data
 @Builder
+@NoArgsConstructor
 public class OrderDto {
 
     private UUID id;
@@ -37,29 +33,20 @@ public class OrderDto {
     @NotBlank
     private String customerEmail;
 
+    @Schema(description = "Type of payment")
     @NotBlank
     private String payment;
 
+    @Schema(description = "Id of a product that is ordered")
     @NotNull
     private UUID productId;
 
+    @Schema(description = "Amount of the same ordered products")
     @NotNull
     private Integer amount;
 
+    @Schema(description = "Id of group of products that were ordered at one time")
     @NotNull
     private UUID groupId;
 
-
-
-//    @Schema(description = "Amount and sizes of ordered products")
-//    @NotNull
-//    private List<UUID> orderedSizes;
-//
-//    @Schema(description = "Ids of products that are ordered")
-//    private List<UUID> productsIds;
-
-
-
-
-    // private List<UUID> sizesIds;
 }

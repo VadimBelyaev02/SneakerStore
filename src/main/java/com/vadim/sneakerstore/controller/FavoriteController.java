@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
-@Tag(name = "Customer Controller", description = "Customer CRUD operations")
+@Tag(name = "Favorite Controller", description = "Favorite CRUD operations")
 @RestController
 @RequestMapping("/api/favorites")
 public class FavoriteController {
@@ -23,7 +23,7 @@ public class FavoriteController {
         this.service = service;
     }
 
-    @Operation(description = "Get customer by id")
+    @Operation(description = "Get favorite by customer and product ids")
     @GetMapping("/{productId}/{customerId}")
     @ResponseStatus(HttpStatus.OK)
     public FavoriteDto getFavorite(@PathVariable("productId") UUID productId,
@@ -31,28 +31,28 @@ public class FavoriteController {
         return service.getById(customerId, productId);
     }
 
-    @Operation(description = "Get all customers")
+    @Operation(description = "Get all products from everyone's favorites")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<FavoriteDto> getAllFavorites() {
         return service.getAll();
     }
 
-    @Operation(description = "")
+    @Operation(description = "Get all products from customer's favorites")
     @GetMapping("/{customerId}")
     @ResponseStatus(HttpStatus.OK)
     public List<FavoriteDto> getAllCustomerFavorite(@PathVariable("customerId") UUID customerId) {
         return service.getByCustomerId(customerId);
     }
 
-    @Operation(description = "Add a new customer")
+    @Operation(description = "Add a new product in favorites")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public FavoriteDto postCustomer(@Valid @RequestBody FavoriteDto favoriteDto) {
         return service.save(favoriteDto);
     }
 
-    @Operation(description = "Update existed customer")
+    @Operation(description = "Update existed product in favorites")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public FavoriteDto putCustomer(@Valid @RequestBody FavoriteDto favoriteDto) {
