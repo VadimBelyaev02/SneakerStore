@@ -43,19 +43,10 @@ public class Customer {
     private Role role;
 
     @ManyToMany
-    @JoinTable(name = "addresses_custoemrs",
+    @JoinTable(name = "addresses_customers",
             joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "address_id", referencedColumnName = "id"))
     private List<Address> addresses;
-
-//    @Column(name = "city")
-//    private String city;
-//
-//    @Column(name = "country")
-//    private String country;
-//
-//    @Column(name = "address")
-//    private String address;
 
     @OneToMany
     private List<Order> orders;

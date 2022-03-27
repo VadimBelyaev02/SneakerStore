@@ -1,0 +1,46 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="7" author="Vadim">
+        <addForeignKeyConstraint baseTableName="cards_customers"
+                                 baseColumnNames="card_id"
+                                 constraintName="cards_customers_id_fkey"
+                                 referencedTableName="cards"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="cards_customers"
+                                 baseColumnNames="customer_id"
+                                 constraintName="customers_cards_id_fkey"
+                                 referencedTableName="customers"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="cart"
+                                 baseColumnNames="customer_id"
+                                 constraintName="customers_products_id_fkey"
+                                 referencedTableName="customers"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="cart"
+                                 baseColumnNames="product_id"
+                                 constraintName="products_customers_id_fkey"
+                                 referencedTableName="products"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="favorites"
+                                 baseColumnNames="customer_id"
+                                 constraintName="customers_favorites_id_fkey"
+                                 referencedTableName="customers"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="favorites"
+                                 baseColumnNames="product_id"
+                                 constraintName="products_favorites_id_fkey"
+                                 referencedTableName="products"
+                                 referencedColumnNames="id"/>
+
+
+    </changeSet>
+
+</databaseChangeLog>
