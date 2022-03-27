@@ -40,18 +40,10 @@ public class CustomerDto {
     @Schema(description = "Person's role")
     private String role;
 
-    @Schema(description = "What country person lives")
-    private String country;
+    @Schema(description = "Person's avatar")
+    private String avatar;
 
-//    @Schema(description = "What city person lives")
-//    private String city;
-//
-//    @Schema(description = "Exact address of living")
-//    private String address;
-//
-//    @Schema(description = "Person's avatar")
-//    private String avatar;
-
+    @Schema(description = "Person's living addresses")
     private List<UUID> addressesIds;
 
     @Schema(description = "List of person's cards")

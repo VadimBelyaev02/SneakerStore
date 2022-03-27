@@ -33,6 +33,7 @@ public class AddressConverter {
                 .id(id)
                 .city(city)
                 .street(street)
+                .country(country)
                 .customers(customers)
                 .build();
     }
@@ -54,6 +55,7 @@ public class AddressConverter {
                 .id(id)
                 .city(city)
                 .street(street)
+                .country(country)
                 .customersIds(customersIds)
                 .build();
     }

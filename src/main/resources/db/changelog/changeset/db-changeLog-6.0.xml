@@ -15,10 +15,10 @@
 
         <createTable tableName="addresses_customers">
             <column name="customer_id" type="uuid">
-                <constraints primaryKey="true" references="customers(id)"/>
+                <constraints primaryKey="true" foreignKeyName="customers_addresses_id_fkey" references="customers(id)"/>
             </column>
             <column name="address_id" type="uuid">
-                <constraints primaryKey="true" references="addresses(id)"/>
+                <constraints primaryKey="true" foreignKeyName="addresses_customers_id_fkey" references="addresses(id)"/>
             </column>
         </createTable>
 
