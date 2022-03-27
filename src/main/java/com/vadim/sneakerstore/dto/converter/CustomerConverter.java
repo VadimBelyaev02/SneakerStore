@@ -35,9 +35,9 @@ public class CustomerConverter {
                 .email(email)
                 .firstName(firstName)
                 .role(role)
-                .city(city)
-                .country(country)
-                .address(address)
+          //      .city(city)
+           //     .country(country)
+            //    .address(address)
                 .phone(phone)
                 .lastName(lastName)
                 .build();
@@ -49,9 +49,9 @@ public class CustomerConverter {
         final String firstName = customer.getFirstName();
         final String phone = customer.getPhone();
         final String lastName = customer.getLastName();
-        final String city = customer.getCity();
-        final String country = customer.getCountry();
-        final String address = customer.getAddress();
+     //   final String city = customer.getCity();
+     //   final String country = customer.getCountry();
+     //   final String address = customer.getAddress();
         final String role = customer.getRole().name();
 
         List<UUID> favoritesIds = new ArrayList<>();
@@ -93,9 +93,9 @@ public class CustomerConverter {
                 .id(id)
                 .email(email)
                 .firstName(firstName)
-                .city(city)
-                .country(country)
-                .address(address)
+          //      .city(city)
+          //      .country(country)
+          //      .address(address)
                 .role(role)
                 .phone(phone)
                 .lastName(lastName)
@@ -120,9 +120,9 @@ public class CustomerConverter {
 
 
         return Customer.builder()
-                .city(city)
-                .address(address)
-                .country(country)
+              //  .city(city)
+              //  .address(address)
+              //  .country(country)
                 .password(password)
                 .email(email)
                 .firstName(firstName)

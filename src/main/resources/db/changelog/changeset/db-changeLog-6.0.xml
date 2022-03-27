@@ -4,23 +4,27 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
     <changeSet id="6" author="Vadim">
-            <createTable tableName="addresses">
-                <column name="id" type="uuid">
-                    <constraints primaryKey="true"/>
-                </column>
-                <column name="country" type="varchar(64)"/>
-                <column name="address" type="varchar(64)"/>
-                <column name="city" type="varchar(64)"/>
-            </createTable>
+        <createTable tableName="addresses">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="country" type="varchar(64)"/>
+            <column name="address" type="varchar(64)"/>
+            <column name="city" type="varchar(64)"/>
+        </createTable>
 
-            <createTable tableName="addresses_customers">
-                <column name="customer_id" type="uuid">
-                    <constraints primaryKey="true" references="customers(id)"/>
-                </column>
-                <column name="address_id" type="uuid">
-                    <constraints primaryKey="true" references="addresses(id)"/>
-                </column>
-            </createTable>
+        <createTable tableName="addresses_customers">
+            <column name="customer_id" type="uuid">
+                <constraints primaryKey="true" references="customers(id)"/>
+            </column>
+            <column name="address_id" type="uuid">
+                <constraints primaryKey="true" references="addresses(id)"/>
+            </column>
+        </createTable>
+
+        <dropColumn tableName="customers" columnName="country"/>
+        <dropColumn tableName="customers" columnName="city"/>
+        <dropColumn tableName="customers" columnName="address"/>
     </changeSet>
 
 </databaseChangeLog>
