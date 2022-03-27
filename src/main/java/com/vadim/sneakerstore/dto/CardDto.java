@@ -40,7 +40,7 @@ public class CardDto {
 
     @Schema(description = "Cvv number")
     @NotNull
-    private Integer cvv;
+    private String cvv;
 
     @Schema(description = "Ids of people that have this card in their accounts")
     private List<UUID> customersIds;

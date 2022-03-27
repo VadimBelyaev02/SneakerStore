@@ -23,7 +23,7 @@ public class CardConverter {
 
     public CardDto convertToDto(Card card) {
         final UUID id = card.getId();
-        final Integer cvv = card.getCvv();
+        final String cvv = card.getCvv();
         final String number = card.getNumber();
         final LocalDate date = card.getValidityDate();
         final String owner = card.getOwner();
@@ -44,7 +44,7 @@ public class CardConverter {
 
     public Card convertToEntity(CardDto cardDto) {
         final UUID id = cardDto.getId();
-        final Integer cvv = cardDto.getCvv();
+        final String cvv = cardDto.getCvv();
         final String number = cardDto.getNumber();
         final LocalDate date = cardDto.getValidityDate();
         final String owner = cardDto.getOwner();
