@@ -16,5 +16,5 @@ public interface FavoriteRepository extends JpaRepository<Favorite, ProductCusto
 
     Optional<Favorite> findByCustomerIdAndProductId(UUID customerId, UUID productId);
 
-    void deleteByCustomerIdAndProductId(UUID customerId, UUID productId)
+    void deleteByCustomerIdAndProductId(UUID customerId, UUID productId);
 }
