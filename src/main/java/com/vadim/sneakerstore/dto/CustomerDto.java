@@ -49,7 +49,7 @@ public class CustomerDto {
     @Schema(description = "List of person's cards")
     private List<UUID> cardsIds;
 
-    @Schema(description = "Comment's ids left by the user")
+    @Schema(description = "Comment's ids that are left by the customer")
     private List<UUID> commentsIds;
 
     @Schema(description = "Products what customers added in favorites")
@@ -58,6 +58,6 @@ public class CustomerDto {
     @Schema(description = "Products ids that are in a customer's cart")
     private List<UUID> inCartIds;
 
-    @Schema(description = "Hui")
+    @Schema(description = "Customer's orders")
     private List<UUID> ordersIds;
 }
