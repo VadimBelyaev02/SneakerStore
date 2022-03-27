@@ -14,7 +14,7 @@ import java.util.UUID;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Photo Controller", description = "Photo CRUD operations")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/photos")
 public class PhotoController {
 
     private final PhotoService service;
@@ -24,35 +24,35 @@ public class PhotoController {
     }
 
     @Operation(description = "Get photo by id")
-    @GetMapping("/photos/{id}")
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public PhotoDto getById(@PathVariable("id") UUID id) {
         return service.getById(id);
     }
 
     @Operation(description = "Get all photos")
-    @GetMapping("/photos")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<PhotoDto> getAllPhotos() {
         return service.getAll();
     }
 
     @Operation(description = "Add a new photo")
-    @PostMapping("/photos")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PhotoDto postPhotos(@Valid @RequestBody PhotoDto photoDto) {
         return service.save(photoDto);
     }
 
     @Operation(description = "Update existed photo")
-    @PutMapping("/photos")
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public PhotoDto putPhotos(@Valid @RequestBody PhotoDto photoDto) {
         return service.update(photoDto);
     }
 
     @Operation(description = "Delete photo by id")
-    @DeleteMapping("/photos/{id}")
+    @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePhotos(@PathVariable("id") UUID id) {
         service.deleteById(id);
