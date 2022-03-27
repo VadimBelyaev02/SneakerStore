@@ -21,11 +21,11 @@ public class Favorite {
     @EmbeddedId
     private ProductCustomerId id;
 
-//     public UUID getCustomerId() {
-//        return this.id.getCustomer().getId();
-//    }
-//
-//    public UUID getProductId() {
-//        return this.id.getProduct().getId();
-//    }
+     public UUID getCustomerId() {
+        return this.id.getCustomer().getId();
+    }
+
+    public UUID getProductId() {
+        return this.id.getProduct().getId();
+    }
 }

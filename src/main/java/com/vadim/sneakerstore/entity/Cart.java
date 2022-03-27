@@ -2,7 +2,6 @@ package com.vadim.sneakerstore.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.EmbeddedId;
@@ -14,18 +13,17 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Data
 @Table(name = "cart")
 public class Cart {
 
     @EmbeddedId
     private ProductCustomerId id;
 
-//    public UUID getCustomerId() {
-//        return this.id.getCustomer().getId();
-//    }
-//
-//    public UUID getProductId() {
-//        return this.id.getProduct().getId();
-//    }
+    public UUID getCustomerId() {
+        return this.id.getCustomer().getId();
+    }
+
+    public UUID getProductId() {
+        return this.id.getProduct().getId();
+    }
 }
