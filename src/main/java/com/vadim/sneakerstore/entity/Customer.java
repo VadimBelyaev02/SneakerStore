@@ -1,16 +1,20 @@
 package com.vadim.sneakerstore.entity;
 
 import com.vadim.sneakerstore.entity.enums.Role;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
@@ -42,13 +46,18 @@ public class Customer {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
+    @Column(name = "avatar")
+    private String avatar;
+
     @ManyToMany
     @JoinTable(name = "addresses_customers",
             joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "address_id", referencedColumnName = "id"))
+    @ToString.Exclude
     private List<Address> addresses;
 
     @OneToMany
+    @ToString.Exclude
     private List<Order> orders;
 
     @OneToOne(mappedBy = "customer")
@@ -58,9 +67,11 @@ public class Customer {
     @JoinTable(name = "cards_customers",
             joinColumns = @JoinColumn(name = "card_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"))
+    @ToString.Exclude
     private List<Card> cards;
 
     @OneToMany(mappedBy = "customer")
+    @ToString.Exclude
     private List<Comment> comments;
 
     @ManyToMany
@@ -78,4 +89,17 @@ public class Customer {
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
     @ToString.Exclude
     private List<Product> inCart;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Customer customer = (Customer) o;
+        return id != null && Objects.equals(id, customer.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

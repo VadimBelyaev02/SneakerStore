@@ -8,7 +8,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -43,37 +42,6 @@ public class Order {
     @Column(name = "amount")
     private Integer amount;
 
-    @Column(name = "groupId")
+    @Column(name = "group_id")
     private UUID groupId;
-    /*
-        private UUID id;
-
-    @Schema(description = "When ordered")
-    @NotBlank
-    @JsonSerialize(using = ToStringSerializer.class)
-    private LocalDate date;
-
-    @Schema(description = "Order status")
-    @NotBlank
-    private String status;
-
-    @Schema(description = "Who ordered email")
-    @NotBlank
-    private String customerEmail;
-
-    private String payment;
-
-    private UUID productId;
-
-    private Integer amount;
-
-    private UUID groupId;
-     */
-
-//    @OneToMany
-//    private List<Product> products;
-
-
-    //   @OneToMany
-  //  private List<Size> sizes;
 }

@@ -4,7 +4,7 @@ import com.vadim.sneakerstore.dto.CustomerDto;
 import com.vadim.sneakerstore.entity.*;
 import com.vadim.sneakerstore.entity.enums.Role;
 import com.vadim.sneakerstore.model.RegistrationRequestDto;
-import com.vadim.sneakerstore.repository.AddressRepository;
+import com.vadim.sneakerstore.repository.*;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,9 +17,21 @@ import java.util.stream.Collectors;
 public class CustomerConverter {
 
     private final AddressRepository addressRepository;
+    private final OrderRepository orderRepository;
+    private final CardRepository cardRepository;
+    private final CommentRepository commentRepository;
+    private final ProductRepository productRepository;
 
-    public CustomerConverter(AddressRepository addressRepository) {
+    public CustomerConverter(AddressRepository addressRepository,
+                             OrderRepository orderRepository,
+                             CardRepository cardRepository,
+                             CommentRepository commentRepository,
+                             ProductRepository productRepository) {
         this.addressRepository = addressRepository;
+        this.orderRepository = orderRepository;
+        this.cardRepository = cardRepository;
+        this.commentRepository = commentRepository;
+        this.productRepository = productRepository;
     }
 
     public Customer convertToEntity(CustomerDto customerDto) {
@@ -29,8 +41,14 @@ public class CustomerConverter {
         final String firstName = customerDto.getFirstName();
         final String phone = customerDto.getPhone();
         final String lastName = customerDto.getLastName();
+        final String avatat = customerDto.getAvatar();
 
         List<Address> addresses = addressRepository.findAllById(customerDto.getAddressesIds());
+        List<Order> orders = orderRepository.findAllById(customerDto.getOrdersIds());
+        List<Card> cards = cardRepository.findAllById(customerDto.getCardsIds());
+        List<Comment> comments = commentRepository.findAllById(customerDto.getCommentsIds());
+        List<Product> favorites = productRepository.findAllById(customerDto.getFavoritesIds());
+        List<Product> inCart  = productRepository.findAllById(customerDto.getInCartIds());
 
         return Customer.builder()
                 .id(id)
@@ -39,7 +57,13 @@ public class CustomerConverter {
                 .role(role)
                 .phone(phone)
                 .lastName(lastName)
+                .avatar(avatat)
                 .addresses(addresses)
+                .orders(orders)
+                .cards(cards)
+                .comments(comments)
+                .favorites(favorites)
+                .inCart(inCart)
                 .build();
     }
 
@@ -49,10 +73,8 @@ public class CustomerConverter {
         final String firstName = customer.getFirstName();
         final String phone = customer.getPhone();
         final String lastName = customer.getLastName();
-     //   final String city = customer.getCity();
-     //   final String country = customer.getCountry();
-     //   final String address = customer.getAddress();
         final String role = customer.getRole().name();
+        final String avatar = customer.getAvatar();
 
         List<UUID> favoritesIds = new ArrayList<>();
         if (Objects.nonNull(customer.getFavorites())) {
@@ -82,27 +104,34 @@ public class CustomerConverter {
                     .collect(Collectors.toList());
         }
 
-//        List<UUID> favoriteIds = new ArrayList<>();
-//        if (Objects.nonNull(customer.getFavorites())) {
-//            favoriteIds = customer.getFavorites().stream()
-//                    .map(Product::getId)
-//                    .collect(Collectors.toList());
-//        }
+        List<UUID> addressesIds = new ArrayList<>();
+        if (Objects.nonNull(customer.getAddresses())) {
+            addressesIds = customer.getAddresses().stream()
+                    .map(Address::getId)
+                    .collect(Collectors.toList());
+        }
+
+        List<UUID> ordersIds = new ArrayList<>();
+        if (Objects.nonNull(customer.getOrders())) {
+            ordersIds = customer.getOrders().stream()
+                    .map(Order::getId)
+                    .collect(Collectors.toList());
+        }
 
         return CustomerDto.builder()
                 .id(id)
                 .email(email)
                 .firstName(firstName)
-          //      .city(city)
-          //      .country(country)
-          //      .address(address)
                 .role(role)
                 .phone(phone)
                 .lastName(lastName)
+                .avatar(avatar)
                 .cardsIds(cardIds)
                 .commentsIds(commentIds)
                 .inCartIds(inCartIds)
                 .favoritesIds(favoritesIds)
+                .addressesIds(addressesIds)
+                .ordersIds(ordersIds)
                 .build();
     }
 
@@ -120,10 +149,7 @@ public class CustomerConverter {
 
 
         return Customer.builder()
-              //  .city(city)
-              //  .address(address)
-              //  .country(country)
-                .password(password)
+                 .password(password)
                 .email(email)
                 .firstName(firstName)
                 .phone(phone)

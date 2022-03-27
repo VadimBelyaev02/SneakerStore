@@ -3,7 +3,10 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <include file="db/changelog/changeset/db-changeLog-8.0.xml"/>
+    <changeSet id="7" author="Vadim">
+        <renameColumn tableName="addresses" oldColumnName="address" newColumnName="street"/>
 
+
+    </changeSet>
 
 </databaseChangeLog>
