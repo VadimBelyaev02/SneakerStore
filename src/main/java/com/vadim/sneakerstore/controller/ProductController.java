@@ -3,6 +3,7 @@ package com.vadim.sneakerstore.controller;
 import com.vadim.sneakerstore.dto.ProductDto;
 import com.vadim.sneakerstore.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,7 @@ public class ProductController {
     }
 
     @Operation(description = "Get product by id")
+    @ApiResponse(description = "Product is found")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ProductDto getProduct(@PathVariable("id") UUID id) {
@@ -35,6 +37,7 @@ public class ProductController {
     }
 
     @Operation(description = "Get all products")
+    @ApiResponse(description = "All products are found")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ProductDto> findAllTest(@RequestParam(value = "size", defaultValue = "21") int size,
@@ -44,6 +47,7 @@ public class ProductController {
     }
 
     @Operation(description = "Add a new product")
+    @ApiResponse(description = "Product is successfully created")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProductDto postProduct(@Valid @RequestBody ProductDto productDto) {
@@ -51,6 +55,7 @@ public class ProductController {
     }
 
     @Operation(description = "Update existed product")
+    @ApiResponse(description = "Product is successfully updated")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public ProductDto putProduct(@Valid @RequestBody ProductDto productDto) {
@@ -58,6 +63,7 @@ public class ProductController {
     }
 
     @Operation(description = "Delete product by id")
+    @ApiResponse(description = "Product is successfully deleted")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(@PathVariable("id") UUID id) {

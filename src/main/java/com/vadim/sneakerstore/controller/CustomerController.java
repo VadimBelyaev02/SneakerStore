@@ -3,6 +3,7 @@ package com.vadim.sneakerstore.controller;
 import com.vadim.sneakerstore.dto.CustomerDto;
 import com.vadim.sneakerstore.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ public class CustomerController {
     }
 
     @Operation(description = "Get customer by id")
+    @ApiResponse(description = "Customer is found")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CustomerDto getCustomer(@PathVariable("id") UUID id) {
@@ -32,6 +34,7 @@ public class CustomerController {
     }
 
     @Operation(description = "Get all customers")
+    @ApiResponse(description = "All customers are found")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<CustomerDto> getAllCustomers() {
@@ -39,6 +42,7 @@ public class CustomerController {
     }
 
     @Operation(description = "Add a new customer")
+    @ApiResponse(description = "Customer is created")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerDto postCustomer(@Valid @RequestBody CustomerDto customerDto) {
@@ -46,6 +50,7 @@ public class CustomerController {
     }
 
     @Operation(description = "Update existed customer")
+    @ApiResponse(description = "Customer is updated")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public CustomerDto putCustomer(@Valid @RequestBody CustomerDto customerDto) {
@@ -53,6 +58,7 @@ public class CustomerController {
     }
 
     @Operation(description = "Delete customer by id")
+    @ApiResponse(description = "Customer is deleted")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCustomer(@PathVariable("id") UUID id) {

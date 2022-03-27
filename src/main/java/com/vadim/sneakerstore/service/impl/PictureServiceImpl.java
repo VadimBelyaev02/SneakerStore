@@ -6,7 +6,7 @@ import com.vadim.sneakerstore.entity.Picture;
 import com.vadim.sneakerstore.exception.AlreadyExistsException;
 import com.vadim.sneakerstore.exception.NotFoundException;
 import com.vadim.sneakerstore.repository.PhotoRepository;
-import com.vadim.sneakerstore.service.PhotoService;
+import com.vadim.sneakerstore.service.PictureService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,12 +15,12 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class PhotoServiceImpl implements PhotoService {
+public class PictureServiceImpl implements PictureService {
 
     private final PhotoRepository repository;
     private final PhotoConverter converter;
 
-    public PhotoServiceImpl(PhotoRepository repository, PhotoConverter converter) {
+    public PictureServiceImpl(PhotoRepository repository, PhotoConverter converter) {
         this.repository = repository;
         this.converter = converter;
     }

@@ -3,6 +3,7 @@ package com.vadim.sneakerstore.controller;
 import com.vadim.sneakerstore.dto.OrderDto;
 import com.vadim.sneakerstore.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ public class OrderController {
     }
 
     @Operation(description = "Get order by its id")
+    @ApiResponse(description = "Order is found")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public OrderDto getOrder(@PathVariable("id") UUID id) {
@@ -31,6 +33,7 @@ public class OrderController {
     }
 
     @Operation(description = "Get all orders")
+    @ApiResponse(description = "All orders are found")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<OrderDto> getAllOrders() {
@@ -38,6 +41,7 @@ public class OrderController {
     }
 
     @Operation(description = "Save a new order")
+    @ApiResponse(description = "Order is successfully created")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public OrderDto postOrder(@Valid @RequestBody OrderDto orderDto) {
@@ -45,6 +49,7 @@ public class OrderController {
     }
 
     @Operation(description = "Update existed order")
+    @ApiResponse(description = "Order is successfully updated")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public OrderDto putOrder(@Valid @RequestBody OrderDto orderDto) {
@@ -52,6 +57,7 @@ public class OrderController {
     }
 
     @Operation(description = "Delete existed order")
+    @ApiResponse(description = "Order is successfully deleted")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteOrder(@PathVariable("id") UUID id) {

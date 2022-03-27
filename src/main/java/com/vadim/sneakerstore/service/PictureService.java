@@ -5,7 +5,7 @@ import com.vadim.sneakerstore.dto.PhotoDto;
 import java.util.List;
 import java.util.UUID;
 
-public interface PhotoService {
+public interface PictureService {
 
     PhotoDto getById(UUID id);
 

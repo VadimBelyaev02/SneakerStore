@@ -25,6 +25,7 @@ public class SizeController {
     }
 
     @Operation(description = "Get size by id")
+    @ApiResponse(description = "Size is found")
     @GetMapping("/sizes/{id}")
     @ResponseStatus(HttpStatus.OK)
     public SizeDto getSize(@PathVariable("id") UUID id) {
@@ -32,6 +33,7 @@ public class SizeController {
     }
 
     @Operation(description = "Get all sizes")
+    @ApiResponse(description = "All sizes are found")
     @GetMapping("/sizes")
     @ResponseStatus(HttpStatus.OK)
     public List<SizeDto> getAllSizes() {
@@ -47,6 +49,7 @@ public class SizeController {
     }
 
     @Operation(description = "Add a new size")
+    @ApiResponse(description = "Sizes is added")
     @PostMapping("/sizes")
     @ResponseStatus(HttpStatus.CREATED)
     public SizeDto postSize(@Valid @RequestBody SizeDto sizeDto) {
@@ -54,6 +57,7 @@ public class SizeController {
     }
 
     @Operation(description = "Update existed size")
+    @ApiResponse(description = "Size is updated")
     @PutMapping("/sizes")
     @ResponseStatus(HttpStatus.OK)
     public SizeDto putSize(@Valid @RequestBody SizeDto sizeDto) {
@@ -61,6 +65,7 @@ public class SizeController {
     }
 
     @Operation(description = "Delete size by id")
+    @ApiResponse(description = "Size is deleted")
     @DeleteMapping("/sizes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteSize(@PathVariable("id") UUID id) {
