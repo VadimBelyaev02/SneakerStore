@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.UUID;
 
 @Builder
 @AllArgsConstructor
@@ -17,4 +18,12 @@ public class Cart {
 
     @EmbeddedId
     private ProductCustomerId id;
+
+    public UUID getCustomerId() {
+        return this.id.getCustomer().getId();
+    }
+
+    public UUID getProductId() {
+        return this.id.getProduct().getId();
+    }
 }
