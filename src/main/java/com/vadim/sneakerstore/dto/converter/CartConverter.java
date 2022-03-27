@@ -43,11 +43,8 @@ public class CartConverter {
     }
 
     public CartDto convertToDto(Cart cart) {
-     //   final UUID customerId = cart.getCustomerId();
-     //   final UUID productId = cart.getProductId();
-
-           final UUID customerId = cart.getId().getCustomer().getId();
-           final UUID productId = cart.getId().getProduct().getId();
+        final UUID customerId = cart.getCustomerId();
+        final UUID productId = cart.getProductId();
 
         return CartDto.builder()
                 .customerId(customerId)
