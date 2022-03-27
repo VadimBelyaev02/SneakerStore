@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
+@ExtendWith(SpringExtension.class) // mockito runner and @mock
 public class CustomerServiceUnitTest {
 
     @Autowired
