@@ -21,8 +21,6 @@ public class Favorite {
     @EmbeddedId
     private ProductCustomerId id;
 
-
-
 //     public UUID getCustomerId() {
 //        return this.id.getCustomer().getId();
 //    }
