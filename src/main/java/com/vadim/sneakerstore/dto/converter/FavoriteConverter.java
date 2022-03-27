@@ -43,8 +43,12 @@ public class FavoriteConverter {
     }
 
     public FavoriteDto convertToDto(Favorite favorite) {
-        final UUID customerId = favorite.getCustomerId();
-        final UUID productId = favorite.getProductId();
+    //    final UUID customerId = favorite.getCustomerId();
+    //    final UUID productId = favorite.getProductId();
+
+        final UUID customerId = favorite.getId().getCustomer().getId();
+        final UUID productId = favorite.getId().getProduct().getId();
+
 
         return FavoriteDto.builder()
                 .customerId(customerId)

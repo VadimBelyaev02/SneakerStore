@@ -12,7 +12,11 @@ public interface FavoriteRepository extends JpaRepository<Favorite, ProductCusto
 
     List<Favorite> findAllByCustomerId(UUID customerId);
 
+   // boolean existsByCustomerIdAndProductId();
+
     boolean existsByCustomerIdAndProductId(UUID customerId, UUID productId);
+
+    //   Favorite findByCustomerIdAndProductId();
 
     Optional<Favorite> findByCustomerIdAndProductId(UUID customerId, UUID productId);
 
