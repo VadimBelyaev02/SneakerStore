@@ -1,17 +1,11 @@
 package com.vadim.sneakerstore.dto;
 
-import com.vadim.sneakerstore.entity.Comment;
-import com.vadim.sneakerstore.entity.Customer;
-import com.vadim.sneakerstore.entity.Photo;
-import com.vadim.sneakerstore.entity.Size;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -71,10 +65,6 @@ public class ProductDto {
 
     @Schema(description = "List of size ids")
     private List<UUID> sizesIds;
-
-//    @Schema(description = "Main photo of product")
-//    @NotBlank
-//    private String preview;
 
     @Schema(description = "List of photo ids")
     private List<UUID> photosIds;
