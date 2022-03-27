@@ -45,6 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {//} implements
                 .authorizeRequests()
                // .antMatchers(HttpMethod.GET, "/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/swagger-ui.html/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/v3/api-docs/**").permitAll()
+
                 .antMatchers(HttpMethod.GET, "/api/customers/**").authenticated()
                 .antMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/cards/**").hasAuthority(Permission.WRITE.getPermission())
