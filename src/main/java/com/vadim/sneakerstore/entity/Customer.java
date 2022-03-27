@@ -42,23 +42,23 @@ public class Customer {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
-    @Column(name = "city")
-    private String city;
+    @ManyToMany
+    @JoinTable(name = "addresses_custoemrs",
+            joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "address_id", referencedColumnName = "id"))
+    private List<Address> address;
 
-    @Column(name = "country")
-    private String country;
-
-    @Column(name = "address")
-    private String address;
+//    @Column(name = "city")
+//    private String city;
+//
+//    @Column(name = "country")
+//    private String country;
+//
+//    @Column(name = "address")
+//    private String address;
 
     @OneToMany
     private List<Order> orders;
-
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "products_customers",
-//            joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
-//    private List<Product> favorites;
 
     @OneToOne(mappedBy = "customer")
     private Confirmation confirmation;
