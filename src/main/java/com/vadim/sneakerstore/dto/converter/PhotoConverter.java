@@ -1,7 +1,7 @@
 package com.vadim.sneakerstore.dto.converter;
 
 import com.vadim.sneakerstore.dto.PhotoDto;
-import com.vadim.sneakerstore.entity.Photo;
+import com.vadim.sneakerstore.entity.Picture;
 import com.vadim.sneakerstore.entity.Product;
 import com.vadim.sneakerstore.exception.NotFoundException;
 import com.vadim.sneakerstore.repository.ProductRepository;
@@ -18,23 +18,23 @@ public class PhotoConverter {
         this.productRepository = productRepository;
     }
 
-    public Photo convertToEntity(PhotoDto photoDto) {
+    public Picture convertToEntity(PhotoDto photoDto) {
         final UUID id = photoDto.getId();
         final String link = photoDto.getLink();
         final Product product = productRepository.findById(photoDto.getProductId()).orElseThrow(() ->
                 new NotFoundException("Product with id = " + photoDto.getProductId() + " is not found")
         );
-        return Photo.builder()
+        return Picture.builder()
                 .id(id)
                 .link(link)
                 .product(product)
                 .build();
     }
 
-    public PhotoDto convertToDto(Photo photo) {
-        final UUID id = photo.getId();
-        final String link = photo.getLink();
-        final UUID productId = photo.getProduct().getId();
+    public PhotoDto convertToDto(Picture picture) {
+        final UUID id = picture.getId();
+        final String link = picture.getLink();
+        final UUID productId = picture.getProduct().getId();
         return PhotoDto.builder()
                 .id(id)
                 .link(link)

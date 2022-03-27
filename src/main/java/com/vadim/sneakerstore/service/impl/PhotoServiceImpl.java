@@ -2,7 +2,7 @@ package com.vadim.sneakerstore.service.impl;
 
 import com.vadim.sneakerstore.dto.PhotoDto;
 import com.vadim.sneakerstore.dto.converter.PhotoConverter;
-import com.vadim.sneakerstore.entity.Photo;
+import com.vadim.sneakerstore.entity.Picture;
 import com.vadim.sneakerstore.exception.AlreadyExistsException;
 import com.vadim.sneakerstore.exception.NotFoundException;
 import com.vadim.sneakerstore.repository.PhotoRepository;
@@ -29,10 +29,10 @@ public class PhotoServiceImpl implements PhotoService {
     @Override
     @Transactional
     public PhotoDto getById(UUID id) {
-        Photo photo = repository.findById(id).orElseThrow(() ->
+        Picture picture = repository.findById(id).orElseThrow(() ->
                 new NotFoundException("Photo with id = " + id + " is not found")
         );
-        return converter.convertToDto(photo);
+        return converter.convertToDto(picture);
     }
 
     @Override
@@ -49,8 +49,8 @@ public class PhotoServiceImpl implements PhotoService {
         if (repository.existsById(photoDto.getId())) {
             throw new AlreadyExistsException("Photo with id = " + photoDto.getId() + " already exists");
         }
-        Photo photo = repository.save(converter.convertToEntity(photoDto));
-        return converter.convertToDto(photo);
+        Picture picture = repository.save(converter.convertToEntity(photoDto));
+        return converter.convertToDto(picture);
     }
 
     @Override
@@ -59,8 +59,8 @@ public class PhotoServiceImpl implements PhotoService {
         if (!repository.existsById(photoDto.getId())) {
             throw new NotFoundException("Photo with id = " + photoDto.getId() + " is not found");
         }
-        Photo photo = repository.save(converter.convertToEntity(photoDto));
-        return converter.convertToDto(photo);
+        Picture picture = repository.save(converter.convertToEntity(photoDto));
+        return converter.convertToDto(picture);
     }
 
     @Override

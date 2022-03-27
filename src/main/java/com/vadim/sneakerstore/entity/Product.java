@@ -1,9 +1,7 @@
 package com.vadim.sneakerstore.entity;
 
-import com.vadim.sneakerstore.entity.enums.Currency;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -55,15 +53,10 @@ public class Product {
     private String material;
 
     @OneToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "products_sizes",
-//            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "size_id", referencedColumnName = "id"))
-//    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<Size> sizes;
 
-
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    private List<Photo> photos;
+    private List<Picture> pictures;
 
     @ManyToMany
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST})

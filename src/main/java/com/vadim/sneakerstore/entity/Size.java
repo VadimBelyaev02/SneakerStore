@@ -12,7 +12,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -32,13 +31,7 @@ public class Size {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @ToString.Exclude
-//    @JoinTable(name = "products_sizes",
-//            joinColumns = @JoinColumn(name = "size_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
-//    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private Product product;
-
-
 
     @Override
     public boolean equals(Object o) {

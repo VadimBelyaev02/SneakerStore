@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.DoubleStream;
 
 @Component
 public class ProductConverter {
@@ -25,7 +24,7 @@ public class ProductConverter {
         final String material = productDto.getMaterial();
         final BigDecimal price = productDto.getPrice();
         final List<Size> sizes;
-        final List<Photo> photos;
+        final List<Picture> pictures;
         final List<Customer> customers;
         final List<Comment> comments;
 
@@ -65,9 +64,9 @@ public class ProductConverter {
         }
 
         List<UUID> photosIds = new ArrayList<>();
-        if (Objects.nonNull(product.getPhotos())) {
-             photosIds = product.getPhotos().stream()
-                    .map(Photo::getId)
+        if (Objects.nonNull(product.getPictures())) {
+             photosIds = product.getPictures().stream()
+                    .map(Picture::getId)
                      .collect(Collectors.toList());
         }
 

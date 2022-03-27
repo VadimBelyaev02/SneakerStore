@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "pictures")
-public class Photo {
+public class Picture {
 
     @Id
     @GeneratedValue(generator = "UUID")
