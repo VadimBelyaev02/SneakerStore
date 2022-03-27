@@ -16,4 +16,6 @@ public interface CommentService {
     CommentDto update(CommentDto commentDto);
 
     void deleteById(UUID id);
+
+    List<CommentDto> getAllByProductId(UUID productId);
 }

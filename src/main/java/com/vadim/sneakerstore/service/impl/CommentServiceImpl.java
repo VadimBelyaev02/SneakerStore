@@ -71,4 +71,12 @@ public class CommentServiceImpl implements CommentService {
         }
         repository.deleteById(id);
     }
+
+    @Override
+    @Transactional
+    public List<CommentDto> getAllByProductId(UUID productId) {
+        return repository.findAllByProductId(productId).stream()
+                .map(converter::convertToDto)
+                .collect(Collectors.toList());
+    }
 }

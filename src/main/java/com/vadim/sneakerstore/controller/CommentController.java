@@ -18,51 +18,57 @@ import java.util.UUID;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Comment Controller", description = "Comment CRUD operations")
 @RestController
-@RequestMapping("/api/comments")
+@RequestMapping("/api")
 public class CommentController {
 
-    private final CommentService commentService;
+    private final CommentService service;
 
     public CommentController(CommentService commentService) {
-        this.commentService = commentService;
+        this.service = commentService;
     }
 
     @Operation(description = "Get all comments")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<CommentDto> getAllComments() {
-        return commentService.getAll();
+        return service.getAll();
     }
 
     @Operation(description = "Get a comment by its id")
-    @GetMapping("/{id}")
+    @GetMapping("/comments/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CommentDto getComment(@Parameter(description = "Id of needed comment")
                                  @PathVariable("id") UUID id) {
-        return commentService.getById(id);
+        return service.getById(id);
+    }
+
+    @GetMapping("/products/{productId}/comments")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CommentDto> getAllProductComments(@PathVariable("productId") UUID productId) {
+        return service.getAllByProductId(productId);
     }
 
     @Operation(description = "Add a new comment")
-    @PostMapping
+    @PostMapping("/comments")
     @ResponseStatus(HttpStatus.CREATED)
     public CommentDto postComment(@Parameter(description = "Object that will be saved")
                                   @Valid @RequestBody CommentDto commentDto) {
-        return commentService.save(commentDto);
+        return service.save(commentDto);
     }
 
     @Operation(description = "Update existed comment")
-    @PutMapping
+    @PutMapping("/comments")
     @ResponseStatus(HttpStatus.OK)
     public CommentDto putComment(@Parameter(description = "Contains updated fields of existed comment")
                                  @Valid @RequestBody CommentDto commentDto) {
-        return commentService.update(commentDto);
+        return service.update(commentDto);
     }
 
     @Operation(description = "Delete a comment by its id")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/comments/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteComment(@Parameter(description = "Id of object that will be deleted")
                               @PathVariable("id") UUID id) {
-        commentService.deleteById(id);
+        service.deleteById(id);
     }
 }

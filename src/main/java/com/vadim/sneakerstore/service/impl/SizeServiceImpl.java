@@ -70,4 +70,12 @@ public class SizeServiceImpl implements SizeService {
         }
         repository.deleteById(id);
     }
+
+    @Override
+    @Transactional
+    public List<SizeDto> getAllByProductId(UUID productId) {
+        return repository.findAllByProductId(productId).stream()
+                .map(converter::convertToDto)
+                .collect(Collectors.toList());
+    }
 }

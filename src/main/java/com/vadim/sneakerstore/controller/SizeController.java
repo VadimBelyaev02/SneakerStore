@@ -3,6 +3,7 @@ package com.vadim.sneakerstore.controller;
 import com.vadim.sneakerstore.dto.SizeDto;
 import com.vadim.sneakerstore.service.SizeService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,14 @@ public class SizeController {
     @ResponseStatus(HttpStatus.OK)
     public List<SizeDto> getAllSizes() {
         return service.getAll();
+    }
+
+    @Operation(description = "Get all product's sizes")
+    @ApiResponse(description = "All product's sizes are found")
+    @GetMapping("/products/{productId}/sizes")
+    @ResponseStatus(HttpStatus.OK)
+    public List<SizeDto> getAllProductSizes(@PathVariable("productId") UUID productId) {
+        return service.getAllByProductId(productId);
     }
 
     @Operation(description = "Add a new size")

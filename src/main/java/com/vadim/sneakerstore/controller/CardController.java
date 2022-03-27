@@ -4,6 +4,7 @@ import com.vadim.sneakerstore.dto.CardDto;
 import com.vadim.sneakerstore.service.CardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import liquibase.pro.packaged.O;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,7 @@ public class CardController {
     }
 
     @Operation(description = "Add a new card")
+    @ApiResponse(description = "Card is created")
     @PostMapping("/cards")
     @ResponseStatus(HttpStatus.CREATED)
     public CardDto postCard(@Parameter(description = "Contains info about card")
@@ -34,6 +36,7 @@ public class CardController {
     }
 
     @Operation(description = "Delete a card by id")
+    @ApiResponse(description = "Card is deleted")
     @DeleteMapping("/cards/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCard(@Parameter(description = "Id of deleted card")
@@ -42,6 +45,7 @@ public class CardController {
     }
 
     @Operation(description = "Get customer's cards by his id")
+    @ApiResponse(description = "All customer's cards are found")
     @GetMapping("/customers/{customerId}/cards")
     @ResponseStatus(HttpStatus.OK)
     public List<CardDto> getCustomerCards(@Parameter(description = "Id of a customer that has this card")
@@ -50,6 +54,7 @@ public class CardController {
     }
 
     @Operation(description = "Update existed card")
+    @ApiResponse(description = "Card is updated")
     @PutMapping("/cards")
     @ResponseStatus(HttpStatus.OK)
     public CardDto putCard(@Parameter(description = "Contains info about card")
