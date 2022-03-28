@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PhotoDto {
+public class PictureDto {
 
     @NotNull
     private UUID id;

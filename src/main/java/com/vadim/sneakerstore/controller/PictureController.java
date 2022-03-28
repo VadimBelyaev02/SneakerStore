@@ -1,6 +1,6 @@
 package com.vadim.sneakerstore.controller;
 
-import com.vadim.sneakerstore.dto.PhotoDto;
+import com.vadim.sneakerstore.dto.PictureDto;
 import com.vadim.sneakerstore.service.PictureService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,7 +28,7 @@ public class PictureController {
     @ApiResponse(description = "Picture is found")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public PhotoDto getById(@PathVariable("id") UUID id) {
+    public PictureDto getById(@PathVariable("id") UUID id) {
         return service.getById(id);
     }
 
@@ -36,7 +36,7 @@ public class PictureController {
     @ApiResponse(description = "All pictures are found")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<PhotoDto> getAllPhotos() {
+    public List<PictureDto> getAllPhotos() {
         return service.getAll();
     }
 
@@ -44,16 +44,16 @@ public class PictureController {
     @ApiResponse(description = "Picture is added")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PhotoDto postPhotos(@Valid @RequestBody PhotoDto photoDto) {
-        return service.save(photoDto);
+    public PictureDto postPhotos(@Valid @RequestBody PictureDto pictureDto) {
+        return service.save(pictureDto);
     }
 
     @Operation(description = "Update existed picture")
     @ApiResponse(description = "Picture is successfully updated")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public PhotoDto putPhotos(@Valid @RequestBody PhotoDto photoDto) {
-        return service.update(photoDto);
+    public PictureDto putPhotos(@Valid @RequestBody PictureDto pictureDto) {
+        return service.update(pictureDto);
     }
 
     @Operation(description = "Delete picture by id")

@@ -1,11 +1,11 @@
 package com.vadim.sneakerstore.service.impl;
 
-import com.vadim.sneakerstore.dto.PhotoDto;
-import com.vadim.sneakerstore.dto.converter.PhotoConverter;
+import com.vadim.sneakerstore.dto.PictureDto;
+import com.vadim.sneakerstore.dto.converter.PictureConverter;
 import com.vadim.sneakerstore.entity.Picture;
 import com.vadim.sneakerstore.exception.AlreadyExistsException;
 import com.vadim.sneakerstore.exception.NotFoundException;
-import com.vadim.sneakerstore.repository.PhotoRepository;
+import com.vadim.sneakerstore.repository.PictureRepository;
 import com.vadim.sneakerstore.service.PictureService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +17,10 @@ import java.util.stream.Collectors;
 @Service
 public class PictureServiceImpl implements PictureService {
 
-    private final PhotoRepository repository;
-    private final PhotoConverter converter;
+    private final PictureRepository repository;
+    private final PictureConverter converter;
 
-    public PictureServiceImpl(PhotoRepository repository, PhotoConverter converter) {
+    public PictureServiceImpl(PictureRepository repository, PictureConverter converter) {
         this.repository = repository;
         this.converter = converter;
     }
@@ -28,7 +28,7 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     @Transactional
-    public PhotoDto getById(UUID id) {
+    public PictureDto getById(UUID id) {
         Picture picture = repository.findById(id).orElseThrow(() ->
                 new NotFoundException("Photo with id = " + id + " is not found")
         );
@@ -37,7 +37,7 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     @Transactional
-    public List<PhotoDto> getAll() {
+    public List<PictureDto> getAll() {
         return repository.findAll().stream()
                 .map(converter::convertToDto)
                 .collect(Collectors.toList());
@@ -45,21 +45,21 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     @Transactional
-    public PhotoDto save(PhotoDto photoDto) {
-        if (repository.existsById(photoDto.getId())) {
-            throw new AlreadyExistsException("Photo with id = " + photoDto.getId() + " already exists");
+    public PictureDto save(PictureDto pictureDto) {
+        if (repository.existsById(pictureDto.getId())) {
+            throw new AlreadyExistsException("Photo with id = " + pictureDto.getId() + " already exists");
         }
-        Picture picture = repository.save(converter.convertToEntity(photoDto));
+        Picture picture = repository.save(converter.convertToEntity(pictureDto));
         return converter.convertToDto(picture);
     }
 
     @Override
     @Transactional
-    public PhotoDto update(PhotoDto photoDto) {
-        if (!repository.existsById(photoDto.getId())) {
-            throw new NotFoundException("Photo with id = " + photoDto.getId() + " is not found");
+    public PictureDto update(PictureDto pictureDto) {
+        if (!repository.existsById(pictureDto.getId())) {
+            throw new NotFoundException("Photo with id = " + pictureDto.getId() + " is not found");
         }
-        Picture picture = repository.save(converter.convertToEntity(photoDto));
+        Picture picture = repository.save(converter.convertToEntity(pictureDto));
         return converter.convertToDto(picture);
     }
 

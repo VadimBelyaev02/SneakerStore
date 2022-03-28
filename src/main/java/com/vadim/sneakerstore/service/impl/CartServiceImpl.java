@@ -28,12 +28,11 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional
     public CartDto getById(UUID customerId, UUID productId) {
-//        Cart cart = repository.findByCustomerIdAndProductId(customerId, productId).orElseThrow(() ->
-//                new NotFoundException("Cart with customer's id = " + customerId + " and product's id = " +
-//                        productId + " is not found")
-//        );
-//        return converter.convertToDto(cart);
-        return null;
+        Cart cart = repository.findByCustomerIdAndProductId(customerId, productId).orElseThrow(() ->
+                new NotFoundException("Cart with customer's id = " + customerId + " and product's id = " +
+                        productId + " is not found")
+        );
+        return converter.convertToDto(cart);
     }
 
     @Override
@@ -47,43 +46,40 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional
     public CartDto save(CartDto cartDto) {
-//        if (repository.existsByCustomerIdAndProductId(cartDto.getCustomerId(), cartDto.getProductId())) {
-//            throw new AlreadyExistsException("Cart with customer's id = " + cartDto.getCustomerId() +
-//                    " and product's id = " + cartDto.getCustomerId() + " already exists");
-//        }
-//        Cart cart = repository.save(converter.convertToEntity(cartDto));
-//        return converter.convertToDto(cart);
-        return null;
+        if (repository.existsByCustomerIdAndProductId(cartDto.getCustomerId(), cartDto.getProductId())) {
+            throw new AlreadyExistsException("Cart with customer's id = " + cartDto.getCustomerId() +
+                    " and product's id = " + cartDto.getCustomerId() + " already exists");
+        }
+        Cart cart = repository.save(converter.convertToEntity(cartDto));
+        return converter.convertToDto(cart);
     }
 
     @Override
     @Transactional
     public CartDto update(CartDto cartDto) {
-//        if (!repository.existsByCustomerIdAndProductId(cartDto.getCustomerId(), cartDto.getProductId())) {
-//            throw new NotFoundException("Cart with customer's id = " + cartDto.getCustomerId() +
-//                    " and product's id = " + cartDto.getProductId() + " is not found");
-//        }
-//        Cart cart = repository.save(converter.convertToEntity(cartDto));
-//        return converter.convertToDto(cart);
-        return null;
+        if (!repository.existsByCustomerIdAndProductId(cartDto.getCustomerId(), cartDto.getProductId())) {
+            throw new NotFoundException("Cart with customer's id = " + cartDto.getCustomerId() +
+                    " and product's id = " + cartDto.getProductId() + " is not found");
+        }
+        Cart cart = repository.save(converter.convertToEntity(cartDto));
+        return converter.convertToDto(cart);
     }
 
     @Override
     @Transactional
     public void deleteById(UUID customerId, UUID productId) {
-//        if (!repository.existsByCustomerIdAndProductId(customerId, productId)) {
-//            throw new NotFoundException("Cart with customer's id = " + customerId +
-//                    " and product's id = " + productId + " is not found");
-//        }
-//        repository.deleteByCustomerIdAndProductId(customerId, productId);
+        if (!repository.existsByCustomerIdAndProductId(customerId, productId)) {
+            throw new NotFoundException("Cart with customer's id = " + customerId +
+                    " and product's id = " + productId + " is not found");
+        }
+        repository.deleteByCustomerIdAndProductId(customerId, productId);
     }
 
     @Override
     @Transactional
     public List<CartDto> getByCustomerId(UUID customerId) {
-//        return repository.findAllByCustomerId(customerId).stream()
-//                .map(converter::convertToDto)
-//                .collect(Collectors.toList());
-        return null;
+        return repository.findAllByCustomerId(customerId).stream()
+                .map(converter::convertToDto)
+                .collect(Collectors.toList());
     }
 }

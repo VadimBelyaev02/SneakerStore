@@ -1,19 +1,19 @@
 package com.vadim.sneakerstore.service;
 
-import com.vadim.sneakerstore.dto.PhotoDto;
+import com.vadim.sneakerstore.dto.PictureDto;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface PictureService {
 
-    PhotoDto getById(UUID id);
+    PictureDto getById(UUID id);
 
-    List<PhotoDto> getAll();
+    List<PictureDto> getAll();
 
-    PhotoDto save(PhotoDto photoDto);
+    PictureDto save(PictureDto pictureDto);
 
-    PhotoDto update(PhotoDto photoDto);
+    PictureDto update(PictureDto pictureDto);
 
     void deleteById(UUID id);
 }
