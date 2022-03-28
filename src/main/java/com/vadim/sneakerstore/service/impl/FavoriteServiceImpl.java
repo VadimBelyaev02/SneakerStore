@@ -60,10 +60,10 @@ public class FavoriteServiceImpl implements FavoriteService {
     @Override
     @Transactional
     public FavoriteDto save(FavoriteDto favoriteDto) {
-        if (repository.existsByCustomerIdAndProductId(favoriteDto.getCustomerId(), favoriteDto.getProductId())) {
-            throw new AlreadyExistsException("Favorite with customer id = " + favoriteDto.getCustomerId()
-            + " and product id = " + favoriteDto.getProductId() + " already exists");
-        }
+     //   if (repository.existsByCustomerIdAndProductId(favoriteDto.getCustomerId(), favoriteDto.getProductId())) {
+     //       throw new AlreadyExistsException("Favorite with customer id = " + favoriteDto.getCustomerId()
+     //       + " and product id = " + favoriteDto.getProductId() + " already exists");
+      //  }
         Favorite favorite = repository.save(converter.convertToEntity(favoriteDto));
         return converter.convertToDto(favorite);
  //       return null;
@@ -72,10 +72,10 @@ public class FavoriteServiceImpl implements FavoriteService {
     @Override
     @Transactional
     public FavoriteDto update(FavoriteDto favoriteDto) {
-        if (!repository.existsByCustomerIdAndProductId(favoriteDto.getCustomerId(), favoriteDto.getProductId())) {
-            throw new NotFoundException("Favorite with customer id = " + favoriteDto.getCustomerId()
-                    + " and product id = " + favoriteDto.getProductId() + " is not founa");
-        }
+    //    if (!repository.existsByCustomerIdAndProductId(favoriteDto.getCustomerId(), favoriteDto.getProductId())) {
+   //         throw new NotFoundException("Favorite with customer id = " + favoriteDto.getCustomerId()
+    //                + " and product id = " + favoriteDto.getProductId() + " is not founa");
+    //    }
         Favorite favorite = repository.save(converter.convertToEntity(favoriteDto));
         return converter.convertToDto(favorite);
        // return null;
@@ -84,10 +84,10 @@ public class FavoriteServiceImpl implements FavoriteService {
     @Override
     @Transactional
     public void deleteById(UUID customerId, UUID productId) {
-        if (!repository.existsByCustomerIdAndProductId(customerId, productId)) {
-            throw new NotFoundException("Favorite with customer id = " + customerId
-                    + " and product id = " + productId + " is not founa");
-        }
+   //     if (!repository.existsByCustomerIdAndProductId(customerId, productId)) {
+   //         throw new NotFoundException("Favorite with customer id = " + customerId
+   //                 + " and product id = " + productId + " is not founa");
+   //     }
         repository.deleteByCustomerIdAndProductId(customerId, productId);
     }
 
