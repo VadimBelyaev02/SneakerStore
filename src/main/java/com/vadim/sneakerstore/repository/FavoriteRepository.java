@@ -14,8 +14,9 @@ public interface FavoriteRepository extends JpaRepository<Favorite, ProductCusto
     @Query(nativeQuery = true, value = "SELECT * FROM favorites WHERE customer_id = :customerId")
     List<Favorite> findAllByCustomerId(UUID customerId);
 
-  //  @Query(nativeQuery = true, value = "SELECT * ")
-  //  boolean existsByCustomerIdAndProductId(UUID customerId, UUID productId);
+    @Query(nativeQuery = true, value = "SELECT EXISTS(SELECT * FROM favorites WHERE " +
+            "customer_id = :customerId AND product_id = :productId)")
+    boolean existsByCustomerIdAndProductId(UUID customerId, UUID productId);
 
     @Query(nativeQuery = true, value = "SELECT * FROM favorites WHERE customer_id = :customerId" +
             " AND product_id = :productId")
