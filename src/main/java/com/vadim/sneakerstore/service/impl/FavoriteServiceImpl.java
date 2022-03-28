@@ -51,10 +51,10 @@ public class FavoriteServiceImpl implements FavoriteService {
     @Override
     @Transactional
     public List<FavoriteDto> getByCustomerId(UUID customerId) {
-//        return repository.findAllByCustomerId(customerId).stream()
-//                .map(converter::convertToDto)
-//                .collect(Collectors.toList());
-        return null;
+        return repository.findAllByCustomerId(customerId).stream()
+                .map(converter::convertToDto)
+                .collect(Collectors.toList());
+    //    return null;
     }
 
     @Override
