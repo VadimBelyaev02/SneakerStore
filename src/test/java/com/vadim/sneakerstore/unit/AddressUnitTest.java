@@ -32,7 +32,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.UUID;
 
-@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class AddressUnitTest {
 

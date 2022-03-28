@@ -1,6 +1,5 @@
 package com.vadim.sneakerstore.integration;
 
-import com.vadim.sneakerstore.controller.CustomerController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +12,14 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.ServletContext;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CustomerIntegrationTest {
+public class AddressIntegrationTest {
 
-    private final String ENDPOINT = "/api/customers";
+    private final String ENDPOINT = "/api/addresses";
 
     @Autowired
     private WebApplicationContext applicationContext;
@@ -42,5 +39,4 @@ public class CustomerIntegrationTest {
         assertTrue(servletContext instanceof MockServletContext);
         assertNotNull(applicationContext.getBean("parallelogramController"));
     }
-
 }
