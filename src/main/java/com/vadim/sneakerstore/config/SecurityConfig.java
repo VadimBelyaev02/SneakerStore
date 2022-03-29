@@ -55,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {//} implements
                 .antMatchers(HttpMethod.GET, "/api/photo/**").authenticated()
                 .antMatchers(HttpMethod.GET, "/api/sizes/**").authenticated()
                 .antMatchers(HttpMethod.GET, "/api/comments").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/addresses").authenticated()
 
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/register").permitAll()
@@ -68,6 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {//} implements
                 .antMatchers(HttpMethod.POST, "/api/products").hasAuthority(Permission.WRITE.getPermission())
             //    .antMatchers(HttpMethod.POST, "/api/orders").hasAuthority(Permission.READ.getPermission())
                 .antMatchers(HttpMethod.POST, "/api/orders").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/addresses").authenticated()
 
                 .antMatchers(HttpMethod.PUT, "/api/change_password").authenticated()
                 .antMatchers(HttpMethod.PUT, "/api/cards").hasAuthority(Permission.READ.getPermission())
@@ -77,9 +79,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {//} implements
                 .antMatchers(HttpMethod.PUT, "/api/photos").authenticated()
                 .antMatchers(HttpMethod.PUT, "/api/products").hasAuthority(Permission.UPDATE.getPermission())
                 .antMatchers(HttpMethod.PUT, "/api/sizes").hasAuthority(Permission.UPDATE.getPermission())
+                .antMatchers(HttpMethod.PUT, "/api/addresses").authenticated()
 
-
-                .antMatchers(HttpMethod.PUT, "/api/**").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/api/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/oauth2/authorization/google").permitAll()
 
