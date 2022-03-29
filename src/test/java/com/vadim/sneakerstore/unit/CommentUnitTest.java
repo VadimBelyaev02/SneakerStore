@@ -144,7 +144,7 @@ public class CommentUnitTest {
     }
 
     @Test
-    public void shouldThrowNotFoundExceptionWhildUpdating() {
+    public void shouldThrowNotFoundExceptionWhileUpdating() {
 
     }
 
