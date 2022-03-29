@@ -145,57 +145,48 @@ public class CommentUnitTest {
 
     @Test
     public void shouldThrowNotFoundExceptionWhileUpdating() {
+        UUID id = UUID.randomUUID();
+        Comment comment = new Comment();
+        CommentDto commentDto = new CommentDto();
+        commentDto.setId(id);
 
+        when(repository.existsById(id)).thenReturn(false);
+
+        assertThrows(NotFoundException.class, () -> service.update(commentDto));
+
+        verify(repository, only()).existsById(id);
+        verify(converter, never()).convertToDto(comment);
+        verify(converter, never()).convertToEntity(commentDto);
     }
 
     @Test
     public void shouldThrowNotFoundExceptingWhileDeleting() {
+        UUID id = UUID.randomUUID();
 
+        when(repository.existsById(id)).thenReturn(false);
+
+        assertThrows(NotFoundException.class, () -> service.deleteById(id));
+
+        verify(repository, only()).existsById(id);
+        verify(repository, never()).deleteById(id);
     }
 
-    /*
-    public List<CommentDto> getAll() {
-        return repository.findAll().stream()
-                .map(converter::convertToDto)
+    @Test
+    public void shouldReturnListOfSizeDtosByProductId() {
+        UUID productId = UUID.randomUUID();
+        Comment comment = new Comment();
+        CommentDto commentDto = new CommentDto();
+        List<Comment> comments = Stream.of(comment, comment, comment, comment)
                 .collect(Collectors.toList());
-    }
-
-   public CommentDto getById(UUID id) {
-        Comment comment = repository.findById(id).orElseThrow(() ->
-                new NotFoundException("Comment with id=" + id + " is not found")
-        );
-        return converter.convertToDto(comment);
-    }
-
-    public CommentDto save(CommentDto commentDto) {
-        if (repository.existsById(commentDto.getId())) {
-            throw new AlreadyExistsException("Comment with id = " + commentDto.getId() + " already exists");
-        }
-        Comment comment = repository.save(converter.convertToEntity(commentDto));
-        return converter.convertToDto(comment);
-    }
-
-    public CommentDto update(CommentDto commentDto) {
-        if (Objects.isNull(commentDto.getId()) || !repository.existsById(commentDto.getId())) {
-            throw new NotFoundException("Comment with id = " + commentDto.getId() + " is not found");
-        }
-        Comment comment = repository.save(converter.convertToEntity(commentDto));
-        return converter.convertToDto(comment);
-    }
-
-    public void deleteById(UUID id) {
-        if (!repository.existsById(id)) {
-            throw new NotFoundException("Comment with id=" + id + " is not found");
-        }
-        repository.deleteById(id);
-    }
-
-    @Override
-    @Transactional
-    public List<CommentDto> getAllByProductId(UUID productId) {
-        return repository.findAllByProductId(productId).stream()
-                .map(converter::convertToDto)
+        List<CommentDto> commentDtos = Stream.of(commentDto, commentDto, commentDto, commentDto)
                 .collect(Collectors.toList());
+
+        when(repository.findAllByProductId(productId)).thenReturn(comments);
+        when(converter.convertToDto(comment)).thenReturn(commentDto);
+
+        assertEquals(service.getAllByProductId(productId), commentDtos);
+
+        verify(repository, only()).findAllByProductId(productId);
+        verify(converter, times(4)).convertToDto(comment);
     }
-     */
 }
