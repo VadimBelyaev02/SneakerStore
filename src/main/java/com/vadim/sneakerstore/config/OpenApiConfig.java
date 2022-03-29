@@ -22,7 +22,7 @@ class OpenApiConfig implements WebMvcConfigurer {
     public GroupedOpenApi publicUserApi() {
         return GroupedOpenApi.builder()
                 .group("")
-                .pathsToMatch("/customers/**")
+                .pathsToMatch("/products/**")
                 .build();
     }
 

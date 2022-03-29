@@ -82,6 +82,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {//} implements
                 .antMatchers(HttpMethod.PUT, "/api/addresses").authenticated()
 
                 .antMatchers(HttpMethod.DELETE, "/api/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/h2-console/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/h2-console/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/oauth2/authorization/google").permitAll()
 
                 .anyRequest()
