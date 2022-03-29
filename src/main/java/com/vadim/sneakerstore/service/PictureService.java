@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface PictureService {
 
-    PictureDto getById(UUID id);
+    PictureDto getById(String id);
 
     List<PictureDto> getAll();
 
@@ -15,5 +15,5 @@ public interface PictureService {
 
     PictureDto update(PictureDto pictureDto);
 
-    void deleteById(UUID id);
+    void deleteById(String id);
 }

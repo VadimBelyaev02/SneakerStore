@@ -1,8 +1,10 @@
 package com.vadim.sneakerstore.unit;
 
 import com.vadim.sneakerstore.dto.AddressDto;
+import com.vadim.sneakerstore.dto.SizeDto;
 import com.vadim.sneakerstore.dto.converter.AddressConverter;
 import com.vadim.sneakerstore.entity.Address;
+import com.vadim.sneakerstore.entity.Size;
 import com.vadim.sneakerstore.exception.AlreadyExistsException;
 import com.vadim.sneakerstore.exception.NotFoundException;
 import com.vadim.sneakerstore.repository.AddressRepository;
@@ -31,6 +33,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @ExtendWith(MockitoExtension.class)
 public class AddressUnitTest {
@@ -74,21 +78,16 @@ public class AddressUnitTest {
 
     @Test
     public void shouldReturnAllAddressDtos() {
-        UUID id = UUID.randomUUID();
-        List<Address> addresses = new ArrayList<>();
-        List<AddressDto> addressDtos = new ArrayList<>();
         Address address = new Address();
         AddressDto addressDto = new AddressDto();
+        UUID id = UUID.randomUUID();
+        List<Address> addresses = Stream.of(address, address, address)
+                .collect(Collectors.toList());
+        List<AddressDto> addressDtos = Stream.of(addressDto, addressDto, addressDto)
+                .collect(Collectors.toList());
+
         address.setId(id);
         addressDto.setId(id);
-
-        addresses.add(address);
-        addresses.add(address);
-        addresses.add(address);
-
-        addressDtos.add(addressDto);
-        addressDtos.add(addressDto);
-        addressDtos.add(addressDto);
 
         when(repository.findAll()).thenReturn(addresses);
         when(converter.convertToDto(address)).thenReturn(addressDto);
@@ -100,13 +99,33 @@ public class AddressUnitTest {
     }
 
     @Test
-    public void shouldReturnEmptyList() {
+    public void shouldReturnEmptyListOfAddressDtos() {
+        when(repository.findAll()).thenReturn(new ArrayList<>());
 
+        assertEquals(service.getAll(), new ArrayList<>());
+
+        verify(repository, only()).findAll();
+        verify(converter, never()).convertToDto(new Address());
     }
 
     @Test
     public void shouldReturnSavedAddress() {
+        UUID id = UUID.randomUUID();
+        Address address = new Address();
+        AddressDto addressDto = new AddressDto();
+        addressDto.setId(id);
 
+        when(repository.existsById(id)).thenReturn(false);
+        when(repository.save(address)).thenReturn(address);
+        when(converter.convertToDto(address)).thenReturn(addressDto);
+        when(converter.convertToEntity(addressDto)).thenReturn(address);
+
+        assertEquals(service.save(addressDto), addressDto);
+
+        verify(repository, times(1)).save(address);
+        verify(repository, times(1)).existsById(id);
+        verify(converter, times(1)).convertToDto(address);
+        verify(converter, times(1)).convertToEntity(addressDto);
     }
 
     @Test
@@ -130,6 +149,7 @@ public class AddressUnitTest {
         UUID id = UUID.randomUUID();
         Address address = new Address();
         AddressDto addressDto = new AddressDto();
+        addressDto.setId(id);
 
         when(repository.existsById(id)).thenReturn(false);
 

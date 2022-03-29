@@ -61,7 +61,7 @@ public class AddressServiceImpl implements AddressService {
 //        }
 
 
-            // all three fields must be primary key
+            // all three fields may be must be primary key
         if (!repository.existsByCityAndCountryAndStreet(addressDto.getCity(), addressDto.getCountry(), addressDto.getStreet())) {
             throw new NotFoundException("Address with city = " + addressDto.getCity() + " and country = "
                     + addressDto.getCountry() + " and street =" + addressDto.getStreet() + " is not found");

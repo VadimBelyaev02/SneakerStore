@@ -17,9 +17,6 @@ import java.util.UUID;
 @Builder
 public class PictureDto {
 
-    @NotNull
-    private UUID id;
-
     @Schema(description = "Link of a photo of product")
     @NotBlank
     private String link;

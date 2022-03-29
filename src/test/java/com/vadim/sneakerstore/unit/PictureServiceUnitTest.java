@@ -45,7 +45,7 @@ public class PictureServiceUnitTest {
 
     @Test
     public void shouldReturnPictureById() {
-        UUID id = UUID.randomUUID();
+        String id = UUID.randomUUID().toString();
         Picture picture = new Picture();
         PictureDto pictureDto = new PictureDto();
 

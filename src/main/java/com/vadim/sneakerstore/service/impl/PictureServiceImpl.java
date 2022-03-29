@@ -28,7 +28,7 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     @Transactional
-    public PictureDto getById(UUID id) {
+    public PictureDto getById(String id) {
         Picture picture = repository.findById(id).orElseThrow(() ->
                 new NotFoundException("Photo with id = " + id + " is not found")
         );
@@ -46,8 +46,8 @@ public class PictureServiceImpl implements PictureService {
     @Override
     @Transactional
     public PictureDto save(PictureDto pictureDto) {
-        if (repository.existsById(pictureDto.getId())) {
-            throw new AlreadyExistsException("Photo with id = " + pictureDto.getId() + " already exists");
+        if (repository.existsById(pictureDto.getLink())) {
+            throw new AlreadyExistsException("Photo with id = " + pictureDto.getLink() + " already exists");
         }
         Picture picture = repository.save(converter.convertToEntity(pictureDto));
         return converter.convertToDto(picture);
@@ -56,8 +56,8 @@ public class PictureServiceImpl implements PictureService {
     @Override
     @Transactional
     public PictureDto update(PictureDto pictureDto) {
-        if (!repository.existsById(pictureDto.getId())) {
-            throw new NotFoundException("Photo with id = " + pictureDto.getId() + " is not found");
+        if (!repository.existsById(pictureDto.getLink())) {
+            throw new NotFoundException("Photo with link = " + pictureDto.getLink() + " is not found");
         }
         Picture picture = repository.save(converter.convertToEntity(pictureDto));
         return converter.convertToDto(picture);
@@ -65,7 +65,7 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     @Transactional
-    public void deleteById(UUID id) {
+    public void deleteById(String id) {
         if (!repository.existsById(id)) {
             throw new NotFoundException("Photo with id = " + id + " is not found");
         }

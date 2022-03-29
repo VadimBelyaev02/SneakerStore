@@ -3,6 +3,8 @@ package com.vadim.sneakerstore.unit;
 import com.vadim.sneakerstore.dto.SizeDto;
 import com.vadim.sneakerstore.dto.converter.SizeConverter;
 import com.vadim.sneakerstore.entity.Size;
+import com.vadim.sneakerstore.exception.AlreadyExistsException;
+import com.vadim.sneakerstore.exception.NotFoundException;
 import com.vadim.sneakerstore.repository.SizeRepository;
 import com.vadim.sneakerstore.service.impl.SizeServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -10,34 +12,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import com.vadim.sneakerstore.entity.Customer;
-import com.vadim.sneakerstore.exception.AlreadyExistsException;
-import com.vadim.sneakerstore.exception.NotFoundException;
-import com.vadim.sneakerstore.repository.CustomerRepository;
-import com.vadim.sneakerstore.service.impl.CustomerServiceImpl;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class SizeUnitTest {
@@ -109,6 +94,7 @@ public class SizeUnitTest {
         UUID id = UUID.randomUUID();
         Size size = new Size();
         SizeDto sizeDto = new SizeDto();
+        sizeDto.setId(id);
 
         when(repository.existsById(id)).thenReturn(false);
         when(repository.save(size)).thenReturn(size);
@@ -123,34 +109,79 @@ public class SizeUnitTest {
         verify(converter, times(1)).convertToEntity(sizeDto);
     }
 
-    /*
-    public SizeDto save(SizeDto sizeDto) {
-        if (repository.existsById(sizeDto.getId())) {
-            throw new AlreadyExistsException("Size with id = " + sizeDto.getId() + " already exists");
-        }
-        Size size = repository.save(converter.convertToEntity(sizeDto));
-        return converter.convertToDto(size);
+    @Test
+    public void shouldThrowsAlreadyExistsExceptionWhileSaving() {
+        UUID id = UUID.randomUUID();
+        SizeDto sizeDto = new SizeDto();
+        sizeDto.setId(id);
+
+        when(repository.existsById(id)).thenReturn(true);
+
+        assertThrows(AlreadyExistsException.class, () -> service.save(sizeDto));
+
+        verify(repository, only()).existsById(id);
+        verify(converter, never()).convertToEntity(sizeDto);
+        verify(converter, never()).convertToDto(new Size());
     }
 
-    public SizeDto update(SizeDto sizeDto) {
-        if (!repository.existsById(sizeDto.getId())) {
-            throw new NotFoundException("Size with id = " + sizeDto.getId() + " is not found");
-        }
-        Size size = repository.save(converter.convertToEntity(sizeDto));
-        return converter.convertToDto(size);
+    @Test
+    public void shouldReturnUpdatedSizeDto() {
+//        UUID id = UUID.randomUUID();
+//        Size size = new Size();
+//        SizeDto sizeDto = new SizeDto();
+//
+//        when(repository.existsById(id)).thenReturn(true);
+//        when(converter.convertToEntity(sizeDto)).thenReturn(size);
+//        when(converter.convertToDto(size)).thenReturn(sizeDto);
+//
+//
+//        assertEquals(service.update(sizeDto), sizeDto);
+//
+//        verify(repository, )
     }
 
-   public void deleteById(UUID id) {
-        if (!repository.existsById(id)) {
-            throw new NotFoundException("Size with id = " + id + " is not found");
-        }
-        repository.deleteById(id);
+    @Test
+    public void shouldThrowsNotFoundExceptionWhileUpdating() {
+        UUID id = UUID.randomUUID();
+        Size size = new Size();
+        SizeDto sizeDto = new SizeDto();
+        sizeDto.setId(id);
+
+        when(repository.existsById(id)).thenReturn(false);
+
+        assertThrows(NotFoundException.class, () -> service.update(sizeDto));
+
+        verify(repository, only()).existsById(id);
+        verify(converter, never()).convertToDto(size);
+        verify(converter, never()).convertToEntity(sizeDto);
     }
 
-   public List<SizeDto> getAllByProductId(UUID productId) {
-        return repository.findAllByProductId(productId).stream()
-                .map(converter::convertToDto)
-                .collect(Collectors.toList());
+    @Test
+    public void shouldThrowsNotFoundExceptionWhileDeleting() {
+        UUID id = UUID.randomUUID();
+
+        when(repository.existsById(id)).thenReturn(false);
+
+        assertThrows(NotFoundException.class, () -> service.deleteById(id));
+
+        verify(repository, only()).existsById(id);
+        verify(repository, never()).deleteById(id);
     }
-     */
+
+    @Test
+    public void shouldReturnListOfSizeDtosByProductId() {
+        UUID productId = UUID.randomUUID();
+        Size size = new Size();
+        SizeDto sizeDto = new SizeDto();
+        List<Size> sizes = Stream.of(size, size, size, size).collect(Collectors.toList());
+        List<SizeDto> sizeDtos = Stream.of(sizeDto, sizeDto, sizeDto, sizeDto).collect(Collectors.toList());
+
+        when(repository.findAllByProductId(productId)).thenReturn(sizes);
+        when(converter.convertToDto(size)).thenReturn(sizeDto);
+
+        assertEquals(service.getAllByProductId(productId), sizeDtos);
+
+        verify(repository, only()).findAllByProductId(productId);
+        verify(converter, times(4)).convertToDto(size);
+    }
 }

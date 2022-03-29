@@ -28,7 +28,7 @@ public class PictureController {
     @ApiResponse(description = "Picture is found")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public PictureDto getById(@PathVariable("id") UUID id) {
+    public PictureDto getById(@PathVariable("id") String id) {
         return service.getById(id);
     }
 
@@ -58,9 +58,9 @@ public class PictureController {
 
     @Operation(description = "Delete picture by id")
     @ApiResponse(description = "Picture is successfully deleted")
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePhotos(@PathVariable("id") UUID id) {
+    public void deletePhotos(@PathVariable("id") String id) {
         service.deleteById(id);
     }
 }
