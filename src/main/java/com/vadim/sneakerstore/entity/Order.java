@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -29,7 +30,8 @@ public class Order {
     @Column(name = "status")
     private String status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
@@ -38,10 +40,4 @@ public class Order {
 
     @Column(name = "payment")
     private String payment;
-
-    @Column(name = "amount")
-    private Integer amount;
-
-    @Column(name = "group_id")
-    private UUID groupId;
 }

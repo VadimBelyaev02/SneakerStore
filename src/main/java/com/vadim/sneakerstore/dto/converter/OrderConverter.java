@@ -38,9 +38,7 @@ public class OrderConverter {
                 .status(status)
                 .product(product)
                 .payment(payment)
-                .groupId(groupId)
                 .orderedDate(orderedDate)
-                .amount(amount)
                 .build();
 
     }
@@ -50,8 +48,6 @@ public class OrderConverter {
         final LocalDate date = order.getOrderedDate();
         final String status = order.getStatus();
         final String payment = order.getPayment();
-        final Integer amount = order.getAmount();
-        final UUID groupId = order.getGroupId();
         final UUID productId = order.getProduct().getId();
 
 
@@ -61,8 +57,6 @@ public class OrderConverter {
                 .status(status)
                 .productId(productId)
                 .payment(payment)
-                .groupId(groupId)
-                .amount(amount)
                 .build();
     }
 }

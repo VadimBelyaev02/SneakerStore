@@ -48,18 +48,19 @@ public class Customer {
     @Column(name = "avatar")
     private String avatar;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     @JoinTable(name = "addresses_customers",
             joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "address_id", referencedColumnName = "id"))
     @ToString.Exclude
     private List<Address> addresses;
 
-    @OneToMany
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<Order> orders;
 
-    @OneToOne(mappedBy = "customer")
+    @OneToOne(mappedBy = "customer", fetch = FetchType.LAZY)
     private Confirmation confirmation;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -69,11 +70,11 @@ public class Customer {
     @ToString.Exclude
     private List<Card> cards;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<Comment> comments;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST})
     @JoinTable(name = "favorites",
             joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
@@ -81,7 +82,7 @@ public class Customer {
     @ToString.Exclude
     private List<Product> favorites;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST})
     @JoinTable(name = "cart",
             joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
