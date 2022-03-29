@@ -71,8 +71,6 @@ public class CardUnitTest {
     @Test
     public void shouldThrowsNotFoundException() {
         UUID id = UUID.randomUUID();
-        Card card = new Card();
-        CardDto cardDto = new CardDto();
 
         when(repository.findById(id)).thenReturn(Optional.empty());
 

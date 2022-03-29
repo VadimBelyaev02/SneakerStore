@@ -78,4 +78,12 @@ public class AddressServiceImpl implements AddressService {
         }
         repository.deleteById(id);
     }
+
+    @Override
+    @Transactional
+    public List<AddressDto> getAllByCustomerId(UUID customerId) {
+        return repository.findAllByCustomerId(customerId).stream()
+                .map(converter::convertToDto)
+                .collect(Collectors.toList());
+    }
 }

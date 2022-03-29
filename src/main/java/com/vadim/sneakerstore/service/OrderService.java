@@ -16,4 +16,6 @@ public interface OrderService {
     OrderDto update(OrderDto orderDto);
 
     void deleteById(UUID id);
+
+    List<OrderDto> getAllByCustomerId(UUID customerId);
 }

@@ -16,4 +16,6 @@ public interface AddressService {
     AddressDto update(AddressDto addressDto);
 
     void deleteById(UUID id);
+
+    List<AddressDto> getAllByCustomerId(UUID customerId);
 }

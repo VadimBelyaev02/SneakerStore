@@ -15,7 +15,7 @@ import java.util.UUID;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Address Controller", description = "Address CRUD operations")
 @RestController
-@RequestMapping("/api/addresses")
+@RequestMapping("/api")
 public class AddressController {
 
     private final AddressService service;
@@ -26,7 +26,7 @@ public class AddressController {
 
     @Operation(description = "Get address by its id")
     @ApiResponse(description = "Address is found")
-    @GetMapping("/{id}")
+    @GetMapping("/addresses/{id}")
     @ResponseStatus(HttpStatus.OK)
     public AddressDto getAddress(@PathVariable("id") UUID id) {
         return service.getById(id);
@@ -34,15 +34,23 @@ public class AddressController {
 
     @Operation(description = "Get all addresses")
     @ApiResponse(description = "Addresses are found")
-    @GetMapping
+    @GetMapping("/addresses")
     @ResponseStatus(HttpStatus.OK)
     public List<AddressDto> getAllAddresses() {
         return service.getAll();
     }
 
+    @Operation(description = "Get all customer's addresses")
+    @ApiResponse(description = "All customer's addresses are found")
+    @GetMapping("/customers/{customerId}/addresses")
+    @ResponseStatus(HttpStatus.OK)
+    public List<AddressDto> getAllByCustomerId(@PathVariable("customerId") UUID customerId) {
+        return service.getAllByCustomerId(customerId);
+    }
+
     @Operation(description = "Save a new address")
     @ApiResponse(description = "Address is successfully saved")
-    @PostMapping
+    @PostMapping("/addresses")
     @ResponseStatus(HttpStatus.CREATED)
     public AddressDto postAddresses(@Valid @RequestBody AddressDto addressDto) {
         return service.save(addressDto);
@@ -50,7 +58,7 @@ public class AddressController {
 
     @Operation(description = "Update existed address")
     @ApiResponse(description = "Address is successfully updated")
-    @PutMapping
+    @PutMapping("/addresses")
     @ResponseStatus(HttpStatus.OK)
     public AddressDto putAddresses(@Valid @RequestBody AddressDto addressDto) {
         return service.update(addressDto);
@@ -58,7 +66,7 @@ public class AddressController {
 
     @Operation(description = "Delete existed address by its id")
     @ApiResponse(description = "Address is successfully deleted")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/addresses/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAddress(@PathVariable("id") UUID id) {
         service.deleteById(id);

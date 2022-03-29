@@ -70,4 +70,12 @@ public class OrderServiceImpl implements OrderService {
         }
         repository.deleteById(id);
     }
+
+    @Override
+    @Transactional
+    public List<OrderDto> getAllByCustomerId(UUID customerId) {
+        return repository.findAllByCustomerId(customerId).stream()
+                .map(converter::convertToDto)
+                .collect(Collectors.toList());
+    }
 }

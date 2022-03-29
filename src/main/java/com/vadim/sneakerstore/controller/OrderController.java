@@ -15,7 +15,7 @@ import java.util.UUID;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Order Controller", description = "Order CRUD operations")
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api")
 public class OrderController {
 
     private final OrderService service;
@@ -26,7 +26,7 @@ public class OrderController {
 
     @Operation(description = "Get order by its id")
     @ApiResponse(description = "Order is found")
-    @GetMapping("/{id}")
+    @GetMapping("/orders/{id}")
     @ResponseStatus(HttpStatus.OK)
     public OrderDto getOrder(@PathVariable("id") UUID id) {
         return service.getById(id);
@@ -34,15 +34,24 @@ public class OrderController {
 
     @Operation(description = "Get all orders")
     @ApiResponse(description = "All orders are found")
-    @GetMapping
+    @GetMapping("/orders")
     @ResponseStatus(HttpStatus.OK)
     public List<OrderDto> getAllOrders() {
         return service.getAll();
     }
 
+    @Operation(description = "Get all customer's order")
+    @ApiResponse(description = "All customer's orders are found")
+    @GetMapping("/customers/{customerId}/orders")
+    @ResponseStatus(HttpStatus.OK)
+    public List<OrderDto> getAllOrdersByCustomerId(@PathVariable("customerId") UUID customerId) {
+        return service.getAllByCustomerId(customerId);
+    }
+
+
     @Operation(description = "Save a new order")
     @ApiResponse(description = "Order is successfully created")
-    @PostMapping
+    @PostMapping("/orders")
     @ResponseStatus(HttpStatus.CREATED)
     public OrderDto postOrder(@Valid @RequestBody OrderDto orderDto) {
         return service.save(orderDto);
@@ -50,7 +59,7 @@ public class OrderController {
 
     @Operation(description = "Update existed order")
     @ApiResponse(description = "Order is successfully updated")
-    @PutMapping
+    @PutMapping("/orders")
     @ResponseStatus(HttpStatus.OK)
     public OrderDto putOrder(@Valid @RequestBody OrderDto orderDto) {
         return service.update(orderDto);
@@ -58,7 +67,7 @@ public class OrderController {
 
     @Operation(description = "Delete existed order")
     @ApiResponse(description = "Order is successfully deleted")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/orders/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteOrder(@PathVariable("id") UUID id) {
         service.deleteById(id);

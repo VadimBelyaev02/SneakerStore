@@ -40,4 +40,9 @@ public class SizeIntegrationTest {
         assertTrue(servletContext instanceof MockServletContext);
         assertNotNull(applicationContext.getBean("parallelogramController"));
     }
+
+    @Test
+    public void shouldReturnSizeById() {
+
+    }
 }
