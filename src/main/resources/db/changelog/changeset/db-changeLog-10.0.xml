@@ -1,0 +1,32 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="10" author="Vadim">
+        <createTable tableName="stocks">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="product_id" type="uuid">
+                <constraints foreignKeyName="stock_products_id_fkey" references="products(id)"/>
+            </column>
+            <column name="amount" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="size" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <dropColumn tableName="orders" columnName="group_id"/>
+
+        <addColumn tableName="orders">
+            <column name="stock_id" type="uuid">
+                <constraints foreignKeyName="orders_stocks_id_fkey" references="stocks(id)"/>
+            </column>
+        </addColumn>
+
+    </changeSet>
+
+</databaseChangeLog>
