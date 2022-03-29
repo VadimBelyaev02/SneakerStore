@@ -1,0 +1,19 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="8" author="Vadim">
+        <addColumn tableName="customers">
+            <column name="address_id" type="uuid">
+                <constraints foreignKeyName="customers_addresses_id_fkey" references="addresses(id)"/>
+            </column>
+        </addColumn>
+
+        <dropColumn tableName="pictures" columnName="id"/>
+
+        <addPrimaryKey tableName="pictures" columnNames="link"/>
+
+    </changeSet>
+
+</databaseChangeLog>

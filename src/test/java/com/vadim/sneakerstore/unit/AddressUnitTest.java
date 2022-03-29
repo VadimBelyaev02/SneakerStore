@@ -80,17 +80,23 @@ public class AddressUnitTest {
         Address address = new Address();
         AddressDto addressDto = new AddressDto();
         address.setId(id);
-   //     addressDto.setId(id);
+        addressDto.setId(id);
 
         addresses.add(address);
         addresses.add(address);
         addresses.add(address);
+
+        addressDtos.add(addressDto);
+        addressDtos.add(addressDto);
+        addressDtos.add(addressDto);
 
         when(repository.findAll()).thenReturn(addresses);
         when(converter.convertToDto(address)).thenReturn(addressDto);
 
         assertEquals(service.getAll(), addressDtos);
 
+        verify(repository, only()).findAll();
+        verify(converter, times(3)).convertToDto(address);
     }
 
     @Test
@@ -104,7 +110,7 @@ public class AddressUnitTest {
     }
 
     @Test
-    public void shouldThrowAlreadyExistsException() {
+    public void shouldThrowAlreadyExistsExceptionWhileSaving() {
         UUID id = UUID.randomUUID();
         Address address = new Address();
         AddressDto addressDto = new AddressDto();
