@@ -63,10 +63,10 @@ public class ProductConverter {
                     .collect(Collectors.toList());
         }
 
-        List<UUID> photosIds = new ArrayList<>();
+        List<String> links = new ArrayList<>();
         if (Objects.nonNull(product.getPictures())) {
-             photosIds = product.getPictures().stream()
-                    .map(Picture::getId)
+             links = product.getPictures().stream()
+                    .map(Picture::getLink)
                      .collect(Collectors.toList());
         }
 
@@ -121,7 +121,7 @@ public class ProductConverter {
                 .commentsIds(commentIds)
                 .customersIds(customersFavoritesIds)
                 .inCustomersCarts(inCustomersCartsIds)
-                .photosIds(photosIds)
+                .links(links)
                 .sizesIds(sizesIds)
                 .averageRate(averageRate)
                 .build();

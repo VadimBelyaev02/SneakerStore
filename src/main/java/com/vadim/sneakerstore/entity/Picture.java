@@ -18,13 +18,20 @@ import java.util.UUID;
 public class Picture {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
-
-    @Column(name = "link")
     private String link;
 
     @ManyToOne
     private Product product;
+
+
+//    @Id
+//    @GeneratedValue(generator = "UUID")
+//    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+//    private UUID id;
+//
+//    @Column(name = "link")
+//    private String link;
+//
+//    @ManyToOne
+//    private Product product;
 }
