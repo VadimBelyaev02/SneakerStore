@@ -27,7 +27,10 @@ public class AddressConverter {
         final String country = addressDto.getCountry();
         final String street = addressDto.getStreet();
 
-        final List<Customer> customers = customerRepository.findAllById(addressDto.getCustomersIds());
+        List<Customer> customers = new ArrayList<>();
+        if (Objects.nonNull(addressDto.getCustomersIds())) {
+            customerRepository.findAllById(addressDto.getCustomersIds());
+        }
 
         return Address.builder()
                 .id(id)
