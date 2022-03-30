@@ -52,7 +52,7 @@ public class Product {
     @Column(name = "material")
     private String material;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<Size> sizes;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
