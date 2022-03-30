@@ -77,17 +77,6 @@ public class AddressIntegrationTest {
     }
 
     @Test
-    public void givenServletContext_whenInitialize_thenContextExists() {
-        ServletContext servletContext = applicationContext.getServletContext();
-
-        assertNotNull(servletContext);
-        assertTrue(servletContext instanceof MockServletContext);
-        assertNotNull(applicationContext.getBean("addressController"));
-    }
-
-
-
-    @Test
     public void shouldReturnInfoThatAddressIsNotFound() throws Exception {
         mockMvc.perform(get(ENDPOINT + addressDto.getId()))
                 .andDo(print())

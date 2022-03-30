@@ -71,7 +71,8 @@ public class SizeIntegrationTest {
 
     @Test
     public void shouldReturnNotFoundInfo() throws Exception {
-        mockMvc.perform(get(ENDPOINT + sizeDto.getId()))
+        UUID id = UUID.randomUUID();
+        mockMvc.perform(get(ENDPOINT + "/{id}", id))
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }
@@ -104,8 +105,7 @@ public class SizeIntegrationTest {
 
     @Test
     public void shouldReturnSizeById() throws Exception {
-        mockMvc.perform(get(ENDPOINT + sizeDto.getId().toString()))
-                      //  .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get(ENDPOINT + "/{id}", sizeDto.getId().toString()))
                 .andDo(print())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -156,7 +156,7 @@ public class SizeIntegrationTest {
                 .amount(sizeDto.getAmount())
                 .build();
         newSizeDto.setId(UUID.randomUUID());
-        mockMvc.perform(delete(ENDPOINT + newSizeDto.getId()))
+        mockMvc.perform(delete(ENDPOINT + "/{id}", newSizeDto.getId()))
                 .andDo(print())
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
@@ -164,7 +164,7 @@ public class SizeIntegrationTest {
 
     @Test
     public void shouldDeleteSizeById() throws Exception {
-        mockMvc.perform(delete(ENDPOINT + sizeDto.getId()))
+        mockMvc.perform(delete(ENDPOINT + "/{id}", sizeDto.getId()))
                 .andDo(print())
                 .andExpect(status().isNoContent())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));

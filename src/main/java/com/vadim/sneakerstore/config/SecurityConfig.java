@@ -120,7 +120,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {//} implements
 
     @Bean
     public PrincipalExtractor principalExtractor(CustomerRepository repository) {
-     //   return map -> new Customer();
         return map -> {
             String email = (String) map.get("email");
             Customer customerD = repository.findByEmail(email).orElseGet(() ->{

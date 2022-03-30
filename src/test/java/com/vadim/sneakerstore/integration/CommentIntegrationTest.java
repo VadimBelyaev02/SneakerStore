@@ -1,5 +1,6 @@
 package com.vadim.sneakerstore.integration;
 
+import com.vadim.sneakerstore.dto.CommentDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.ServletContext;
+
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -26,17 +29,18 @@ public class CommentIntegrationTest {
 
     private MockMvc mockMvc;
 
+    private CommentDto commentDto;
+
     @BeforeEach
     public void setup() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.applicationContext).build();
     }
 
-    @Test
-    public void givenServletContext_whenInitialize_thenContextExists() {
-        ServletContext servletContext = applicationContext.getServletContext();
-
-        assertNotNull(servletContext);
-        assertTrue(servletContext instanceof MockServletContext);
-        assertNotNull(applicationContext.getBean("parallelogramController"));
+    @BeforeEach
+    public void init() {
+        commentDto = CommentDto.builder()
+                .id(UUID.fromString("9b410870-2c8a-4fd4-8377-89514c4bc05d"))
+                //.date(Local)
+                .build();
     }
 }
