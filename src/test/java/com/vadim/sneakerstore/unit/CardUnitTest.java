@@ -145,4 +145,41 @@ public class CardUnitTest {
         verify(converter, never()).convertToDto(card);
         verify(converter, never()).convertToEntity(cardDto);
     }
+
+    @Test
+    public void shouldThrowsNotFoundExceptionWhileUpdating() {
+        UUID id = UUID.randomUUID();
+        CardDto cardDto = new CardDto();
+        cardDto.setId(id);
+
+        when(repository.existsById(id)).thenReturn(false);
+
+        assertThrows(NotFoundException.class, () -> service.update(cardDto));
+
+        verify(repository, only()).existsById(id);
+        verify(converter, never()).convertToEntity(cardDto);
+        verify(converter, never()).convertToDto(new Card());
+    }
+
+    @Test
+    public void shouldReturnUpdatedCardDto() {
+
+    }
+
+    @Test
+    public void shouldThrowsNotFoundExceptionWhileDeleting() {
+        UUID id = UUID.randomUUID();
+
+        when(repository.existsById(id)).thenReturn(false);
+
+        assertThrows(NotFoundException.class, () -> service.deleteById(id));
+
+        verify(repository, only()).existsById(id);
+        verify(repository, never()).deleteById(id);
+    }
+
+    @Test
+    public void shouldReturnAllCardsDtoByCustomerId() {
+        UUID customerId = UUID.randomUUID();
+    }
 }

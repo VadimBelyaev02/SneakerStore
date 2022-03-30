@@ -133,6 +133,7 @@ public class AddressUnitTest {
         UUID id = UUID.randomUUID();
         Address address = new Address();
         AddressDto addressDto = new AddressDto();
+        addressDto.setId(id);
 
         when(repository.existsById(id)).thenReturn(true);
 

@@ -173,8 +173,10 @@ public class SizeUnitTest {
         UUID productId = UUID.randomUUID();
         Size size = new Size();
         SizeDto sizeDto = new SizeDto();
-        List<Size> sizes = Stream.of(size, size, size, size).collect(Collectors.toList());
-        List<SizeDto> sizeDtos = Stream.of(sizeDto, sizeDto, sizeDto, sizeDto).collect(Collectors.toList());
+        List<Size> sizes = Stream.of(size, size, size, size)
+                .collect(Collectors.toList());
+        List<SizeDto> sizeDtos = Stream.of(sizeDto, sizeDto, sizeDto, sizeDto)
+                .collect(Collectors.toList());
 
         when(repository.findAllByProductId(productId)).thenReturn(sizes);
         when(converter.convertToDto(size)).thenReturn(sizeDto);
