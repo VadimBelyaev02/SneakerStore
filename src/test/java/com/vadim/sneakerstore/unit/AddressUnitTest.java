@@ -3,6 +3,7 @@ package com.vadim.sneakerstore.unit;
 import com.vadim.sneakerstore.dto.AddressDto;
 import com.vadim.sneakerstore.dto.converter.AddressConverter;
 import com.vadim.sneakerstore.entity.Address;
+import com.vadim.sneakerstore.entity.Card;
 import com.vadim.sneakerstore.exception.AlreadyExistsException;
 import com.vadim.sneakerstore.exception.NotFoundException;
 import com.vadim.sneakerstore.repository.AddressRepository;
@@ -99,11 +100,16 @@ public class AddressUnitTest {
     @Test
     public void shouldReturnSavedAddress() {
         UUID id = UUID.randomUUID();
+        String everyField = "city";
         Address address = new Address();
         AddressDto addressDto = new AddressDto();
         addressDto.setId(id);
+        addressDto.setCity(everyField);
+        addressDto.setCountry(everyField);
+        addressDto.setStreet(everyField);
 
-        when(repository.existsById(id)).thenReturn(false);
+        when(repository.existsByCityAndCountryAndStreet(everyField, everyField, everyField))
+                .thenReturn(false);
         when(repository.save(address)).thenReturn(address);
         when(converter.convertToDto(address)).thenReturn(addressDto);
         when(converter.convertToEntity(addressDto)).thenReturn(address);
@@ -111,7 +117,7 @@ public class AddressUnitTest {
         assertEquals(service.save(addressDto), addressDto);
 
         verify(repository, times(1)).save(address);
-        verify(repository, times(1)).existsById(id);
+        verify(repository, times(1)).existsByCityAndCountryAndStreet(everyField, everyField, everyField);
         verify(converter, times(1)).convertToDto(address);
         verify(converter, times(1)).convertToEntity(addressDto);
     }
@@ -119,15 +125,20 @@ public class AddressUnitTest {
     @Test
     public void shouldThrowAlreadyExistsExceptionWhileSaving() {
         UUID id = UUID.randomUUID();
+        String everyField = "city";
         Address address = new Address();
         AddressDto addressDto = new AddressDto();
         addressDto.setId(id);
+        addressDto.setCity(everyField);
+        addressDto.setCountry(everyField);
+        addressDto.setStreet(everyField);
 
-        when(repository.existsById(id)).thenReturn(true);
+        when(repository.existsByCityAndCountryAndStreet(everyField, everyField, everyField))
+                .thenReturn(true);
 
         assertThrows(AlreadyExistsException.class, () -> service.save(addressDto));
 
-        verify(repository, only()).existsById(id);
+        verify(repository, only()).existsByCityAndCountryAndStreet(everyField, everyField, everyField);
         verify(converter, never()).convertToDto(address);
         verify(converter, never()).convertToEntity(addressDto);
         verify(repository, never()).save(address);
@@ -165,6 +176,25 @@ public class AddressUnitTest {
 
         verify(repository, only()).existsById(id);
         verify(repository, never()).deleteById(id);
+    }
+
+    @Test
+    public void shouldReturnAllAddressesDtosByCustomerId() {
+        UUID customerId = UUID.randomUUID();
+        Address address = new Address();
+        AddressDto addressDto = new AddressDto();
+        List<Address> addresses = Stream.of(address, address, address, address)
+                .collect(Collectors.toList());
+        List<AddressDto> addressDtos = Stream.of(addressDto, addressDto, addressDto, addressDto)
+                .collect(Collectors.toList());
+
+        when(repository.findAllByCustomerId(customerId)).thenReturn(addresses);
+        when(converter.convertToDto(address)).thenReturn(addressDto);
+
+        assertEquals(service.getAllByCustomerId(customerId), addressDtos);
+
+        verify(repository, only()).findAllByCustomerId(customerId);
+        verify(converter, times(4)).convertToDto(address);
     }
 
 }

@@ -7,24 +7,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.web.SpringBootMockServletContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.servlet.ServletContext;
 import java.util.UUID;
 
 import static com.vadim.sneakerstore.utils.JsonParser.toJson;
-import static com.vadim.sneakerstore.utils.JsonParser.toObject;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -50,15 +42,6 @@ public class SizeIntegrationTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.applicationContext).build();
     }
 
-//    @Test
-//    public void givenServletContext_whenInitialize_thenContextExists() {
-//        ServletContext servletContext = applicationContext.getServletContext();
-//
-//        assertNotNull(servletContext);
-//        assertTrue(servletContext instanceof SpringBootMockServletContext);
-//        assertNotNull(applicationContext.getBean("sizeController"));
-//    }
-
     @BeforeEach
     public void init() {
         sizeDto = SizeDto.builder()
@@ -78,19 +61,12 @@ public class SizeIntegrationTest {
     }
 
     @Test
-    public void shouldReturnSavedSizeDto() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+    public void shouldReturnConflict() throws Exception {
+        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
                         .content(toJson(sizeDto)))
                 .andDo(print())
-                .andExpect(status().isCreated())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.amount").value(5))
-                .andExpect(jsonPath("$.size").value(3))
-                .andReturn();
-
-        String returned = mvcResult.getResponse().getContentAsString();
-        SizeDto returnedSizeDto = toObject(returned, SizeDto.class);
-        returnedSizeDto.setId(sizeDto.getId());
+                .andExpect(status().isConflict())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
@@ -166,17 +142,6 @@ public class SizeIntegrationTest {
     public void shouldDeleteSizeById() throws Exception {
         mockMvc.perform(delete(ENDPOINT + "/{id}", sizeDto.getId()))
                 .andDo(print())
-                .andExpect(status().isNoContent())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(status().isNoContent());
     }
-
-    @Test
-    public void shouldReturnInfoThatSizeNotFoundWhileDeleting() throws Exception {
-        mockMvc.perform(delete(ENDPOINT + sizeDto.getId()))
-                .andDo(print())
-                .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-    }
-
-
 }

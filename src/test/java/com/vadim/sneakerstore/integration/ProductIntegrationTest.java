@@ -49,12 +49,4 @@ public class ProductIntegrationTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.applicationContext).build();
     }
 
-    @Test
-    public void givenServletContext_whenInitialize_thenContextExists() {
-        ServletContext servletContext = applicationContext.getServletContext();
-
-        assertNotNull(servletContext);
-        assertTrue(servletContext instanceof MockServletContext);
-        assertNotNull(applicationContext.getBean("parallelogramController"));
-    }
 }
