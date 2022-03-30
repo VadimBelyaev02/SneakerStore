@@ -79,13 +79,13 @@ public class PictureIntegrationTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
-    @Test
-    public void shouldReturnInfoThatMethodIsNotAllowed() throws Exception {
-        mockMvc.perform(get(ENDPOINT + "/{id}", "justString"))
-                .andDo(print())
-                .andExpect(status().isMethodNotAllowed())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-    }
+//    @Test
+//    public void shouldReturn() throws Exception {
+//        mockMvc.perform(get(ENDPOINT + "/{id}", "????"))
+//                .andDo(print())
+//                .andExpect(status().isMethodNotAllowed())
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+//    }
 
     @Test
     public void shouldReturnAllPictures() throws Exception {
@@ -100,7 +100,7 @@ public class PictureIntegrationTest {
         mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(pictureDto)))
                 .andDo(print())
-                .andExpect(status().isCreated())
+                .andExpect(status().isConflict())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.link").value("link"));
     }
@@ -116,11 +116,19 @@ public class PictureIntegrationTest {
     }
 
     @Test
-    public void shouldReturnMethodNotAllowedWithIncorrectIdWhileDeleting() throws Exception {
-        mockMvc.perform(delete(ENDPOINT + "/{id}", "badValue"))
+    public void shouldDeletePictureById() throws Exception {
+        mockMvc.perform(delete(ENDPOINT + "/{id}", pictureDto.getLink()))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void shouldReturnNotFoundWithIncorrectIdWhileDeleting() throws Exception {
+        mockMvc.perform(delete(ENDPOINT + "/{id}", "."))
                 .andDo(print())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isMethodNotAllowed());
+                .andExpect(status().isNotFound());
     }
 
     @Test

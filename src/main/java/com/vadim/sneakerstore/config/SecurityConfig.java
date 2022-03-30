@@ -94,6 +94,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {//} implements
                 .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .oauth2Login()
                 .and()
+                .oauth2Client()
+                .and()
 //               // .logout(l -> l.logoutSuccessUrl()).
                     .oauth2Client();
     }
@@ -118,43 +120,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {//} implements
 
     // oauth2/authorization/google
 
-    @Bean
-    public PrincipalExtractor principalExtractor(CustomerRepository repository) {
-        return map -> {
-            String email = (String) map.get("email");
-            Customer customerD = repository.findByEmail(email).orElseGet(() ->{
-                Customer customer = new Customer();
-                customer.setEmail(email);
-                customer.setFirstName((String) map.get("given_name"));
-                customer.setLastName((String) map.get("family_name"));
-
-                return customer;
-
-            });
-
-            repository.save(customerD); // incorrect
-
-            return customerD;
-        };
-    }
-
 //    @Bean
-//    public WebMvcConfigurer corsConfigurer() {
-//        return new WebMvcConfigurer() {
-//            @Override
-//            public void addCorsMappings(CorsRegistry registry) {
-//                registry.addMapping("/**").allowedOrigins("*");
-//                      //  .allowedMethods("POST", "GET", "PUT", "DELETE");
-//            }
+//    public PrincipalExtractor principalExtractor(CustomerRepository repository) {
+//        return map -> {
+//            String email = (String) map.get("email");
+//            Customer customerD = repository.findByEmail(email).orElseGet(() ->{
+//                Customer customer = new Customer();
+//                customer.setEmail(email);
+//                customer.setFirstName((String) map.get("given_name"));
+//                customer.setLastName((String) map.get("family_name"));
+//
+//                return customer;
+//
+//            });
+//
+//            repository.save(customerD); // incorrect
+//
+//            return customerD;
 //        };
 //    }
 
-//    @Override
-//    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**")
-//                .allowedMethods("POST", "GET", "PUT", "DELETE")
-//                .allowedHeaders("Access-Control-Allow-Origin", "Content-Type", "Authorization")
-//                .exposedHeaders("Access-Control-Allow-Origin", "Content-Type", "Authorization")
-//                .allowedOrigins("*");
-//    }
 }
