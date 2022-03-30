@@ -48,7 +48,6 @@ public class OrderController {
         return service.getAllByCustomerId(customerId);
     }
 
-
     @Operation(description = "Save a new order")
     @ApiResponse(description = "Order is successfully created")
     @PostMapping("/orders")

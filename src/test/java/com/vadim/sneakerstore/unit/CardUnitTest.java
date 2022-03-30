@@ -181,5 +181,19 @@ public class CardUnitTest {
     @Test
     public void shouldReturnAllCardsDtoByCustomerId() {
         UUID customerId = UUID.randomUUID();
+        Card card = new Card();
+        CardDto cardDto = new CardDto();
+        List<Card> cards = Stream.of(card, card, card, card)
+                        .collect(Collectors.toList());
+        List<CardDto> cardDtos = Stream.of(cardDto, cardDto, cardDto, cardDto)
+                        .collect(Collectors.toList());
+
+        when(repository.findAllByCustomerId(customerId)).thenReturn(cards);
+        when(converter.convertToEntity(cardDto)).thenReturn(card);
+
+        assertEquals(service.getByCustomerId(customerId), cardDtos);
+
+        verify(repository, only()).findAllByCustomerId(customerId);
+        verify(converter, times(4)).convertToDto(card);
     }
 }
