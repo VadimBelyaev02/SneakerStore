@@ -3,6 +3,7 @@ package com.vadim.sneakerstore.controller;
 import com.vadim.sneakerstore.dto.AddressDto;
 import com.vadim.sneakerstore.service.AddressService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,8 @@ public class AddressController {
     @ApiResponse(description = "Address is found", responseCode = "200")
     @GetMapping("/addresses/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AddressDto getAddress(@PathVariable("id") UUID id) {
+    public AddressDto getAddress(@Parameter(description = "Id of needed address")
+                                 @PathVariable("id") UUID id) {
         return service.getById(id);
     }
 
@@ -44,7 +46,8 @@ public class AddressController {
     @ApiResponse(description = "All customer's addresses are found", responseCode = "200")
     @GetMapping("/customers/{customerId}/addresses")
     @ResponseStatus(HttpStatus.OK)
-    public List<AddressDto> getAllByCustomerId(@PathVariable("customerId") UUID customerId) {
+    public List<AddressDto> getAllByCustomerId(@Parameter(description = "Customer's id whose addresses need to find")
+                                               @PathVariable("customerId") UUID customerId) {
         return service.getAllByCustomerId(customerId);
     }
 
@@ -52,7 +55,8 @@ public class AddressController {
     @ApiResponse(description = "Address is successfully saved", responseCode = "201")
     @PostMapping("/addresses")
     @ResponseStatus(HttpStatus.CREATED)
-    public AddressDto postAddresses(@Valid @RequestBody AddressDto addressDto) {
+    public AddressDto postAddresses(@Parameter(description = "Contains info about new address")
+                                    @Valid @RequestBody AddressDto addressDto) {
         return service.save(addressDto);
     }
 
@@ -60,7 +64,8 @@ public class AddressController {
     @ApiResponse(description = "Address is successfully updated", responseCode = "200")
     @PutMapping("/addresses")
     @ResponseStatus(HttpStatus.OK)
-    public AddressDto putAddresses(@Valid @RequestBody AddressDto addressDto) {
+    public AddressDto putAddresses(@Parameter(description = "Contains new fields")
+                                   @Valid @RequestBody AddressDto addressDto) {
         return service.update(addressDto);
     }
 
@@ -68,7 +73,8 @@ public class AddressController {
     @ApiResponse(description = "Address is successfully deleted", responseCode = "204")
     @DeleteMapping("/addresses/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAddress(@PathVariable("id") UUID id) {
+    public void deleteAddress(@Parameter(description = "Id of deleted address")
+                              @PathVariable("id") UUID id) {
         service.deleteById(id);
     }
 }

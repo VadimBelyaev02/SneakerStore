@@ -1,5 +1,6 @@
 package com.vadim.sneakerstore.dto;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,5 +29,6 @@ public class AddressDto {
     private String street;
 
     @Schema(description = "People that are living at this address")
+    @ArraySchema()
     private List<UUID> customersIds;
 }

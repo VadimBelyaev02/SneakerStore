@@ -49,7 +49,8 @@ public class CommentController {
     @ApiResponse(description = "All product's comments are found", responseCode = "200")
     @GetMapping("/products/{productId}/comments")
     @ResponseStatus(HttpStatus.OK)
-    public List<CommentDto> getAllProductComments(@PathVariable("productId") UUID productId) {
+    public List<CommentDto> getAllProductComments(@Parameter(description = "Id of product whose comments should be found")
+                                                  @PathVariable("productId") UUID productId) {
         return service.getAllByProductId(productId);
     }
 

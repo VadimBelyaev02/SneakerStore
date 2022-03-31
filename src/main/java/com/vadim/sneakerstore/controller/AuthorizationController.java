@@ -49,7 +49,7 @@ public class AuthorizationController {
     }
 
     @Operation(description = "It's used if somebody has forgotten his password")
-    @ApiResponse(description = "Account found and email is sended")
+    @ApiResponse(description = "Account found and email is sended", responseCode = "200")
     @PostMapping("/forgot_password")
     @ResponseStatus(HttpStatus.OK)
     public void forgotPassword(@RequestParam String email) {
@@ -58,7 +58,7 @@ public class AuthorizationController {
     }
 
     @Operation(description = "Recover password after forgetting")
-    @ApiResponse(description = "Password has been recovered")
+    @ApiResponse(description = "Password has been recovered", responseCode = "200")
     @PostMapping("/reset_password")
     @ResponseStatus(HttpStatus.OK)
     public CustomerDto resetPassword(@Valid @RequestBody ResetPasswordRequestDto requestDto) {
@@ -66,7 +66,7 @@ public class AuthorizationController {
     }
 
     @Operation(description = "Change password by knowing the current password")
-    @ApiResponse(description = "Password has been changed")
+    @ApiResponse(description = "Password has been changed", responseCode = "200")
     @PutMapping("/change_password")
     @ResponseStatus(HttpStatus.OK)
     public CustomerDto changePassword(@Valid @RequestBody ChangePasswordRequestDto requestDto) {

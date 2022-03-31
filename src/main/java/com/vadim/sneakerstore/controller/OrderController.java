@@ -3,6 +3,7 @@ package com.vadim.sneakerstore.controller;
 import com.vadim.sneakerstore.dto.OrderDto;
 import com.vadim.sneakerstore.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,8 @@ public class OrderController {
     @ApiResponse(description = "Order is found", responseCode = "200")
     @GetMapping("/orders/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public OrderDto getOrder(@PathVariable("id") UUID id) {
+    public OrderDto getOrder(@Parameter(description = "Id of needed order")
+                             @PathVariable("id") UUID id) {
         return service.getById(id);
     }
 
@@ -44,7 +46,8 @@ public class OrderController {
     @ApiResponse(description = "All customer's orders are found", responseCode = "200")
     @GetMapping("/customers/{customerId}/orders")
     @ResponseStatus(HttpStatus.OK)
-    public List<OrderDto> getAllOrdersByCustomerId(@PathVariable("customerId") UUID customerId) {
+    public List<OrderDto> getAllOrdersByCustomerId(@Parameter(description = "Id of a customer whose order should be found")
+                                                   @PathVariable("customerId") UUID customerId) {
         return service.getAllByCustomerId(customerId);
     }
 
@@ -52,7 +55,8 @@ public class OrderController {
     @ApiResponse(description = "Order is successfully created", responseCode = "201")
     @PostMapping("/orders")
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderDto postOrder(@Valid @RequestBody OrderDto orderDto) {
+    public OrderDto postOrder(@Parameter(description = "Contains info about a new order")
+                              @Valid @RequestBody OrderDto orderDto) {
         return service.save(orderDto);
     }
 
@@ -60,7 +64,8 @@ public class OrderController {
     @ApiResponse(description = "Order is successfully updated", responseCode = "200")
     @PutMapping("/orders")
     @ResponseStatus(HttpStatus.OK)
-    public OrderDto putOrder(@Valid @RequestBody OrderDto orderDto) {
+    public OrderDto putOrder(@Parameter(description = "Contains info about new order's fields")
+                             @Valid @RequestBody OrderDto orderDto) {
         return service.update(orderDto);
     }
 
@@ -68,7 +73,8 @@ public class OrderController {
     @ApiResponse(description = "Order is successfully deleted", responseCode = "204")
     @DeleteMapping("/orders/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteOrder(@PathVariable("id") UUID id) {
+    public void deleteOrder(@Parameter(description = "Id of a deleted order")
+                            @PathVariable("id") UUID id) {
         service.deleteById(id);
     }
 }

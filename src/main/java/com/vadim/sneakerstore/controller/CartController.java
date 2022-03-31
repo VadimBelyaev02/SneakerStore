@@ -3,6 +3,7 @@ package com.vadim.sneakerstore.controller;
 import com.vadim.sneakerstore.dto.CartDto;
 import com.vadim.sneakerstore.service.CartService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -25,10 +26,12 @@ public class CartController {
     }
 
     @Operation(description = "Get product from customer's cart by composite id")
-    @ApiResponse(description = "All products from customer's cart are found", responseCode = "200")
+    @ApiResponse(description = "Product by id from customer's cart are found", responseCode = "200")
     @GetMapping("/{customerId}/{productId}")
     @ResponseStatus(HttpStatus.OK)
-    public CartDto getCart(@PathVariable("customerId") UUID customerId,
+    public CartDto getCart(@Parameter(description = "Id of customer in whose cart this product")
+                           @PathVariable("customerId") UUID customerId,
+                           @Parameter(description = "Id of a product from customer's cart")
                            @PathVariable("productId") UUID productId) {
         return service.getById(customerId, productId);
     }
@@ -37,7 +40,8 @@ public class CartController {
     @ApiResponse(description = "All products from customer's cart are found", responseCode = "200")
     @GetMapping("/{customerId}")
     @ResponseStatus(HttpStatus.OK)
-    public List<CartDto> getByCustomerId(@PathVariable("customerId") UUID customerId) {
+    public List<CartDto> getByCustomerId(@Parameter(description = "Id of needed customer's cart")
+                                         @PathVariable("customerId") UUID customerId) {
         return service.getByCustomerId(customerId);
     }
 
@@ -53,7 +57,8 @@ public class CartController {
     @ApiResponse(description = "A new product is added in cart", responseCode = "201")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CartDto postCarts(@Valid @RequestBody CartDto cartDto) {
+    public CartDto postCarts(@Parameter(description = "Contains info about new cart")
+                             @Valid @RequestBody CartDto cartDto) {
         return service.save(cartDto);
     }
 
@@ -61,7 +66,8 @@ public class CartController {
     @ApiResponse(description = "Product in cart is updated", responseCode = "200")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public CartDto putCarts(@Valid @RequestBody CartDto cartDto) {
+    public CartDto putCarts(@Parameter(description = "Contains info about new field of customer's cart")
+                            @Valid @RequestBody CartDto cartDto) {
         return service.update(cartDto);
     }
 
@@ -69,7 +75,9 @@ public class CartController {
     @ApiResponse(description = "Product is deleted from cart", responseCode = "204")
     @DeleteMapping("/{customerId}/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCarts(@PathVariable("customerId") UUID customerId,
+    public void deleteCarts(@Parameter(description = "Id of a customers from whose cart the product will be deleted")
+                            @PathVariable("customerId") UUID customerId,
+                            @Parameter(description = "Id of a product that will be deleted from customer's cart")
                             @PathVariable("productId") UUID productId) {
         service.deleteById(customerId, productId);
     }

@@ -3,6 +3,7 @@ package com.vadim.sneakerstore.controller;
 import com.vadim.sneakerstore.dto.PictureDto;
 import com.vadim.sneakerstore.service.PictureService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.UUID;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Picture Controller", description = "Picture CRUD operations")
@@ -28,7 +28,8 @@ public class PictureController {
     @ApiResponse(description = "Picture is found", responseCode = "200")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public PictureDto getById(@PathVariable("id") String id) {
+    public PictureDto getById(@Parameter(description = "Id of needed picture")
+                              @PathVariable("id") String id) {
         return service.getById(id);
     }
 
@@ -44,7 +45,8 @@ public class PictureController {
     @ApiResponse(description = "Picture is added", responseCode = "201")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PictureDto postPhotos(@Valid @RequestBody PictureDto pictureDto) {
+    public PictureDto postPhotos(@Parameter(description = "Contains info about a new picture")
+                                 @Valid @RequestBody PictureDto pictureDto) {
         return service.save(pictureDto);
     }
 
@@ -52,7 +54,8 @@ public class PictureController {
     @ApiResponse(description = "Picture is successfully updated", responseCode = "200")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public PictureDto putPhotos(@Valid @RequestBody PictureDto pictureDto) {
+    public PictureDto putPhotos(@Parameter(description = "Contains info about new picture's info")
+                                @Valid @RequestBody PictureDto pictureDto) {
         return service.update(pictureDto);
     }
 
@@ -60,7 +63,8 @@ public class PictureController {
     @ApiResponse(description = "Picture is successfully deleted", responseCode = "204")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePhotos(@PathVariable("id") String id) {
+    public void deletePhotos(@Parameter(description = "Id of deleted picture")
+                             @PathVariable("id") String id) {
         service.deleteById(id);
     }
 }

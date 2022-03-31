@@ -3,6 +3,7 @@ package com.vadim.sneakerstore.controller;
 import com.vadim.sneakerstore.dto.CustomerDto;
 import com.vadim.sneakerstore.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,8 @@ public class CustomerController {
     @ApiResponse(description = "Customer is found", responseCode = "200")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CustomerDto getCustomer(@PathVariable("id") UUID id) {
+    public CustomerDto getCustomer(@Parameter(description = "Id of needed customer")
+                                   @PathVariable("id") UUID id) {
         return customerService.getById(id);
     }
 
@@ -45,7 +47,8 @@ public class CustomerController {
     @ApiResponse(description = "Customer is created", responseCode = "201")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CustomerDto postCustomer(@Valid @RequestBody CustomerDto customerDto) {
+    public CustomerDto postCustomer(@Parameter(description = "Contains info about fields of a new customer")
+                                    @Valid @RequestBody CustomerDto customerDto) {
         return customerService.save(customerDto);
     }
 
@@ -53,7 +56,8 @@ public class CustomerController {
     @ApiResponse(description = "Customer is updated", responseCode = "200")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public CustomerDto putCustomer(@Valid @RequestBody CustomerDto customerDto) {
+    public CustomerDto putCustomer(@Parameter(description = "Contains info about new customer's field")
+                                   @Valid @RequestBody CustomerDto customerDto) {
         return customerService.update(customerDto);
     }
 
@@ -61,7 +65,8 @@ public class CustomerController {
     @ApiResponse(description = "Customer is deleted", responseCode = "204")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCustomer(@PathVariable("id") UUID id) {
+    public void deleteCustomer(@Parameter(description = "Id of deleted customer")
+                               @PathVariable("id") UUID id) {
         customerService.deleteById(id);
     }
 }
