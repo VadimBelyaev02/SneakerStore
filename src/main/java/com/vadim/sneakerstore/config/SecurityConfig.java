@@ -20,33 +20,33 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {//} implements WebMvcConfigurer{
 
-    @Order(1)
-    @Configuration
-    public static class OAuth2Config extends WebSecurityConfigurerAdapter {
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http
-                    .requestMatchers()
-                    .antMatchers(
-                            "/oauth2/authorization/google",
-                            "/api/customers/export",
-                            "/api/customers/export/last",
-                            "/login/oauth2/code/google/**")
-                    .and()
-                    .authorizeRequests()
-                    .anyRequest().authenticated()
-                    .and()
-                    .oauth2Login();
-        }
-    }
+//    @Order(1)
+//    @Configuration
+//    public static class OAuth2Config extends WebSecurityConfigurerAdapter {
+//        @Override
+//        protected void configure(HttpSecurity http) throws Exception {
+//            http
+//                    .requestMatchers()
+//                    .antMatchers(
+//                            "/oauth2/authorization/google",
+//                            "/api/customers/export",
+//                            "/api/customers/export/last",
+//                            "/login/oauth2/code/google/**")
+//                    .and()
+//                    .authorizeRequests()
+//                    .anyRequest().authenticated()
+//                    .and()
+//                    .oauth2Login();
+//        }
+//    }
 
-    @Order(2)
-    @Configuration
-    public static class BasicConfig extends WebSecurityConfigurerAdapter {
+  //  @Order(2)
+  //  @Configuration
+  //  public static class BasicConfig extends WebSecurityConfigurerAdapter {
 
         private final UserDetailsService userDetailsService;
 
-        public BasicConfig(@Qualifier("customerDetailsServiceImpl") UserDetailsService userDetailsService) {
+        public SecurityConfig(@Qualifier("customerDetailsServiceImpl") UserDetailsService userDetailsService) {
             this.userDetailsService = userDetailsService;
         }
 
@@ -147,5 +147,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {//} implements
 //            return customerD;
 //        };
 //    }
-    }
+   // }
 }
