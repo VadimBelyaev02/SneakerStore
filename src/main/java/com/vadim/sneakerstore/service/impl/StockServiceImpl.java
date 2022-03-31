@@ -55,7 +55,6 @@ public class StockServiceImpl implements StockService {
     @Override
     @Transactional
     public StockDto update(StockDto stockDto) {
-        UUID.randomUUID()
         if (!repository.existsById(stockDto.getId())) {
             throw new NotFoundException("Stock with id = " + stockDto.getId() + " is not found");
         }
