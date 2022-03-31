@@ -25,7 +25,7 @@ public class PictureController {
     }
 
     @Operation(description = "Get picture by id")
-    @ApiResponse(description = "Picture is found")
+    @ApiResponse(description = "Picture is found", responseCode = "200")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public PictureDto getById(@PathVariable("id") String id) {
@@ -33,7 +33,7 @@ public class PictureController {
     }
 
     @Operation(description = "Get all pictures")
-    @ApiResponse(description = "All pictures are found")
+    @ApiResponse(description = "All pictures are found", responseCode = "200")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<PictureDto> getAllPhotos() {
@@ -41,7 +41,7 @@ public class PictureController {
     }
 
     @Operation(description = "Add a new picture")
-    @ApiResponse(description = "Picture is added")
+    @ApiResponse(description = "Picture is added", responseCode = "201")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PictureDto postPhotos(@Valid @RequestBody PictureDto pictureDto) {
@@ -49,7 +49,7 @@ public class PictureController {
     }
 
     @Operation(description = "Update existed picture")
-    @ApiResponse(description = "Picture is successfully updated")
+    @ApiResponse(description = "Picture is successfully updated", responseCode = "200")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public PictureDto putPhotos(@Valid @RequestBody PictureDto pictureDto) {
@@ -57,7 +57,7 @@ public class PictureController {
     }
 
     @Operation(description = "Delete picture by id")
-    @ApiResponse(description = "Picture is successfully deleted")
+    @ApiResponse(description = "Picture is successfully deleted", responseCode = "204")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePhotos(@PathVariable("id") String id) {

@@ -25,7 +25,7 @@ public class FavoriteController {
     }
 
     @Operation(description = "Get favorite by customer and product ids")
-    @ApiResponse(description = "Favorite product by product id and customer id is found")
+    @ApiResponse(description = "Favorite product by product id and customer id is found", responseCode = "200")
     @GetMapping("/{productId}/{customerId}")
     @ResponseStatus(HttpStatus.OK)
     public FavoriteDto getFavorite(@PathVariable("productId") UUID productId,
@@ -34,7 +34,7 @@ public class FavoriteController {
     }
 
     @Operation(description = "Get all products from everyone's favorites")
-    @ApiResponse(description = "All favorites of all customers are found")
+    @ApiResponse(description = "All favorites of all customers are found", responseCode = "200")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<FavoriteDto> getAllFavorites() {
@@ -42,7 +42,7 @@ public class FavoriteController {
     }
 
     @Operation(description = "Get all products from customer's favorites")
-    @ApiResponse(description = "All customer's favorites are found")
+    @ApiResponse(description = "All customer's favorites are found", responseCode = "200")
     @GetMapping("/{customerId}")
     @ResponseStatus(HttpStatus.OK)
     public List<FavoriteDto> getAllCustomerFavorite(@PathVariable("customerId") UUID customerId) {
@@ -50,7 +50,7 @@ public class FavoriteController {
     }
 
     @Operation(description = "Add a new product in favorites")
-    @ApiResponse(description = "Favorite product is added to customer's favorites")
+    @ApiResponse(description = "Favorite product is added to customer's favorites", responseCode = "201")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public FavoriteDto postCustomer(@Valid @RequestBody FavoriteDto favoriteDto) {
@@ -58,7 +58,7 @@ public class FavoriteController {
     }
 
     @Operation(description = "Update existed product in favorites")
-    @ApiResponse(description = "Favorite product is successfully updated")
+    @ApiResponse(description = "Favorite product is successfully updated", responseCode = "200")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public FavoriteDto putCustomer(@Valid @RequestBody FavoriteDto favoriteDto) {
@@ -66,7 +66,7 @@ public class FavoriteController {
     }
 
     @Operation(description = "Delete favorite by id")
-    @ApiResponse(description = "Favorite product is successfully deleted from customer's favorites")
+    @ApiResponse(description = "Favorite product is successfully deleted from customer's favorites", responseCode = "204")
     @DeleteMapping("/{productId}/{customerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCustomer(@PathVariable("productId") UUID productId,

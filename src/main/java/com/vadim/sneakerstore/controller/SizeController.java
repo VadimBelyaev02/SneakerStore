@@ -25,7 +25,7 @@ public class SizeController {
     }
 
     @Operation(description = "Get size by id")
-    @ApiResponse(description = "Size is found")
+    @ApiResponse(description = "Size is found", responseCode = "200")
     @GetMapping("/sizes/{id}")
     @ResponseStatus(HttpStatus.OK)
     public SizeDto getSize(@PathVariable("id") UUID id) {
@@ -33,7 +33,7 @@ public class SizeController {
     }
 
     @Operation(description = "Get all sizes")
-    @ApiResponse(description = "All sizes are found")
+    @ApiResponse(description = "All sizes are found", responseCode = "200")
     @GetMapping("/sizes")
     @ResponseStatus(HttpStatus.OK)
     public List<SizeDto> getAllSizes() {
@@ -41,7 +41,7 @@ public class SizeController {
     }
 
     @Operation(description = "Get all product's sizes")
-    @ApiResponse(description = "All product's sizes are found")
+    @ApiResponse(description = "All product's sizes are found", responseCode = "200")
     @GetMapping("/products/{productId}/sizes")
     @ResponseStatus(HttpStatus.OK)
     public List<SizeDto> getAllProductSizes(@PathVariable("productId") UUID productId) {
@@ -49,7 +49,7 @@ public class SizeController {
     }
 
     @Operation(description = "Add a new size")
-    @ApiResponse(description = "Sizes is added")
+    @ApiResponse(description = "Sizes is added", responseCode = "201")
     @PostMapping("/sizes")
     @ResponseStatus(HttpStatus.CREATED)
     public SizeDto postSize(@Valid @RequestBody SizeDto sizeDto) {
@@ -57,7 +57,7 @@ public class SizeController {
     }
 
     @Operation(description = "Update existed size")
-    @ApiResponse(description = "Size is updated")
+    @ApiResponse(description = "Size is updated", responseCode = "200")
     @PutMapping("/sizes")
     @ResponseStatus(HttpStatus.OK)
     public SizeDto putSize(@Valid @RequestBody SizeDto sizeDto) {
@@ -65,7 +65,7 @@ public class SizeController {
     }
 
     @Operation(description = "Delete size by id")
-    @ApiResponse(description = "Size is deleted")
+    @ApiResponse(description = "Size is deleted", responseCode = "204")
     @DeleteMapping("/sizes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteSize(@PathVariable("id") UUID id) {

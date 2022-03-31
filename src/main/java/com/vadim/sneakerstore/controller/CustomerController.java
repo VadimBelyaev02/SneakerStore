@@ -26,7 +26,7 @@ public class CustomerController {
     }
 
     @Operation(description = "Get customer by id")
-    @ApiResponse(description = "Customer is found")
+    @ApiResponse(description = "Customer is found", responseCode = "200")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CustomerDto getCustomer(@PathVariable("id") UUID id) {
@@ -34,7 +34,7 @@ public class CustomerController {
     }
 
     @Operation(description = "Get all customers")
-    @ApiResponse(description = "All customers are found")
+    @ApiResponse(description = "All customers are found", responseCode = "200")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<CustomerDto> getAllCustomers() {
@@ -42,7 +42,7 @@ public class CustomerController {
     }
 
     @Operation(description = "Add a new customer")
-    @ApiResponse(description = "Customer is created")
+    @ApiResponse(description = "Customer is created", responseCode = "201")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerDto postCustomer(@Valid @RequestBody CustomerDto customerDto) {
@@ -50,7 +50,7 @@ public class CustomerController {
     }
 
     @Operation(description = "Update existed customer")
-    @ApiResponse(description = "Customer is updated")
+    @ApiResponse(description = "Customer is updated", responseCode = "200")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public CustomerDto putCustomer(@Valid @RequestBody CustomerDto customerDto) {
@@ -58,7 +58,7 @@ public class CustomerController {
     }
 
     @Operation(description = "Delete customer by id")
-    @ApiResponse(description = "Customer is deleted")
+    @ApiResponse(description = "Customer is deleted", responseCode = "204")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCustomer(@PathVariable("id") UUID id) {

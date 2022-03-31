@@ -25,7 +25,7 @@ public class OrderController {
     }
 
     @Operation(description = "Get order by its id")
-    @ApiResponse(description = "Order is found")
+    @ApiResponse(description = "Order is found", responseCode = "200")
     @GetMapping("/orders/{id}")
     @ResponseStatus(HttpStatus.OK)
     public OrderDto getOrder(@PathVariable("id") UUID id) {
@@ -33,7 +33,7 @@ public class OrderController {
     }
 
     @Operation(description = "Get all orders")
-    @ApiResponse(description = "All orders are found")
+    @ApiResponse(description = "All orders are found", responseCode = "200")
     @GetMapping("/orders")
     @ResponseStatus(HttpStatus.OK)
     public List<OrderDto> getAllOrders() {
@@ -41,7 +41,7 @@ public class OrderController {
     }
 
     @Operation(description = "Get all customer's order")
-    @ApiResponse(description = "All customer's orders are found")
+    @ApiResponse(description = "All customer's orders are found", responseCode = "200")
     @GetMapping("/customers/{customerId}/orders")
     @ResponseStatus(HttpStatus.OK)
     public List<OrderDto> getAllOrdersByCustomerId(@PathVariable("customerId") UUID customerId) {
@@ -49,7 +49,7 @@ public class OrderController {
     }
 
     @Operation(description = "Save a new order")
-    @ApiResponse(description = "Order is successfully created")
+    @ApiResponse(description = "Order is successfully created", responseCode = "201")
     @PostMapping("/orders")
     @ResponseStatus(HttpStatus.CREATED)
     public OrderDto postOrder(@Valid @RequestBody OrderDto orderDto) {
@@ -57,7 +57,7 @@ public class OrderController {
     }
 
     @Operation(description = "Update existed order")
-    @ApiResponse(description = "Order is successfully updated")
+    @ApiResponse(description = "Order is successfully updated", responseCode = "200")
     @PutMapping("/orders")
     @ResponseStatus(HttpStatus.OK)
     public OrderDto putOrder(@Valid @RequestBody OrderDto orderDto) {
@@ -65,7 +65,7 @@ public class OrderController {
     }
 
     @Operation(description = "Delete existed order")
-    @ApiResponse(description = "Order is successfully deleted")
+    @ApiResponse(description = "Order is successfully deleted", responseCode = "204")
     @DeleteMapping("/orders/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteOrder(@PathVariable("id") UUID id) {

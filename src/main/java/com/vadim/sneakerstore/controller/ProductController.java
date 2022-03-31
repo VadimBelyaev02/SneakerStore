@@ -27,7 +27,7 @@ public class ProductController {
     }
 
     @Operation(description = "Get product by id")
-    @ApiResponse(description = "Product is found")
+    @ApiResponse(description = "Product is found", responseCode = "200")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ProductDto getProduct(@PathVariable("id") UUID id) {
@@ -37,7 +37,7 @@ public class ProductController {
     }
 
     @Operation(description = "Get all products")
-    @ApiResponse(description = "All products are found")
+    @ApiResponse(description = "All products are found", responseCode = "200")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ProductDto> findAllTest(@RequestParam(value = "size", defaultValue = "21") int size,
@@ -47,7 +47,7 @@ public class ProductController {
     }
 
     @Operation(description = "Add a new product")
-    @ApiResponse(description = "Product is successfully created")
+    @ApiResponse(description = "Product is successfully created", responseCode = "201")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProductDto postProduct(@Valid @RequestBody ProductDto productDto) {
@@ -55,7 +55,7 @@ public class ProductController {
     }
 
     @Operation(description = "Update existed product")
-    @ApiResponse(description = "Product is successfully updated")
+    @ApiResponse(description = "Product is successfully updated", responseCode = "200")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public ProductDto putProduct(@Valid @RequestBody ProductDto productDto) {
@@ -63,7 +63,7 @@ public class ProductController {
     }
 
     @Operation(description = "Delete product by id")
-    @ApiResponse(description = "Product is successfully deleted")
+    @ApiResponse(description = "Product is successfully deleted", responseCode = "204")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(@PathVariable("id") UUID id) {
