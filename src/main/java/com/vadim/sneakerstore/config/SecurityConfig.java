@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {//} implements
                     .and()
                     .authorizeRequests()
                     // .antMatchers(HttpMethod.GET, "/**").permitAll()
-                    .antMatchers(HttpMethod.GET, "/api/**").permitAll()
+                    .antMatchers(HttpMethod.GET, "/**").permitAll()
                     .antMatchers(HttpMethod.POST, "/api/**").hasAuthority(Permission.WRITE.getPermission())
                     .antMatchers(HttpMethod.PUT, "/api/**").hasAuthority(Permission.UPDATE.getPermission())
                     .antMatchers(HttpMethod.DELETE, "/api/**").hasAuthority(Permission.DELETE.getPermission())
