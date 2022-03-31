@@ -64,7 +64,7 @@ public class AddressController {
     @ApiResponse(description = "Address is successfully updated", responseCode = "200")
     @PutMapping("/addresses")
     @ResponseStatus(HttpStatus.OK)
-    public AddressDto putAddresses(@Parameter(description = "Contains new fields")
+    public AddressDto putAddresses(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains new fields")
                                    @Valid @RequestBody AddressDto addressDto) {
         return service.update(addressDto);
     }
