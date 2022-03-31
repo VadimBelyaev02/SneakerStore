@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -65,52 +67,78 @@ public class CustomerServiceUnitTest {
 
     @Test
     public void shouldReturnAllCustomers() {
-        List<Customer> customers = new ArrayList<>();
-        List<CustomerDto> customerDtos = new ArrayList<>();
         Customer customer = new Customer();
         CustomerDto customerDto = new CustomerDto();
-        customers.add(new Customer());
-        customers.add(new Customer());
-        customers.add(new Customer());
-
-        customerDtos.add(new CustomerDto());
-        customerDtos.add(new CustomerDto());
-        customerDtos.add(new CustomerDto());
+        List<Customer> customers = Stream.of(customer, customer)
+                .collect(Collectors.toList());
+        List<CustomerDto> customerDtos = Stream.of(customerDto, customerDto)
+                .collect(Collectors.toList());
 
         when(repository.findAll()).thenReturn(customers);
-        when(converter.convertToDto(new Customer())).thenReturn(new CustomerDto());
+        when(converter.convertToDto(customer)).thenReturn(customerDto);
 
         assertEquals(service.getAll(), customerDtos);
 
         verify(repository, only()).findAll();
-        verify(converter, times(3)).convertToDto(new Customer());
+        verify(converter, times(2)).convertToDto(customer);
     }
 
     @Test
     public void shouldSaveNewCustomer() {
         String email = "vadimbelaev002@gmail.com";
+        String phone = "123456789";
         Customer customer = new Customer();
         CustomerDto customerDto = new CustomerDto();
+        customerDto.setPhone(phone);
+        customerDto.setEmail(email);
 
+        when(repository.existsByPhoneAndEmail(phone, email)).thenReturn(false);
+        when(repository.existsByPhone(phone)).thenReturn(false);
         when(repository.existsByEmail(email)).thenReturn(false);
         when(converter.convertToDto(customer)).thenReturn(customerDto);
         when(converter.convertToEntity(customerDto)).thenReturn(customer);
         when(repository.save(customer)).thenReturn(customer);
 
         assertEquals(service.save(customerDto), customerDto);
+
+        verify(repository, times(1)).existsByEmail(email);
+        verify(repository, times(1)).existsByPhone(phone);
+        verify(repository, times(1)).existsByPhoneAndEmail(phone, email);
+        verify(repository, times(1)).save(customer);
+        verify(converter, times(1)).convertToDto(customer);
+        verify(converter, times(1)).convertToEntity(customerDto);
     }
+    /*
+            if (repository.existsByPhoneAndEmail(customerDto.getPhone(), customerDto.getEmail())) {
+            throw new AlreadyExistsException("Customer with phone  = " + customerDto.getPhone()
+                    + " and email = " + customerDto.getEmail() + " already exists");
+        }
+        if (repository.existsByPhone(customerDto.getPhone())) {
+            throw new AlreadyExistsException("Customer with phone = " + customerDto.getPhone() + " already exists");
+        }
+        if (repository.existsByEmail(customerDto.getEmail())) {
+            throw new AlreadyExistsException("Customer with email = " + customerDto.getEmail() + " already exists");
+        }
+        Customer customer = repository.save(converter.convertToEntity(customerDto));
+        return converter.convertToDto(customer);
+     */
 
     @Test
     public void shouldThrowsAlreadyExistsException() {
         String email = "vadimbelaev002@gmail.com";
+        String phone = "123456789";
         Customer customer = new Customer();
         CustomerDto customerDto = new CustomerDto();
+        customerDto.setPhone(phone);
+        customerDto.setEmail(email);
 
-        when(repository.existsByEmail(email)).thenReturn(true);
+        when(repository.existsByPhoneAndEmail(phone, email)).thenReturn(true);
 
         assertThrows(AlreadyExistsException.class, () -> service.save(customerDto));
 
-        verify(repository, only()).existsByEmail(email);
+        verify(repository, only()).existsByPhoneAndEmail(phone, email);
+        verify(repository, never()).existsByEmail(email);
+        verify(repository, never()).existsByPhone(phone);
         verify(repository, never()).save(customer);
         verify(converter, never()).convertToDto(customer);
         verify(converter, never()).convertToEntity(customerDto);
@@ -122,21 +150,22 @@ public class CustomerServiceUnitTest {
         Customer customer = new Customer();
         CustomerDto customerDto = new CustomerDto();
 
-        when(repository.existsByEmail(email)).thenReturn(true);
-       // when(repository.save())
+        // when(repository.existsByEmail(email)).thenReturn(true);
+        // when(repository.save())
     }
 
     @Test
     public void shouldThrowNotFoundExceptionWhileUpdating() {
-        String email = "vadimbelaev002@gmail.com";
+        UUID id = UUID.randomUUID();
         CustomerDto customerDto = new CustomerDto();
         Customer customer = new Customer();
+        customerDto.setId(id);
 
-        when(repository.existsByEmail(email)).thenReturn(false);
+        when(repository.existsById(id)).thenReturn(false);
 
         assertThrows(NotFoundException.class, () -> service.update(customerDto));
 
-        verify(repository, only()).existsByEmail(email);
+        verify(repository, only()).existsById(id);
         verify(repository, never()).save(customer);
         verify(converter, never()).convertToEntity(customerDto);
         verify(converter, never()).convertToDto(customer);

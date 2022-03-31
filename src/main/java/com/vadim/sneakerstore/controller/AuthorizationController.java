@@ -33,7 +33,7 @@ public class AuthorizationController {
     }
 
     @Operation(description = "Login into the system")
-    @ApiResponse(description = "Account is logged in")
+    @ApiResponse(description = "Account is logged in", responseCode = "200")
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public CustomerDto login(@Valid @RequestBody AuthorizationRequestDto requestDto) {
@@ -41,7 +41,7 @@ public class AuthorizationController {
     }
 
     @Operation(description = "Register in the system")
-    @ApiResponse(description = "Account is registered")
+    @ApiResponse(description = "Account is registered", responseCode = "201")
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerDto register(@Valid @RequestBody RegistrationRequestDto requestDto) {

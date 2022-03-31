@@ -57,12 +57,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public ProductDto update(ProductDto productDto) {
-        if (!repository.existsByName(productDto.getName())) {
-            throw new NotFoundException("Product with name =" + productDto.getName() + " is not found");
+        if (!repository.existsById(productDto.getId())) {
+            throw new NotFoundException("Product with id = " + productDto.getId() + " is not found");
         }
-        if (Objects.nonNull(productDto.getId()) && repository.existsById(productDto.getId())) {
-            throw new AlreadyExistsException("Product with id = " + productDto.getId() + " already exists");
-        }
+//        if (!repository.existsByName(productDto.getName())) {
+//            throw new NotFoundException("Product with name =" + productDto.getName() + " is not found");
+//        }
+//        if (Objects.nonNull(productDto.getId()) && repository.existsById(productDto.getId())) {
+//            throw new AlreadyExistsException("Product with id = " + productDto.getId() + " already exists");
+//        }
         Product product = converter.convertToEntity(productDto);
         return converter.convertToDto(product);
     }

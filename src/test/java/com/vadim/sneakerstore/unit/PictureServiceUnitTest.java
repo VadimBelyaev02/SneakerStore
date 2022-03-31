@@ -100,6 +100,7 @@ public class PictureServiceUnitTest {
         String id = UUID.randomUUID().toString();
         Picture picture = new Picture();
         PictureDto pictureDto = new PictureDto();
+        pictureDto.setLink(id);
 
         when(repository.existsById(id)).thenReturn(false);
         when(repository.save(picture)).thenReturn(picture);
@@ -119,6 +120,7 @@ public class PictureServiceUnitTest {
         String id = UUID.randomUUID().toString();
         Picture picture = new Picture();
         PictureDto pictureDto = new PictureDto();
+        pictureDto.setLink(id);
 
         when(repository.existsById(id)).thenReturn(true);
 

@@ -29,7 +29,7 @@ public class CommentController {
     }
 
     @Operation(description = "Get all comments")
-    @ApiResponse(description = "All comments are found")
+    @ApiResponse(description = "All comments are found", responseCode = "200")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<CommentDto> getAllComments() {
@@ -37,7 +37,7 @@ public class CommentController {
     }
 
     @Operation(description = "Get a comment by its id")
-    @ApiResponse(description = "Comment is found")
+    @ApiResponse(description = "Comment is found", responseCode = "200")
     @GetMapping("/comments/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CommentDto getComment(@Parameter(description = "Id of needed comment")
@@ -46,7 +46,7 @@ public class CommentController {
     }
 
     @Operation(description = "Get all product's comments")
-    @ApiResponse(description = "All product's comments are found")
+    @ApiResponse(description = "All product's comments are found", responseCode = "200")
     @GetMapping("/products/{productId}/comments")
     @ResponseStatus(HttpStatus.OK)
     public List<CommentDto> getAllProductComments(@PathVariable("productId") UUID productId) {
@@ -54,7 +54,7 @@ public class CommentController {
     }
 
     @Operation(description = "Add a new comment")
-    @ApiResponse(description = "Comment is successfully added")
+    @ApiResponse(description = "Comment is successfully added", responseCode = "201")
     @PostMapping("/comments")
     @ResponseStatus(HttpStatus.CREATED)
     public CommentDto postComment(@Parameter(description = "Object that will be saved")
@@ -63,7 +63,7 @@ public class CommentController {
     }
 
     @Operation(description = "Update existed comment")
-    @ApiResponse(description = "Comment is successfully updated")
+    @ApiResponse(description = "Comment is successfully updated", responseCode = "200")
     @PutMapping("/comments")
     @ResponseStatus(HttpStatus.OK)
     public CommentDto putComment(@Parameter(description = "Contains updated fields of existed comment")
@@ -72,7 +72,7 @@ public class CommentController {
     }
 
     @Operation(description = "Delete a comment by its id")
-    @ApiResponse(description = "Comment is successfully deleted")
+    @ApiResponse(description = "Comment is successfully deleted", responseCode = "204")
     @DeleteMapping("/comments/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteComment(@Parameter(description = "Id of object that will be deleted")

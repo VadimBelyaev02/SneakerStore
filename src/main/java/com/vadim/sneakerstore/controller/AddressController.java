@@ -25,7 +25,7 @@ public class AddressController {
     }
 
     @Operation(description = "Get address by its id")
-    @ApiResponse(description = "Address is found")
+    @ApiResponse(description = "Address is found", responseCode = "200")
     @GetMapping("/addresses/{id}")
     @ResponseStatus(HttpStatus.OK)
     public AddressDto getAddress(@PathVariable("id") UUID id) {
@@ -33,7 +33,7 @@ public class AddressController {
     }
 
     @Operation(description = "Get all addresses")
-    @ApiResponse(description = "Addresses are found")
+    @ApiResponse(description = "Addresses are found", responseCode = "200")
     @GetMapping("/addresses")
     @ResponseStatus(HttpStatus.OK)
     public List<AddressDto> getAllAddresses() {
@@ -41,7 +41,7 @@ public class AddressController {
     }
 
     @Operation(description = "Get all customer's addresses")
-    @ApiResponse(description = "All customer's addresses are found")
+    @ApiResponse(description = "All customer's addresses are found", responseCode = "200")
     @GetMapping("/customers/{customerId}/addresses")
     @ResponseStatus(HttpStatus.OK)
     public List<AddressDto> getAllByCustomerId(@PathVariable("customerId") UUID customerId) {
@@ -49,7 +49,7 @@ public class AddressController {
     }
 
     @Operation(description = "Save a new address")
-    @ApiResponse(description = "Address is successfully saved")
+    @ApiResponse(description = "Address is successfully saved", responseCode = "201")
     @PostMapping("/addresses")
     @ResponseStatus(HttpStatus.CREATED)
     public AddressDto postAddresses(@Valid @RequestBody AddressDto addressDto) {
@@ -57,7 +57,7 @@ public class AddressController {
     }
 
     @Operation(description = "Update existed address")
-    @ApiResponse(description = "Address is successfully updated")
+    @ApiResponse(description = "Address is successfully updated", responseCode = "200")
     @PutMapping("/addresses")
     @ResponseStatus(HttpStatus.OK)
     public AddressDto putAddresses(@Valid @RequestBody AddressDto addressDto) {
@@ -65,7 +65,7 @@ public class AddressController {
     }
 
     @Operation(description = "Delete existed address by its id")
-    @ApiResponse(description = "Address is successfully deleted")
+    @ApiResponse(description = "Address is successfully deleted", responseCode = "204")
     @DeleteMapping("/addresses/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAddress(@PathVariable("id") UUID id) {

@@ -27,7 +27,7 @@ public class CardController {
     }
 
     @Operation(description = "Add a new card")
-    @ApiResponse(description = "Card is created")
+    @ApiResponse(description = "Card is created", responseCode = "201")
     @PostMapping("/cards")
     @ResponseStatus(HttpStatus.CREATED)
     public CardDto postCard(@Parameter(description = "Contains info about card")
@@ -36,7 +36,7 @@ public class CardController {
     }
 
     @Operation(description = "Delete a card by id")
-    @ApiResponse(description = "Card is deleted")
+    @ApiResponse(description = "Card is deleted", responseCode = "204")
     @DeleteMapping("/cards/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCard(@Parameter(description = "Id of deleted card")
@@ -45,7 +45,7 @@ public class CardController {
     }
 
     @Operation(description = "Get customer's cards by his id")
-    @ApiResponse(description = "All customer's cards are found")
+    @ApiResponse(description = "All customer's cards are found", responseCode = "200")
     @GetMapping("/customers/{customerId}/cards")
     @ResponseStatus(HttpStatus.OK)
     public List<CardDto> getCustomerCards(@Parameter(description = "Id of a customer that has this card")
@@ -54,7 +54,7 @@ public class CardController {
     }
 
     @Operation(description = "Update existed card")
-    @ApiResponse(description = "Card is updated")
+    @ApiResponse(description = "Card is updated", responseCode = "200")
     @PutMapping("/cards")
     @ResponseStatus(HttpStatus.OK)
     public CardDto putCard(@Parameter(description = "Contains info about card")

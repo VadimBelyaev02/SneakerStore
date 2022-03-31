@@ -3,6 +3,7 @@ package com.vadim.sneakerstore.unit;
 import com.vadim.sneakerstore.dto.OrderDto;
 import com.vadim.sneakerstore.dto.converter.OrderConverter;
 import com.vadim.sneakerstore.entity.Order;
+import com.vadim.sneakerstore.exception.AlreadyExistsException;
 import com.vadim.sneakerstore.exception.NotFoundException;
 import com.vadim.sneakerstore.repository.OrderRepository;
 import com.vadim.sneakerstore.service.impl.OrderServiceImpl;
@@ -96,6 +97,7 @@ public class OrderUnitTest {
         UUID id = UUID.randomUUID();
         Order order = new Order();
         OrderDto orderDto = new OrderDto();
+        orderDto.setId(id);
 
         when(repository.existsById(id)).thenReturn(false);
         when(repository.save(order)).thenReturn(order);
@@ -115,16 +117,14 @@ public class OrderUnitTest {
         UUID id = UUID.randomUUID();
         Order order = new Order();
         OrderDto orderDto = new OrderDto();
+        orderDto.setId(id);
 
-        when(repository.existsById(id)).thenReturn(false);
-        when(repository.save(order)).thenReturn(order);
-        when(converter.convertToDto(order)).thenReturn(orderDto);
-        when(converter.convertToEntity(orderDto)).thenReturn(order);
+        when(repository.existsById(id)).thenReturn(true);
 
-        assertEquals(service.save(orderDto), orderDto);
+        assertThrows(AlreadyExistsException.class, () -> service.save(orderDto));
 
         verify(repository, never()).save(order);
-        verify(repository, times(1)).existsById(id);
+        verify(repository, only()).existsById(id);
         verify(converter, never()).convertToDto(order);
         verify(converter, never()).convertToEntity(orderDto);
     }
@@ -137,14 +137,17 @@ public class OrderUnitTest {
     @Test
     public void shouldThrowsNotFoundExceptionWhileUpdating() {
         UUID id = UUID.randomUUID();
+        OrderDto orderDto = new OrderDto();
+        Order order = new Order();
+        orderDto.setId(id);
 
         when(repository.existsById(id)).thenReturn(false);
 
-        assertThrows(NotFoundException.class, () -> service.update(new OrderDto()));
+        assertThrows(NotFoundException.class, () -> service.update(orderDto));
 
         verify(repository, only()).existsById(id);
-        verify(converter, never()).convertToEntity(new OrderDto());
-        verify(converter, never()).convertToDto(new Order());
+        verify(converter, never()).convertToEntity(orderDto);
+        verify(converter, never()).convertToDto(order);
     }
 
     @Test
@@ -164,12 +167,12 @@ public class OrderUnitTest {
         Order order = new Order();
         OrderDto orderDto = new OrderDto();
         List<Order> orders = Stream.of(order, order, order)
-                        .collect(Collectors.toList());
+                .collect(Collectors.toList());
         List<OrderDto> orderDtos = Stream.of(orderDto, orderDto, orderDto)
-                        .collect(Collectors.toList());
+                .collect(Collectors.toList());
 
         when(repository.findAllByCustomerId(customerId)).thenReturn(orders);
-        when(converter.convertToEntity(orderDto)).thenReturn(order);
+        when(converter.convertToDto(order)).thenReturn(orderDto);
 
         assertEquals(service.getAllByCustomerId(customerId), orderDtos);
 

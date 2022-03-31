@@ -25,7 +25,7 @@ public class CartController {
     }
 
     @Operation(description = "Get product from customer's cart by composite id")
-    @ApiResponse(description = "All products from customer's cart are found")
+    @ApiResponse(description = "All products from customer's cart are found", responseCode = "200")
     @GetMapping("/{customerId}/{productId}")
     @ResponseStatus(HttpStatus.OK)
     public CartDto getCart(@PathVariable("customerId") UUID customerId,
@@ -34,7 +34,7 @@ public class CartController {
     }
 
     @Operation(description = "Get all products from customer's cart by his id")
-    @ApiResponse(description = "All products from customer's cart are found")
+    @ApiResponse(description = "All products from customer's cart are found", responseCode = "200")
     @GetMapping("/{customerId}")
     @ResponseStatus(HttpStatus.OK)
     public List<CartDto> getByCustomerId(@PathVariable("customerId") UUID customerId) {
@@ -42,7 +42,7 @@ public class CartController {
     }
 
     @Operation(description = "Get all products from all carts")
-    @ApiResponse(description = "All carts are found")
+    @ApiResponse(description = "All carts are found", responseCode = "200")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<CartDto> getAllCarts() {
@@ -50,7 +50,7 @@ public class CartController {
     }
 
     @Operation(description = "Save a new product in the cart")
-    @ApiResponse(description = "A new product is added in cart")
+    @ApiResponse(description = "A new product is added in cart", responseCode = "201")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CartDto postCarts(@Valid @RequestBody CartDto cartDto) {
@@ -58,7 +58,7 @@ public class CartController {
     }
 
     @Operation(description = "Updated existed product in the cart")
-    @ApiResponse(description = "Product in cart is updated")
+    @ApiResponse(description = "Product in cart is updated", responseCode = "200")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public CartDto putCarts(@Valid @RequestBody CartDto cartDto) {
@@ -66,7 +66,7 @@ public class CartController {
     }
 
     @Operation(description = "Delete existed product from the cart")
-    @ApiResponse(description = "Product is deleted from cart")
+    @ApiResponse(description = "Product is deleted from cart", responseCode = "204")
     @DeleteMapping("/{customerId}/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCarts(@PathVariable("customerId") UUID customerId,
