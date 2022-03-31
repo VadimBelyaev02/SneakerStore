@@ -55,7 +55,7 @@ public class SizeController {
     @ApiResponse(description = "Sizes is added", responseCode = "201")
     @PostMapping("/sizes")
     @ResponseStatus(HttpStatus.CREATED)
-    public SizeDto postSize(@Parameter(description = "Contains info about a new size")
+    public SizeDto postSize(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains info about a new size")
                             @Valid @RequestBody SizeDto sizeDto) {
         return service.save(sizeDto);
     }
@@ -64,7 +64,7 @@ public class SizeController {
     @ApiResponse(description = "Size is updated", responseCode = "200")
     @PutMapping("/sizes")
     @ResponseStatus(HttpStatus.OK)
-    public SizeDto putSize(@Parameter(description = "Contains info about new size's fields")
+    public SizeDto putSize(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains info about new size's fields")
                            @Valid @RequestBody SizeDto sizeDto) {
         return service.update(sizeDto);
     }

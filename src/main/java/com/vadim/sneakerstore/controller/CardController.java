@@ -30,7 +30,7 @@ public class CardController {
     @ApiResponse(description = "Card is created", responseCode = "201")
     @PostMapping("/cards")
     @ResponseStatus(HttpStatus.CREATED)
-    public CardDto postCard(@Parameter(description = "Contains info about card")
+    public CardDto postCard(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains info about card")
                             @Valid @RequestBody CardDto cardDto) {
         return cardService.save(cardDto);
     }
@@ -57,7 +57,7 @@ public class CardController {
     @ApiResponse(description = "Card is updated", responseCode = "200")
     @PutMapping("/cards")
     @ResponseStatus(HttpStatus.OK)
-    public CardDto putCard(@Parameter(description = "Contains info about card")
+    public CardDto putCard(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains info about card")
                            @Valid @RequestBody CardDto cardDto) {
         return cardService.update(cardDto);
     }

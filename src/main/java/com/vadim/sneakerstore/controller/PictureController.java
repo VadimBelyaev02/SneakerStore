@@ -45,7 +45,7 @@ public class PictureController {
     @ApiResponse(description = "Picture is added", responseCode = "201")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PictureDto postPhotos(@Parameter(description = "Contains info about a new picture")
+    public PictureDto postPhotos(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains info about a new picture")
                                  @Valid @RequestBody PictureDto pictureDto) {
         return service.save(pictureDto);
     }
@@ -54,7 +54,7 @@ public class PictureController {
     @ApiResponse(description = "Picture is successfully updated", responseCode = "200")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public PictureDto putPhotos(@Parameter(description = "Contains info about new picture's info")
+    public PictureDto putPhotos(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains info about new picture's info")
                                 @Valid @RequestBody PictureDto pictureDto) {
         return service.update(pictureDto);
     }

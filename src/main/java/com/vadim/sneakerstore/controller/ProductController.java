@@ -54,7 +54,7 @@ public class ProductController {
     @ApiResponse(description = "Product is successfully created", responseCode = "201")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductDto postProduct(@Parameter(description = "Contains info about a new product")
+    public ProductDto postProduct(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains info about a new product")
                                   @Valid @RequestBody ProductDto productDto) {
         return productService.save(productDto);
     }
@@ -63,7 +63,7 @@ public class ProductController {
     @ApiResponse(description = "Product is successfully updated", responseCode = "200")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public ProductDto putProduct(@Parameter(description = "Contains info about new product's fields")
+    public ProductDto putProduct(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains info about new product's fields")
                                  @Valid @RequestBody ProductDto productDto) {
         return productService.update(productDto);
     }

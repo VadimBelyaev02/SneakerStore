@@ -55,7 +55,7 @@ public class OrderController {
     @ApiResponse(description = "Order is successfully created", responseCode = "201")
     @PostMapping("/orders")
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderDto postOrder(@Parameter(description = "Contains info about a new order")
+    public OrderDto postOrder(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains info about a new order")
                               @Valid @RequestBody OrderDto orderDto) {
         return service.save(orderDto);
     }
@@ -64,7 +64,7 @@ public class OrderController {
     @ApiResponse(description = "Order is successfully updated", responseCode = "200")
     @PutMapping("/orders")
     @ResponseStatus(HttpStatus.OK)
-    public OrderDto putOrder(@Parameter(description = "Contains info about new order's fields")
+    public OrderDto putOrder(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains info about new order's fields")
                              @Valid @RequestBody OrderDto orderDto) {
         return service.update(orderDto);
     }

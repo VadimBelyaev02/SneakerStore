@@ -57,7 +57,7 @@ public class CartController {
     @ApiResponse(description = "A new product is added in cart", responseCode = "201")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CartDto postCarts(@Parameter(description = "Contains info about new cart")
+    public CartDto postCarts(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains info about new cart")
                              @Valid @RequestBody CartDto cartDto) {
         return service.save(cartDto);
     }
@@ -66,7 +66,7 @@ public class CartController {
     @ApiResponse(description = "Product in cart is updated", responseCode = "200")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public CartDto putCarts(@Parameter(description = "Contains info about new field of customer's cart")
+    public CartDto putCarts(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains info about new field of customer's cart")
                             @Valid @RequestBody CartDto cartDto) {
         return service.update(cartDto);
     }

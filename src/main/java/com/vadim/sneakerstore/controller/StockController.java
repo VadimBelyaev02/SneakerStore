@@ -3,6 +3,7 @@ package com.vadim.sneakerstore.controller;
 import com.vadim.sneakerstore.dto.StockDto;
 import com.vadim.sneakerstore.service.StockService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,8 @@ public class StockController {
     @ApiResponse(description = "Stock is found", responseCode = "200")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public StockDto getById(@PathVariable("id") UUID id) {
+    public StockDto getById(@Parameter(description = "Id of needed stock")
+                            @PathVariable("id") UUID id) {
         return service.getById(id);
     }
 
@@ -44,7 +46,8 @@ public class StockController {
     @ApiResponse(description = "Stock is added", responseCode = "201")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public StockDto postStocks(@Valid @RequestBody StockDto stockDto) {
+    public StockDto postStocks(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains info about a new stock")
+                               @Valid @RequestBody StockDto stockDto) {
         return service.save(stockDto);
     }
 
@@ -52,7 +55,9 @@ public class StockController {
     @ApiResponse(description = "Stock is successfully updated", responseCode = "200")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public StockDto putStocks(@Valid @RequestBody StockDto stockDto) {
+    public StockDto putStocks(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains info about updated stock")
+            @Valid @RequestBody StockDto stockDto) {
         return service.update(stockDto);
     }
 
@@ -60,10 +65,11 @@ public class StockController {
     @ApiResponse(description = "Stock is successfully deleted", responseCode = "204")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteStocks(@PathVariable("id") UUID id) {
+    public void deleteStocks(
+            @Parameter(description = "Id of deleted stock")
+            @PathVariable("id") UUID id) {
         service.deleteById(id);
     }
-
 
 
 }

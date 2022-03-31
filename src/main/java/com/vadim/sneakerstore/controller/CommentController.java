@@ -58,7 +58,7 @@ public class CommentController {
     @ApiResponse(description = "Comment is successfully added", responseCode = "201")
     @PostMapping("/comments")
     @ResponseStatus(HttpStatus.CREATED)
-    public CommentDto postComment(@Parameter(description = "Object that will be saved")
+    public CommentDto postComment(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Object that will be saved")
                                   @Valid @RequestBody CommentDto commentDto) {
         return service.save(commentDto);
     }
@@ -67,7 +67,7 @@ public class CommentController {
     @ApiResponse(description = "Comment is successfully updated", responseCode = "200")
     @PutMapping("/comments")
     @ResponseStatus(HttpStatus.OK)
-    public CommentDto putComment(@Parameter(description = "Contains updated fields of existed comment")
+    public CommentDto putComment(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains updated fields of existed comment")
                                  @Valid @RequestBody CommentDto commentDto) {
         return service.update(commentDto);
     }

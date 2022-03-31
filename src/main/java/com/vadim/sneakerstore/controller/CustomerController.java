@@ -47,7 +47,7 @@ public class CustomerController {
     @ApiResponse(description = "Customer is created", responseCode = "201")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CustomerDto postCustomer(@Parameter(description = "Contains info about fields of a new customer")
+    public CustomerDto postCustomer(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains info about fields of a new customer")
                                     @Valid @RequestBody CustomerDto customerDto) {
         return customerService.save(customerDto);
     }
@@ -56,7 +56,7 @@ public class CustomerController {
     @ApiResponse(description = "Customer is updated", responseCode = "200")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public CustomerDto putCustomer(@Parameter(description = "Contains info about new customer's field")
+    public CustomerDto putCustomer(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains info about new customer's field")
                                    @Valid @RequestBody CustomerDto customerDto) {
         return customerService.update(customerDto);
     }

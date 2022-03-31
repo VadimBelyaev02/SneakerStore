@@ -55,7 +55,7 @@ public class AddressController {
     @ApiResponse(description = "Address is successfully saved", responseCode = "201")
     @PostMapping("/addresses")
     @ResponseStatus(HttpStatus.CREATED)
-    public AddressDto postAddresses(@Parameter(description = "Contains info about new address")
+    public AddressDto postAddresses(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains info about new address")
                                     @Valid @RequestBody AddressDto addressDto) {
         return service.save(addressDto);
     }

@@ -57,7 +57,7 @@ public class FavoriteController {
     @ApiResponse(description = "Favorite product is added to customer's favorites", responseCode = "201")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public FavoriteDto postCustomer(@Parameter(description = "Contains info about new someone's favorite product")
+    public FavoriteDto postCustomer(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains info about new someone's favorite product")
                                     @Valid @RequestBody FavoriteDto favoriteDto) {
         return service.save(favoriteDto);
     }
@@ -66,7 +66,7 @@ public class FavoriteController {
     @ApiResponse(description = "Favorite product is successfully updated", responseCode = "200")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public FavoriteDto putCustomer(@Parameter(description = "Contains info about updated customer's favorite product")
+    public FavoriteDto putCustomer(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Contains info about updated customer's favorite product")
                                    @Valid @RequestBody FavoriteDto favoriteDto) {
         return service.update(favoriteDto);
     }
