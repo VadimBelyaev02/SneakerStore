@@ -61,6 +61,34 @@ public class SizeIntegrationTest {
     }
 
     @Test
+    public void shouldReturnUnsupportedMediaType() throws Exception {
+        mockMvc.perform(put(ENDPOINT).contentType(MediaType.APPLICATION_XML)
+                        .contentType(toJson(sizeDto)))
+                .andDo(print())
+                .andExpect(status().isUnsupportedMediaType());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWithEmptyBody() throws Exception {
+        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+                        .content(""))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWithNullField() throws Exception {
+        Integer oldSize = sizeDto.getSize();
+        sizeDto.setSize(null);
+
+        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(sizeDto)))
+                .andExpect(status().isBadRequest());
+
+        sizeDto.setSize(oldSize);
+    }
+
+    @Test
     public void shouldReturnConflict() throws Exception {
         mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
                         .content(toJson(sizeDto)))
@@ -76,7 +104,6 @@ public class SizeIntegrationTest {
                 .andDo(print())
                 .andExpect(status().isConflict())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-        // may also the message itself
     }
 
     @Test
