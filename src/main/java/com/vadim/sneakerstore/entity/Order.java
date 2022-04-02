@@ -44,6 +44,4 @@ public class Order {
     @Column(name = "payment")
     private String payment;
 
-
-//    private Stock stock;
 }
