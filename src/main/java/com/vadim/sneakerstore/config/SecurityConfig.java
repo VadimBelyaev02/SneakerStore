@@ -80,7 +80,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {//} implements
 
                     .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                     .antMatchers(HttpMethod.POST, "/api/register").permitAll()
-                    .antMatchers(HttpMethod.POST, "/api/customers").hasAuthority(Permission.WRITE.getPermission())
+                    //.antMatchers(HttpMethod.POST, "/api/customers").hasAuthority(Permission.WRITE.getPermission())
+                    .antMatchers(HttpMethod.POST, "/api/customers").permitAll()
                     .antMatchers(HttpMethod.POST, "/api/comments").permitAll()
                     .antMatchers(HttpMethod.POST, "/api/cards").authenticated()
                     .antMatchers(HttpMethod.POST, "/api/forgot_password").permitAll()

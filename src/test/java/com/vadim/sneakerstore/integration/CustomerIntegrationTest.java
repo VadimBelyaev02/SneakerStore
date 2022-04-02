@@ -45,7 +45,7 @@ public class CustomerIntegrationTest {
         customerDto = CustomerDto.builder()
                 .id(UUID.fromString("898a0dfe-ac53-11ec-b909-0242ac120002"))
                 .avatar("avatar")
-                .email("email")
+                .email("email@gmail.com")
                 .firstName("firstName")
                 .lastName("lastName")
                 .phone("phone")
@@ -85,7 +85,7 @@ public class CustomerIntegrationTest {
     public void shouldReturnBadRequestWithEmptyId() throws Exception {
         mockMvc.perform(get(ENDPOINT + "/{id}", ""))
                 .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isMethodNotAllowed());
     }
 
     @Test
@@ -104,7 +104,7 @@ public class CustomerIntegrationTest {
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.email").value("email"))
+                .andExpect(jsonPath("$.email").value("email@gmail.com"))
                 .andExpect(jsonPath("$.firstName").value("firstName"))
                 .andExpect(jsonPath("$.lastName").value("lastName"))
                 .andExpect(jsonPath("$.phone").value("phone"))
@@ -132,7 +132,7 @@ public class CustomerIntegrationTest {
 
         mockMvc.perform(post(ENDPOINT)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .contentType(toJson(customerDto)))
+                        .content(toJson(customerDto)))
                 .andDo(print())
                 .andExpect(status().isConflict())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -221,7 +221,7 @@ public class CustomerIntegrationTest {
     public void shouldReturnBadRequestWithEmptyIdInDelete() throws Exception {
         mockMvc.perform(delete(ENDPOINT + "/{id}", ""))
                 .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isMethodNotAllowed());
     }
 
     @Test
