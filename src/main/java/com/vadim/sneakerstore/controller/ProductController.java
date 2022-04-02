@@ -45,9 +45,11 @@ public class ProductController {
     public List<ProductDto> getAllProducts(@Parameter(description = "Amount of products on one page")
                                            @RequestParam(value = "size", defaultValue = "21") int size,
                                            @Parameter(description = "Number of needed page")
-                                           @RequestParam(value = "page", defaultValue = "0") int page) {
+                                           @RequestParam(value = "page", defaultValue = "0") int page,
+                                           @Parameter(description = "Name of field by that it should be sorted")
+                                           @RequestParam(value = "sortBy", defaultValue = "id") String sortBy) {
         Pageable pageable = PageRequest.of(page, size);
-        return productService.getAllPaging(pageable);
+        return productService.getAllPaging(page, size, sortBy);
     }
 
     @Operation(description = "Add a new product")

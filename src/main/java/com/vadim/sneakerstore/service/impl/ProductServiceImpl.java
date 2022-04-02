@@ -7,7 +7,9 @@ import com.vadim.sneakerstore.exception.AlreadyExistsException;
 import com.vadim.sneakerstore.exception.NotFoundException;
 import com.vadim.sneakerstore.repository.ProductRepository;
 import com.vadim.sneakerstore.service.ProductService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,6 +62,7 @@ public class ProductServiceImpl implements ProductService {
         if (!repository.existsById(productDto.getId())) {
             throw new NotFoundException("Product with id = " + productDto.getId() + " is not found");
         }
+
 //        if (!repository.existsByName(productDto.getName())) {
 //            throw new NotFoundException("Product with name =" + productDto.getName() + " is not found");
 //        }
@@ -81,8 +84,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public List<ProductDto> getAllPaging(Pageable pageable) {
-        return repository.findAll(pageable).stream()
+    public List<ProductDto> getAllPaging(int page, int size, String sortBy) {
+        Pageable paging = PageRequest.of(page, size, Sort.by(sortBy));
+        return repository.findAll(paging).stream()
                 .map(converter::convertToDto)
                 .collect(Collectors.toList());
     }
