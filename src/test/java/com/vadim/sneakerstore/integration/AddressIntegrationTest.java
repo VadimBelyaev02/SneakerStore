@@ -72,7 +72,7 @@ public class AddressIntegrationTest {
     @BeforeEach
     public void init() {
         addressDto = AddressDto.builder()
-                .id(UUID.fromString("9b410870-2c8a-4fd4-8377-89514c4bc05d"))
+                .id(UUID.fromString("998a0dfe-ac53-11ec-b909-0242ac120002"))
                 .city("Minsk")
                 .country("Belarus")
                 .street("Ploshca Yakuba Kolasa 28")
@@ -83,8 +83,19 @@ public class AddressIntegrationTest {
     public void shouldReturnInfoThatAddressIsNotFound() throws Exception {
         mockMvc.perform(get(ENDPOINT + addressDto.getId()))
                 .andDo(print())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void shouldReturnAddressDtoById() throws Exception {
+        String id = "89039889-99a8-48e1-a570-e578580fb6cb";
+        mockMvc.perform(get(ENDPOINT + "/{id}", id))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.city").value("Gomel"))
+                .andExpect(jsonPath("$.country").value("Minck"))
+                .andExpect(jsonPath("$.street").value("street"));
     }
 
     @Test
@@ -99,11 +110,91 @@ public class AddressIntegrationTest {
                 .andExpect(jsonPath("$.city").value("Minsk"));
     }
 
+//    @Test
+//    public void shouldReturnBadRequestWithWrongId() throws Exception {
+//        mockMvc.perform(get(ENDPOINT + " /{id}", toJson(addressDto)))
+//                .andDo(print())
+//                .andExpect(status().isBadRequest());
+//    }
+
     @Test
-    public void shouldReturnAddressDtoById() throws Exception {
-        mockMvc.perform(get(ENDPOINT + addressDto.getId()))
+    public void shouldReturnInfoThatNotFoundWhileUpdating() throws Exception {
+        addressDto.setId(UUID.randomUUID());
+
+        mockMvc.perform(put(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(addressDto)))
                 .andDo(print())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
+
+    @Test
+    public void shouldReturnUpdatedAddressDto() throws Exception {
+        addressDto.setId(UUID.fromString("89039889-99a8-48e1-a570-e578580fb6cb"));
+        String city = "newCity";
+        addressDto.setCity(city);
+
+        mockMvc.perform(put(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(addressDto)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.city").value(city));
+
+    }
+
+    @Test
+    public void shouldReturnNotFoundInfoWhileDeleting() throws Exception {
+        mockMvc.perform(delete(ENDPOINT + "/{id}", UUID.randomUUID()))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void shouldReturnUnsupportedMediaTypeInPost() throws Exception {
+        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_XML)
+                .content(toJson(addressDto)))
+                .andDo(print())
+                .andExpect(status().isUnsupportedMediaType());
+    }
+
+    @Test
+    public void shouldReturnNoContent() throws Exception {
+        String id = "89039889-99a8-48e1-a570-e578580fb6cb";
+        mockMvc.perform(delete(ENDPOINT + "/{id}", id))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void shouldReturnInfoThatAlreadyExists() throws Exception {
+        addressDto.setId(UUID.fromString("89039889-99a8-48e1-a570-e578580fb6cb"));
+        addressDto.setCountry("Minck");
+        addressDto.setStreet("street");
+        addressDto.setCity("Gomel");
+
+        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(addressDto)))
+                .andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void shouldReturnCustomersAddresses() throws Exception {
+        UUID customerId = UUID.fromString("998a0dfe-ac53-11ec-b909-0242ac120002");
+
+        String endpoint = "/api/customers";
+        mockMvc.perform(get(endpoint + "/{customerId}/addresses", customerId))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+//    @Test
+//    public void shouldReturnAddressDtoById() throws Exception {
+//        mockMvc.perform(get(ENDPOINT + addressDto.getId()))
+//                .andDo(print())
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk());
+//    }
 }
