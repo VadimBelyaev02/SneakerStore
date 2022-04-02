@@ -107,7 +107,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {//} implements
                     .anyRequest()
                     .authenticated()
                     .and()
-                    .httpBasic().authenticationEntryPoint(new BasicAuthenticationEntryPoint())
+                    .httpBasic()
                     .and()
                     .sessionManagement().disable();
         }
