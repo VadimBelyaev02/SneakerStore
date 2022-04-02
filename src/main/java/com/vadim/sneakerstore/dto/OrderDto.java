@@ -49,6 +49,6 @@ public class OrderDto {
 
     @Schema(description = "Id of group of products that were ordered at one time")
     @NotNull
-    private UUID groupId;
+    private UUID stockId;
 
 }

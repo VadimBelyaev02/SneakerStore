@@ -196,4 +196,22 @@ public class SizeIntegrationTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }
+
+    @Test
+    public void shouldReturnSizesByProductId() throws Exception {
+        UUID productId = UUID.fromString("9b410870-2c8a-4fd4-8377-89514c4bc05d");
+
+        String endpoint = "/api/products";
+        mockMvc.perform(get(endpoint + "/{productId}/sizes", productId))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.name").value("name"))
+                .andExpect(jsonPath("$.sex").value("sex"))
+                .andExpect(jsonPath("$.brand").value("brand"))
+                .andExpect(jsonPath("$.season").value("fdjgjdg@gmail.com"))
+                .andExpect(jsonPath("$.description").value("dfg"))
+                .andExpect(jsonPath("$.material").value("USER"))
+                .andExpect(jsonPath("$.price").value(234));
+    }
 }
