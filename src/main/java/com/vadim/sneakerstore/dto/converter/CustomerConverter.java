@@ -189,32 +189,32 @@ public class CustomerConverter {
 
         List<Address> addresses = new ArrayList<>();
         if (Objects.nonNull(customerDto.getAddressesIds())) {
-            addressRepository.findAllById(customerDto.getAddressesIds());
+            addresses = addressRepository.findAllById(customerDto.getAddressesIds());
         }
 
         List<Order> orders = new ArrayList<>();
         if (Objects.nonNull(customerDto.getOrdersIds())) {
-            orderRepository.findAllById(customerDto.getOrdersIds());
+            orders = orderRepository.findAllById(customerDto.getOrdersIds());
         }
 
         List<Card> cards = new ArrayList<>();
         if (Objects.nonNull(customerDto.getCardsIds())) {
-            cardRepository.findAllById(customerDto.getCardsIds());
+            cards = cardRepository.findAllById(customerDto.getCardsIds());
         }
 
         List<Comment> comments = new ArrayList<>();
         if (Objects.nonNull(customerDto.getCommentsIds())) {
-            commentRepository.findAllById(customerDto.getCommentsIds());
+            comments = commentRepository.findAllById(customerDto.getCommentsIds());
         }
 
         List<Product> favorites = new ArrayList<>();
         if (Objects.nonNull(customerDto.getFavoritesIds())) {
-            productRepository.findAllById(customerDto.getFavoritesIds());
+            favorites = productRepository.findAllById(customerDto.getFavoritesIds());
         }
 
         List<Product> inCart = new ArrayList<>();
         if (Objects.nonNull(customerDto.getInCartIds())) {
-            productRepository.findAllById(customerDto.getInCartIds());
+            inCart = productRepository.findAllById(customerDto.getInCartIds());
         }
 
         customer.setCards(cards);
