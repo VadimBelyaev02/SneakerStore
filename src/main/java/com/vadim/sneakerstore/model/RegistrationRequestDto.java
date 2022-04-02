@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 @Data
@@ -26,14 +27,8 @@ public class RegistrationRequestDto {
     private String email;
 
     @NotBlank
-    private String country;
-
-    private String city;
-
-    private String address;
-
-    @NotBlank
     private String password;
 
+    @Null
     private String role;
 }

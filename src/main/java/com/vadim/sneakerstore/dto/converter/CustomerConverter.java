@@ -137,16 +137,11 @@ public class CustomerConverter {
 
     public Customer convertToEntity(RegistrationRequestDto requestDto) {
         final String email = requestDto.getEmail();
-        final String city = requestDto.getCity();
-        final String address = requestDto.getAddress();
-        final String country = requestDto.getCountry();
         final String password = requestDto.getPassword();
         final String firstName = requestDto.getFirstName();
         final String phone = requestDto.getPhone();
         final String lastName = requestDto.getLastName();
         final Role role = Role.USER;
-
-
 
         return Customer.builder()
                  .password(password)
