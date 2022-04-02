@@ -37,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional
     public CustomerDto getById(UUID id) {
         Customer customer = repository.findById(id).orElseThrow(() ->
-                new NotFoundException("Customer with id=" + id + " is not found")
+                new NotFoundException("Customer with id = " + id + " is not found")
         );
         return converter.convertToDto(customer);
     }

@@ -33,6 +33,6 @@ public class ResponseEntityExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<?> handleNotFoundException(NotFoundException e) {
         ExceptionInfo info = new ExceptionInfo(e.getMessage(), HttpStatus.NOT_FOUND.value());
-        return new ResponseEntity<>(info, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(info, HttpStatus.NOT_FOUND);
     }
 }

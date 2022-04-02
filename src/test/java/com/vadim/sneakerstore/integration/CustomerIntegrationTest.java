@@ -83,9 +83,9 @@ public class CustomerIntegrationTest {
 
     @Test
     public void shouldReturnBadRequestWithEmptyId() throws Exception {
-        mockMvc.perform(get(ENDPOINT + "/{id}", ""))
+        mockMvc.perform(get(ENDPOINT + "/{id}", toJson(customerDto)))
                 .andDo(print())
-                .andExpect(status().isMethodNotAllowed());
+                .andExpect(status().isBadRequest());
     }
 
     @Test

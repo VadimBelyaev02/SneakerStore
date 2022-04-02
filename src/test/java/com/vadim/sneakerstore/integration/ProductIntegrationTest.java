@@ -61,7 +61,7 @@ public class ProductIntegrationTest {
                 .color("color")
                 .destiny("destiny")
                 .material("material")
-                .name("name")
+                .name("name2")
                 .season("season")
                 .sex("sex")
                 .description("description")
@@ -73,11 +73,12 @@ public class ProductIntegrationTest {
 
     @Test
     public void shouldReturnProductById() throws Exception {
-        mockMvc.perform(get(ENDPOINT + "/{id}", productDto.getId()))
+        UUID id = UUID.fromString("836b1a57-7e14-401e-b618-0024c694e8b2");
+        mockMvc.perform(get(ENDPOINT + "/{id}", id))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-    //            .andExpect(jsonPath("$.name").value("name"))
+                .andExpect(jsonPath("$.name").value("name"))
                 .andExpect(jsonPath("$.price").value(BigDecimal.ONE))
                 .andExpect(jsonPath("$.destiny").value("destiny"))
                 .andExpect(jsonPath("$.color").value("color"))
@@ -86,18 +87,46 @@ public class ProductIntegrationTest {
     }
 
     @Test
-    public void shouldReturnUnsupportedMediaType() throws Exception{
-        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_XML)
+    public void shouldReturnNotFoundInfo() throws Exception {
+        UUID id = UUID.randomUUID();
+        String expectedMessage = "Product with id = " + id + " is not found";
+
+        mockMvc.perform(get(ENDPOINT + "/{id}", id))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(expectedMessage));
+    }
+
+    @Test
+    public void shouldReturnUnsupportedMediaTypeInPost() throws Exception{
+        mockMvc.perform(post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_XML)
                 .content(toJson(productDto)))
                 .andDo(print())
                 .andExpect(status().isUnsupportedMediaType());
     }
 
     @Test
-    public void shouldReturnBadRequest() throws Exception {
-        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON))
+    public void shouldReturnBadRequestWithEmptyBodyInPost() throws Exception {
+        mockMvc.perform(post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(""))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnConflictWithExistedProductInPost() throws Exception {
+        productDto.setName("name");
+        String expectedMessage = "Product with name = name already exists";
+
+        mockMvc.perform(post(ENDPOINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(productDto)))
+                .andExpect(status().isConflict())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(expectedMessage));
     }
 
     @Test
@@ -110,10 +139,10 @@ public class ProductIntegrationTest {
 
     @Test
     public void shouldReturnBadRequestWithNullField() throws Exception {
-        String oldName = productDto.getName();
         productDto.setName(null);
 
-        mockMvc.perform(put(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(put(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(productDto)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
@@ -121,47 +150,70 @@ public class ProductIntegrationTest {
 
     @Test
     public void shouldReturnSavedProductDto() throws Exception {
-        UUID oldId = productDto.getId();
-        String oldName = productDto.getName();
-        String newName = UUID.randomUUID().toString();
-        productDto.setName(newName);
-        productDto.setId(UUID.randomUUID());
+        productDto.setName("newName");
 
-        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(productDto)))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.name").value(newName));
-
-        productDto.setBrand(oldName);
-        productDto.setId(oldId);
+                .andExpect(jsonPath("$.name").value("newName"));
     }
 
     @Test
     public void shouldReturnNotFoundWhileUpdating() throws Exception {
-        UUID oldId = productDto.getId();
-        productDto.setId(UUID.randomUUID());
+        String expectedMessage = "Product with id = " + productDto.getId() + " is not found";
 
         mockMvc.perform(put(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
                         .content(toJson(productDto)))
                 .andDo(print())
                 .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(expectedMessage));
+    }
 
-        productDto.setId(oldId);
+    @Test
+    public void shouldReturnUnsupportedMediaTypeInPut() throws Exception {
+        mockMvc.perform(put(ENDPOINT)
+                .contentType(MediaType.APPLICATION_XML)
+                .content(toJson(productDto)))
+                .andDo(print())
+                .andExpect(status().isUnsupportedMediaType());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWithEmptyBodyInPut() throws Exception {
+        mockMvc.perform(put(ENDPOINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(""))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWithIncorrectIdInDelete() throws Exception {
+        mockMvc.perform(delete(ENDPOINT + "/{id}", toJson(productDto)))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
     }
 
     @Test
     public void shouldReturnNotFoundWhileDeleting() throws Exception {
-        mockMvc.perform(delete(ENDPOINT + "/{id}", UUID.randomUUID()))
+        UUID id = UUID.randomUUID();
+        String expectedMessage = "Product with id = " + id + " is not found";
+
+        mockMvc.perform(delete(ENDPOINT + "/{id}", id))
                 .andDo(print())
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(expectedMessage));
     }
 
     @Test
     public void shouldReturnNoContent() throws Exception {
-        mockMvc.perform(delete(ENDPOINT + "/{id}", productDto.getId()))
+        String id = "836b1a57-7e14-401e-b618-0024c694e8b2";
+        mockMvc.perform(delete(ENDPOINT + "/{id}", id))
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }

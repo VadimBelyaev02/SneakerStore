@@ -60,8 +60,8 @@ public class PictureIntegrationTest {
     @BeforeEach
     public void init() {
         this.pictureDto = PictureDto.builder()
-                .link("link")
-                .productId(UUID.fromString("9b410870-2c8a-4fd4-8377-89514c4bc05d"))
+                .link("link2")
+                .productId(UUID.fromString("836b1a57-7e14-401e-b618-0024c694e8b2"))
                 .build();
     }
 
@@ -77,19 +77,22 @@ public class PictureIntegrationTest {
 
     @Test
     public void shouldReturnInfoThatPictureIsNotFound() throws Exception {
-        mockMvc.perform(get(ENDPOINT + "/{id}", "1b410870-2c8a-4fd4-8377-89514c4bc05d"))
+        UUID id = UUID.randomUUID();
+        String expectedMessage = "Picture with id = " + id + " is not found";
+
+        mockMvc.perform(get(ENDPOINT + "/{id}", id))
                 .andDo(print())
                 .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(expectedMessage));
     }
 
-//    @Test
-//    public void shouldReturn() throws Exception {
-//        mockMvc.perform(get(ENDPOINT + "/{id}", "????"))
-//                .andDo(print())
-//                .andExpect(status().isMethodNotAllowed())
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-//    }
+    @Test
+    public void shouldReturnBadRequestWithIncorrectId() throws Exception {
+        mockMvc.perform(get(ENDPOINT + "/{id}", toJson(pictureDto)))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
 
     @Test
     public void shouldReturnAllPictures() throws Exception {
@@ -101,49 +104,109 @@ public class PictureIntegrationTest {
 
     @Test
     public void shouldReturnSavedPictureDto() throws Exception {
-        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-                .content(toJson(pictureDto)))
+        mockMvc.perform(post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(pictureDto)))
+                .andDo(print())
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.link").value("link2"))
+                .andExpect(jsonPath("$.productId").value("836b1a57-7e14-401e-b618-0024c694e8b2"));
+    }
+
+    @Test
+    public void shouldReturnConflictWithExistedLinkInPost() throws Exception {
+        pictureDto.setLink("link");
+        String expectedMessage = "Picture with link = link already exists";
+
+        mockMvc.perform(post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(pictureDto)))
                 .andDo(print())
                 .andExpect(status().isConflict())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.link").value("link"));
+                .andExpect(jsonPath("$.message").value(expectedMessage));
     }
 
     @Test
-    public void shouldReturnUpdatedPictureDto() throws Exception {
-        mockMvc.perform(put(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-                .content(toJson(pictureDto)))
+    public void shouldReturnBadRequestWithEmptyBodyInPost() throws Exception {
+        mockMvc.perform(post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(""))
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.link").value("link"));
+                .andExpect(status().isBadRequest());
     }
 
     @Test
-    public void shouldDeletePictureById() throws Exception {
-        mockMvc.perform(delete(ENDPOINT + "/{id}", pictureDto.getLink()))
-                .andDo(print())
-                .andExpect(status().isNoContent());
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-    }
-
-    @Test
-    public void shouldReturnNotFoundWithIncorrectIdWhileDeleting() throws Exception {
-        mockMvc.perform(delete(ENDPOINT + "/{id}", "."))
-                .andDo(print())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
-    public void shouldReturnUnsupportedMediaType() throws Exception {
-        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_XML)
-                .content(toJson(pictureDto)))
+    public void shouldReturnUnsupportedMediaTypeInPut() throws Exception {
+        mockMvc.perform(post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_XML)
+                        .content(toJson(pictureDto)))
                 .andDo(print())
                 .andExpect(status().isUnsupportedMediaType());
     }
 
+    @Test
+    public void shouldReturnNotFoundInPut() throws Exception {
+        //id
+        String expectedMessage = "Picture with link = " + pictureDto.getLink() + " is not found";
 
+        mockMvc.perform(put(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(pictureDto)))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(expectedMessage));
+    }
+
+    @Test
+    public void shouldReturnBadRequestWithEmptyBodyInPut() throws Exception {
+        mockMvc.perform(put(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(""))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnUpdatedPictureDto() throws Exception {
+        UUID productId = UUID.fromString("9b410870-2c8a-4fd4-8377-89514c4bc05d");
+        pictureDto.setLink("link");
+        pictureDto.setProductId(productId);
+
+        mockMvc.perform(put(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(pictureDto)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.link").value("link"))
+                .andExpect(jsonPath("$.productId").value(productId));
+    }
+
+    @Test
+    public void shouldReturnNoContent() throws Exception {
+        mockMvc.perform(delete(ENDPOINT + "/{id}", "link"))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWithIncorrectIdInDelete() throws Exception {
+        mockMvc.perform(delete(ENDPOINT + "/{id}", toJson(pictureDto)))
+                .andDo(print())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnUnsupportedMediaTypeInPost() throws Exception {
+        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_XML)
+                        .content(toJson(pictureDto)))
+                .andDo(print())
+                .andExpect(status().isUnsupportedMediaType());
+    }
 
 
 }

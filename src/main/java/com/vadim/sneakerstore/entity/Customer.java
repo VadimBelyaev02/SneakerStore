@@ -61,6 +61,7 @@ public class Customer {
     private List<Order> orders;
 
     @OneToOne(mappedBy = "customer", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Confirmation confirmation;
 
     @ManyToMany(fetch = FetchType.LAZY)

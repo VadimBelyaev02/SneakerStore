@@ -30,7 +30,7 @@ public class PictureServiceImpl implements PictureService {
     @Transactional
     public PictureDto getById(String id) {
         Picture picture = repository.findById(id).orElseThrow(() ->
-                new NotFoundException("Photo with id = " + id + " is not found")
+                new NotFoundException("Picture with id = " + id + " is not found")
         );
         return converter.convertToDto(picture);
     }
@@ -47,7 +47,7 @@ public class PictureServiceImpl implements PictureService {
     @Transactional
     public PictureDto save(PictureDto pictureDto) {
         if (repository.existsById(pictureDto.getLink())) {
-            throw new AlreadyExistsException("Photo with id = " + pictureDto.getLink() + " already exists");
+            throw new AlreadyExistsException("Picture with id = " + pictureDto.getLink() + " already exists");
         }
         Picture picture = repository.save(converter.convertToEntity(pictureDto));
         return converter.convertToDto(picture);
@@ -57,7 +57,7 @@ public class PictureServiceImpl implements PictureService {
     @Transactional
     public PictureDto update(PictureDto pictureDto) {
         if (!repository.existsById(pictureDto.getLink())) {
-            throw new NotFoundException("Photo with link = " + pictureDto.getLink() + " is not found");
+            throw new NotFoundException("Picture with link = " + pictureDto.getLink() + " is not found");
         }
         Picture picture = repository.save(converter.convertToEntity(pictureDto));
         return converter.convertToDto(picture);
@@ -67,7 +67,7 @@ public class PictureServiceImpl implements PictureService {
     @Transactional
     public void deleteById(String id) {
         if (!repository.existsById(id)) {
-            throw new NotFoundException("Photo with id = " + id + " is not found");
+            throw new NotFoundException("Picture with id = " + id + " is not found");
         }
         repository.deleteById(id);
     }

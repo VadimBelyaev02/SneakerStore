@@ -38,7 +38,7 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public CommentDto getById(UUID id) {
         Comment comment = repository.findById(id).orElseThrow(() ->
-                new NotFoundException("Comment with id=" + id + " is not found")
+                new NotFoundException("Comment with id = " + id + " is not found")
         );
         return converter.convertToDto(comment);
     }

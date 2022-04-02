@@ -45,8 +45,8 @@ public class SizeIntegrationTest {
     @BeforeEach
     public void init() {
         sizeDto = SizeDto.builder()
-                .id(UUID.fromString("9b410870-2c8a-4fd4-8377-89514c4bc05d"))
-                .amount(5)
+                .id(UUID.fromString("7b410870-2c8a-4fd4-8377-89514c4bc05d"))
+                .amount(6)
                 .size(3)
                 .productId(UUID.fromString("9b410870-2c8a-4fd4-8377-89514c4bc05d"))
                 .build();
@@ -55,22 +55,51 @@ public class SizeIntegrationTest {
     @Test
     public void shouldReturnNotFoundInfo() throws Exception {
         UUID id = UUID.randomUUID();
+        String expectedMessage = "Size with id = " + id + " is not found";
+
         mockMvc.perform(get(ENDPOINT + "/{id}", id))
                 .andDo(print())
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(expectedMessage));
     }
 
+
     @Test
-    public void shouldReturnUnsupportedMediaType() throws Exception {
-        mockMvc.perform(put(ENDPOINT).contentType(MediaType.APPLICATION_XML)
+    public void shouldReturnUnsupportedMediaTypeInPut() throws Exception {
+        mockMvc.perform(put(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_XML)
                         .contentType(toJson(sizeDto)))
                 .andDo(print())
                 .andExpect(status().isUnsupportedMediaType());
     }
 
     @Test
-    public void shouldReturnBadRequestWithEmptyBody() throws Exception {
-        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+    public void shouldReturnUnsupportedMediaTypeInPost() throws Exception {
+        mockMvc.perform(post(ENDPOINT)
+                .contentType(MediaType.APPLICATION_XML)
+                .content(toJson(sizeDto)))
+                .andDo(print())
+                .andExpect(status().isUnsupportedMediaType());
+    }
+
+    @Test
+    public void shouldReturnNotFoundInPut() throws Exception {
+        String expectedMessage = "Size with id = " + sizeDto.getId() + " is not found";
+
+        mockMvc.perform(put(ENDPOINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(sizeDto)))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(expectedMessage));
+    }
+
+    @Test
+    public void shouldReturnBadRequestWithEmptyBodyInPost() throws Exception {
+        mockMvc.perform(post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
                         .content(""))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
@@ -78,37 +107,32 @@ public class SizeIntegrationTest {
 
     @Test
     public void shouldReturnBadRequestWithNullField() throws Exception {
-        Integer oldSize = sizeDto.getSize();
         sizeDto.setSize(null);
 
-        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(sizeDto)))
                 .andExpect(status().isBadRequest());
-
-        sizeDto.setSize(oldSize);
     }
 
     @Test
-    public void shouldReturnConflict() throws Exception {
-        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(sizeDto)))
-                .andDo(print())
-                .andExpect(status().isConflict())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-    }
+    public void shouldReturnConflictWithExistedSizeInPost() throws Exception {
+        UUID id = UUID.fromString("9b410870-2c8a-4fd4-8377-89514c4bc05d");
+        sizeDto.setId(id);
+        String expectedMessage = "Size with id = " + id + " already exists";
 
-    @Test
-    public void shouldReturnMessageThatSizeAlreadyExists() throws Exception {
-        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
                         .content(toJson(sizeDto)))
                 .andDo(print())
                 .andExpect(status().isConflict())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(expectedMessage));
     }
 
     @Test
     public void shouldReturnSizeById() throws Exception {
-        mockMvc.perform(get(ENDPOINT + "/{id}", sizeDto.getId().toString()))
+        mockMvc.perform(get(ENDPOINT + "/{id}", "9b410870-2c8a-4fd4-8377-89514c4bc05d"))
                 .andDo(print())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -127,6 +151,8 @@ public class SizeIntegrationTest {
     @Test
     public void shouldReturnUpdatedSizeDto() throws Exception {
         sizeDto.setAmount(6);
+        sizeDto.setId(UUID.fromString("9b410870-2c8a-4fd4-8377-89514c4bc05d"));
+
         mockMvc.perform(put(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
                         .content(toJson(sizeDto)))
                 .andDo(print())
@@ -138,36 +164,35 @@ public class SizeIntegrationTest {
 
     @Test
     public void shouldReturnInfoThatSizeIsNotFoundWhileUpdating() throws Exception {
-        SizeDto newSizeDto = SizeDto.builder()
-                .size(sizeDto.getSize())
-                .productId(sizeDto.getProductId())
-                .amount(sizeDto.getAmount())
-                .build();
-        newSizeDto.setId(UUID.randomUUID());
-        mockMvc.perform(put(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(newSizeDto)))
+        UUID id = UUID.randomUUID();
+        String expectedMessage = "Size with id = " + id + " is not found";
+        sizeDto.setId(id);
+
+        mockMvc.perform(put(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(sizeDto)))
                 .andDo(print())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value(expectedMessage));
     }
 
     @Test
     public void shouldReturnInfoThatSizeIsNotFoundWhileDeleting() throws Exception {
-        SizeDto newSizeDto = SizeDto.builder()
-                .size(sizeDto.getSize())
-                .productId(sizeDto.getProductId())
-                .amount(sizeDto.getAmount())
-                .build();
-        newSizeDto.setId(UUID.randomUUID());
-        mockMvc.perform(delete(ENDPOINT + "/{id}", newSizeDto.getId()))
+        UUID id = UUID.randomUUID();
+        String expectedMessage = "Size with id = " + id + " is not found";
+
+        mockMvc.perform(delete(ENDPOINT + "/{id}", id))
                 .andDo(print())
                 .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(expectedMessage));
     }
 
     @Test
     public void shouldDeleteSizeById() throws Exception {
-        mockMvc.perform(delete(ENDPOINT + "/{id}", sizeDto.getId()))
+        String id = "9b410870-2c8a-4fd4-8377-89514c4bc05d";
+        mockMvc.perform(delete(ENDPOINT + "/{id}", id))
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }

@@ -41,14 +41,37 @@ public class CustomerConverter {
         final String firstName = customerDto.getFirstName();
         final String phone = customerDto.getPhone();
         final String lastName = customerDto.getLastName();
-        final String avatat = customerDto.getAvatar();
+        final String avatar = customerDto.getAvatar();
 
-        List<Address> addresses = addressRepository.findAllById(customerDto.getAddressesIds());
-        List<Order> orders = orderRepository.findAllById(customerDto.getOrdersIds());
-        List<Card> cards = cardRepository.findAllById(customerDto.getCardsIds());
-        List<Comment> comments = commentRepository.findAllById(customerDto.getCommentsIds());
-        List<Product> favorites = productRepository.findAllById(customerDto.getFavoritesIds());
-        List<Product> inCart  = productRepository.findAllById(customerDto.getInCartIds());
+        List<Address> addresses = new ArrayList<>();
+        if (Objects.nonNull(customerDto.getAddressesIds())) {
+            addressRepository.findAllById(customerDto.getAddressesIds());
+        }
+
+        List<Order> orders = new ArrayList<>();
+        if (Objects.nonNull(customerDto.getOrdersIds())) {
+            orderRepository.findAllById(customerDto.getOrdersIds());
+        }
+
+        List<Card> cards = new ArrayList<>();
+        if (Objects.nonNull(customerDto.getCardsIds())) {
+            cardRepository.findAllById(customerDto.getCardsIds());
+        }
+
+        List<Comment> comments = new ArrayList<>();
+        if (Objects.nonNull(customerDto.getCommentsIds())) {
+            commentRepository.findAllById(customerDto.getCommentsIds());
+        }
+
+        List<Product> favorites = new ArrayList<>();
+        if (Objects.nonNull(customerDto.getFavoritesIds())) {
+            productRepository.findAllById(customerDto.getFavoritesIds());
+        }
+
+        List<Product> inCart = new ArrayList<>();
+        if (Objects.nonNull(customerDto.getInCartIds())) {
+            productRepository.findAllById(customerDto.getInCartIds());
+        }
 
         return Customer.builder()
                 .id(id)
@@ -57,7 +80,7 @@ public class CustomerConverter {
                 .role(role)
                 .phone(phone)
                 .lastName(lastName)
-                .avatar(avatat)
+                .avatar(avatar)
                 .addresses(addresses)
                 .orders(orders)
                 .cards(cards)
