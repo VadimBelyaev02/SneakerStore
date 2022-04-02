@@ -33,9 +33,8 @@ public class ProductController {
     @ResponseStatus(HttpStatus.OK)
     public ProductDto getProduct(@Parameter(description = "Id of needed product")
                                  @PathVariable("id") UUID id) {
-        ProductDto productDto = new ProductDto();
-        productDto.setId(id);
-        return productDto;
+
+        return productService.getById(id);
     }
 
     @Operation(description = "Get all products")

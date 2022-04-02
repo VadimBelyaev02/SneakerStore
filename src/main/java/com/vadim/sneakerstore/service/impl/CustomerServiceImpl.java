@@ -45,6 +45,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional
     public CustomerDto save(CustomerDto customerDto) {
+        // will be deleted
         if (repository.existsByPhoneAndEmail(customerDto.getPhone(), customerDto.getEmail())) {
             throw new AlreadyExistsException("Customer with phone  = " + customerDto.getPhone()
                     + " and email = " + customerDto.getEmail() + " already exists");

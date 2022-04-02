@@ -96,62 +96,62 @@ public class CustomerIntegrationTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
-    @Test
-    public void shouldReturnSavedCustomer() throws Exception {
-        mockMvc.perform(post(ENDPOINT)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(customerDto)))
-                .andDo(print())
-                .andExpect(status().isCreated())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.email").value("email@gmail.com"))
-                .andExpect(jsonPath("$.firstName").value("firstName"))
-                .andExpect(jsonPath("$.lastName").value("lastName"))
-                .andExpect(jsonPath("$.phone").value("phone"))
-                .andExpect(jsonPath("$.role").value("USER"));
-    }
+//    @Test
+//    public void shouldReturnSavedCustomer() throws Exception {
+//        mockMvc.perform(post(ENDPOINT)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(toJson(customerDto)))
+//                .andDo(print())
+//                .andExpect(status().isCreated())
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(jsonPath("$.email").value("email@gmail.com"))
+//                .andExpect(jsonPath("$.firstName").value("firstName"))
+//                .andExpect(jsonPath("$.lastName").value("lastName"))
+//                .andExpect(jsonPath("$.phone").value("phone"))
+//                .andExpect(jsonPath("$.role").value("USER"));
+//    }
 
-    @Test
-    public void shouldReturnAlreadyExistsWithWrongPhone() throws Exception {
-        customerDto.setPhone("324");
-        String expectedMessage = "Customer with phone = 324 already exists";
+//    @Test
+//    public void shouldReturnAlreadyExistsWithWrongPhone() throws Exception {
+//        customerDto.setPhone("324");
+//        String expectedMessage = "Customer with phone = 324 already exists";
+//
+//        mockMvc.perform(post(ENDPOINT)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(toJson(customerDto)))
+//                .andDo(print())
+//                .andExpect(status().isConflict())
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(jsonPath("$.message").value(expectedMessage));
+//    }
 
-        mockMvc.perform(post(ENDPOINT)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(customerDto)))
-                .andDo(print())
-                .andExpect(status().isConflict())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.message").value(expectedMessage));
-    }
-
-    @Test
-    public void shouldReturnAlreadyExistsWithWrongEmail() throws Exception {
-        customerDto.setEmail("vadim@gmail.com");
-        String expectedMessage = "Customer with email = vadim@gmail.com already exists";
-
-        mockMvc.perform(post(ENDPOINT)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(customerDto)))
-                .andDo(print())
-                .andExpect(status().isConflict())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.message").value(expectedMessage));
-    }
-
-    @Test
-    public void shouldReturnAlreadyExistsWithWrongEmailAndPhone() throws Exception {
-        customerDto.setPhone("324");
-        customerDto.setEmail("vadim@gmail.com");
-        String expectedMessage = "Customer with phone = 324 and email = vadim@gmail.com already exists";
-
-        mockMvc.perform(post(ENDPOINT)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(customerDto)))
-                .andDo(print())
-                .andExpect(status().isConflict())
-                .andExpect(jsonPath("$.message").value(expectedMessage));
-    }
+//    @Test
+//    public void shouldReturnAlreadyExistsWithWrongEmail() throws Exception {
+//        customerDto.setEmail("vadim@gmail.com");
+//        String expectedMessage = "Customer with email = vadim@gmail.com already exists";
+//
+//        mockMvc.perform(post(ENDPOINT)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(toJson(customerDto)))
+//                .andDo(print())
+//                .andExpect(status().isConflict())
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(jsonPath("$.message").value(expectedMessage));
+//    }
+//
+//    @Test
+//    public void shouldReturnAlreadyExistsWithWrongEmailAndPhone() throws Exception {
+//        customerDto.setPhone("324");
+//        customerDto.setEmail("vadim@gmail.com");
+//        String expectedMessage = "Customer with phone = 324 and email = vadim@gmail.com already exists";
+//
+//        mockMvc.perform(post(ENDPOINT)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(toJson(customerDto)))
+//                .andDo(print())
+//                .andExpect(status().isConflict())
+//                .andExpect(jsonPath("$.message").value(expectedMessage));
+//    }
 
     @Test
     public void shouldReturnUnsupportedMediaTypeInPost() throws Exception {
