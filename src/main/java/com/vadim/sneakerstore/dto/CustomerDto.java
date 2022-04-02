@@ -1,5 +1,6 @@
 package com.vadim.sneakerstore.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,6 +33,9 @@ public class CustomerDto {
     @Schema(description = "Person's phone number")
     @NotBlank
     private String phone;
+
+    @JsonIgnore
+    private String password;
 
     @Schema(description = "Person's email")
     @Email

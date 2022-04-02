@@ -38,6 +38,7 @@ public class CustomerConverter {
         final UUID id = customerDto.getId();
         final String email = customerDto.getEmail();
         final Role role = Role.valueOf(customerDto.getRole());
+        final String password = customerDto.getPassword();
         final String firstName = customerDto.getFirstName();
         final String phone = customerDto.getPhone();
         final String lastName = customerDto.getLastName();
@@ -79,6 +80,7 @@ public class CustomerConverter {
                 .firstName(firstName)
                 .role(role)
                 .phone(phone)
+                .password(password)
                 .lastName(lastName)
                 .avatar(avatar)
                 .addresses(addresses)
@@ -95,6 +97,7 @@ public class CustomerConverter {
         final String email = customer.getEmail();
         final String firstName = customer.getFirstName();
         final String phone = customer.getPhone();
+        final String password = customer.getPassword();
         final String lastName = customer.getLastName();
         final String role = customer.getRole().name();
         final String avatar = customer.getAvatar();
@@ -174,5 +177,51 @@ public class CustomerConverter {
                 .lastName(lastName)
                 .role(role)
                 .build();
+    }
+
+    public void updateCustomer(Customer customer, CustomerDto customerDto) {
+        customer.setEmail(customerDto.getEmail());
+        customer.setAvatar(customerDto.getAvatar());
+        customer.setFirstName(customerDto.getFirstName());
+        customer.setLastName(customerDto.getLastName());
+        customer.setPhone(customerDto.getPhone());
+        customer.setRole(Role.valueOf(customerDto.getRole()));
+
+        List<Address> addresses = new ArrayList<>();
+        if (Objects.nonNull(customerDto.getAddressesIds())) {
+            addressRepository.findAllById(customerDto.getAddressesIds());
+        }
+
+        List<Order> orders = new ArrayList<>();
+        if (Objects.nonNull(customerDto.getOrdersIds())) {
+            orderRepository.findAllById(customerDto.getOrdersIds());
+        }
+
+        List<Card> cards = new ArrayList<>();
+        if (Objects.nonNull(customerDto.getCardsIds())) {
+            cardRepository.findAllById(customerDto.getCardsIds());
+        }
+
+        List<Comment> comments = new ArrayList<>();
+        if (Objects.nonNull(customerDto.getCommentsIds())) {
+            commentRepository.findAllById(customerDto.getCommentsIds());
+        }
+
+        List<Product> favorites = new ArrayList<>();
+        if (Objects.nonNull(customerDto.getFavoritesIds())) {
+            productRepository.findAllById(customerDto.getFavoritesIds());
+        }
+
+        List<Product> inCart = new ArrayList<>();
+        if (Objects.nonNull(customerDto.getInCartIds())) {
+            productRepository.findAllById(customerDto.getInCartIds());
+        }
+
+        customer.setCards(cards);
+        customer.setComments(comments);
+        customer.setAddresses(addresses);
+        customer.setFavorites(favorites);
+        customer.setInCart(inCart);
+        customer.setOrders(orders);
     }
 }
