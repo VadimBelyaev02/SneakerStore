@@ -17,6 +17,7 @@ import javax.servlet.ServletContext;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -87,6 +88,32 @@ public class AddressIntegrationTest {
     }
 
     @Test
+    public void shouldReturnAllAddresses() throws Exception {
+        mockMvc.perform(get(ENDPOINT))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void shouldReturnBadRequestWithEmptyBodyInPost() throws Exception {
+        mockMvc.perform(post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(""))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWithEmptyBodyInPut() throws Exception {
+        mockMvc.perform(put(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(""))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void shouldReturnAddressDtoById() throws Exception {
         String id = "89039889-99a8-48e1-a570-e578580fb6cb";
         mockMvc.perform(get(ENDPOINT + "/{id}", id))
@@ -100,8 +127,9 @@ public class AddressIntegrationTest {
 
     @Test
     public void shouldReturnSavedAddressDto() throws Exception {
-        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-                .content(toJson(addressDto)))
+        mockMvc.perform(post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(addressDto)))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -110,19 +138,13 @@ public class AddressIntegrationTest {
                 .andExpect(jsonPath("$.city").value("Minsk"));
     }
 
-//    @Test
-//    public void shouldReturnBadRequestWithWrongId() throws Exception {
-//        mockMvc.perform(get(ENDPOINT + " /{id}", toJson(addressDto)))
-//                .andDo(print())
-//                .andExpect(status().isBadRequest());
-//    }
-
     @Test
     public void shouldReturnInfoThatNotFoundWhileUpdating() throws Exception {
         addressDto.setId(UUID.randomUUID());
 
-        mockMvc.perform(put(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-                .content(toJson(addressDto)))
+        mockMvc.perform(put(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(addressDto)))
                 .andDo(print())
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
@@ -134,8 +156,9 @@ public class AddressIntegrationTest {
         String city = "newCity";
         addressDto.setCity(city);
 
-        mockMvc.perform(put(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-                .content(toJson(addressDto)))
+        mockMvc.perform(put(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(addressDto)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.city").value(city));
@@ -151,8 +174,9 @@ public class AddressIntegrationTest {
 
     @Test
     public void shouldReturnUnsupportedMediaTypeInPost() throws Exception {
-        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_XML)
-                .content(toJson(addressDto)))
+        mockMvc.perform(post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_XML)
+                        .content(toJson(addressDto)))
                 .andDo(print())
                 .andExpect(status().isUnsupportedMediaType());
     }
@@ -172,8 +196,9 @@ public class AddressIntegrationTest {
         addressDto.setStreet("street");
         addressDto.setCity("Gomel");
 
-        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-                .content(toJson(addressDto)))
+        mockMvc.perform(post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(addressDto)))
                 .andDo(print())
                 .andExpect(status().isConflict())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
@@ -190,11 +215,4 @@ public class AddressIntegrationTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
-//    @Test
-//    public void shouldReturnAddressDtoById() throws Exception {
-//        mockMvc.perform(get(ENDPOINT + addressDto.getId()))
-//                .andDo(print())
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk());
-//    }
 }

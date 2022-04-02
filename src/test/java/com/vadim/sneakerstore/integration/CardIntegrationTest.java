@@ -74,7 +74,7 @@ public class CardIntegrationTest {
     @BeforeEach
     public void init() {
         cardDto = CardDto.builder()
-                .id(UUID.fromString("9682140b-9d3e-44bb-a3bc-b398dd20c474"))
+                .id(UUID.fromString("89039889-99a8-48e1-a570-e578580fb6cb"))
                 .owner("owner")
                 .number("123456789")
                 .validityDate(LocalDate.of(2022, 1, 1))
@@ -97,7 +97,7 @@ public class CardIntegrationTest {
     public void shouldReturnNotFoundInfo() throws Exception {
         mockMvc.perform(get(ENDPOINT + "/{id}", UUID.randomUUID()))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -110,27 +110,25 @@ public class CardIntegrationTest {
 
     @Test
     public void shouldReturnSavedCard() throws Exception {
-        String oldNumber = cardDto.getNumber();
-        UUID oldId = cardDto.getId();
-        String oldCvv = cardDto.getCvv();
-        cardDto.setCvv("321");
-        cardDto.setNumber("987654321");
+//        cardDto.setId(UUID.randomUUID());
+//        cardDto.setCvv("321");
+//        cardDto.setNumber("987654321");
 
         mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
                         .contentType(toJson(cardDto)))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.cvv").value("321"))
-                .andExpect(jsonPath("$.number").value("987654321"));
-
-        cardDto.setNumber(oldNumber);
-        cardDto.setCvv(oldCvv);
-        cardDto.setId(oldId);
+                .andExpect(jsonPath("$.cvv").value("123"))
+                .andExpect(jsonPath("$.number").value("123456789"));
     }
 
     @Test
     public void shouldReturnInfoThatCardAlreadyExists() throws Exception {
+       // cardDto.setId(UUID.fromString("9682140b-9d3e-44bb-a3bc-b398dd20c474"));
+
+
+        cardDto.setNumber("12345678");
         mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(cardDto)))
                 .andDo(print())
@@ -139,15 +137,75 @@ public class CardIntegrationTest {
     }
 
     @Test
-    public void shouldReturnUnsupportedMediaType() throws Exception {
+    public void shouldReturnUnsupportedMediaTypeInPost() throws Exception {
         mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_XML)
                 .content(toJson(cardDto)))
+                .andDo(print())
                 .andExpect(status().isUnsupportedMediaType());
     }
 
     @Test
-    public void shouldReturnBadRequestWithIncorrectId() throws Exception {
+    public void shouldReturnUnsupportedMediaTypeInPut() throws Exception {
+        mockMvc.perform(put(ENDPOINT).contentType(MediaType.APPLICATION_XML)
+                .content(toJson(cardDto)))
+                .andDo(print())
+                .andExpect(status().isUnsupportedMediaType());
+    }
 
+    @Test
+    public void shouldReturnBadRequestWithEmptyBodyInPost() throws Exception {
+        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+                .content(""))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWithEmptyBodyInPut() throws Exception {
+        mockMvc.perform(put(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+                .content(""))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnNotFoundWhileDeleting() throws Exception {
+        mockMvc.perform(delete(ENDPOINT + "/{id}", UUID.randomUUID()))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void shouldReturnUpdatedCardDto() throws Exception {
+        UUID id = UUID.fromString("9682140b-9d3e-44bb-a3bc-b398dd20c474");
+        cardDto.setCvv("321");
+        cardDto.setNumber("987654321");
+        cardDto.setId(id);
+
+        mockMvc.perform(put(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(cardDto)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.cvv").value("321"))
+                .andExpect(jsonPath("$.number").value("987654321"))
+                .andExpect(jsonPath("$.owner").value("owner"))
+                .andExpect(jsonPath("$.id").value(id));
+    }
+
+    @Test
+    public void shouldReturnAllCustomersCards() throws Exception {
+        UUID customerId = UUID.fromString("998a0dfe-ac53-11ec-b909-0242ac120002");
+
+        String endpoint = "/api/customers";
+        mockMvc.perform(get(endpoint + "/{customerId}/cards", customerId))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.firstName").value("dfg"))
+                .andExpect(jsonPath("$.lastName").value("dfg"))
+                .andExpect(jsonPath("$.phone").value("324"))
+                .andExpect(jsonPath("$.email").value("vadim@gmail.com"));
     }
 
 }
