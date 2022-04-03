@@ -47,7 +47,6 @@ public class ProductController {
                                            @RequestParam(value = "page", defaultValue = "0") int page,
                                            @Parameter(description = "Name of field by that it should be sorted")
                                            @RequestParam(value = "sortBy", defaultValue = "id") String sortBy) {
-        Pageable pageable = PageRequest.of(page, size);
         return productService.getAllPaging(page, size, sortBy);
     }
 

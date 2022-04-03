@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 public class ResetPasswordRequestDto {
 
     @NotNull
-    private Integer code;
+    private String code;
 
     @Email
     private String email;

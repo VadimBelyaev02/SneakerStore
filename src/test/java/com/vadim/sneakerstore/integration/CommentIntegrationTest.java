@@ -100,9 +100,7 @@ public class CommentIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Norm"))
                 .andExpect(jsonPath("$.rate").value(5))
-                .andExpect(jsonPath("$.customer").value("username"))
-                .andExpect(jsonPath("$.productId").value(UUID.fromString("9b410870-2c8a-4fd4-8377-89514c4bc05d")));
-
+                .andExpect(jsonPath("$.customer").value("username"));
     }
 
     @Test
@@ -114,8 +112,8 @@ public class CommentIntegrationTest {
     }
 
     @Test
-    public void shouldReturnBadRequestWithEmptyId() throws Exception {
-        mockMvc.perform(get(ENDPOINT + "/{id}", ""))
+    public void shouldReturnBadRequestWithIncorrectId() throws Exception {
+        mockMvc.perform(get(ENDPOINT + "/{id}", toJson(commentDto)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }
@@ -145,8 +143,7 @@ public class CommentIntegrationTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.rate").value(5))
-                .andExpect(jsonPath("$.message").value("Norm"))
-                .andExpect(jsonPath("$.productId").value(UUID.fromString("9b410870-2c8a-4fd4-8377-89514c4bc05d")));
+                .andExpect(jsonPath("$.message").value("Norm"));
     }
 
     @Test
@@ -166,16 +163,23 @@ public class CommentIntegrationTest {
 
     @Test
     public void shouldReturnUnsupportedMediaTypeWhileUpdating() throws Exception {
-        mockMvc.perform(put(ENDPOINT).contentType(MediaType.APPLICATION_XML)
+        mockMvc.perform(put(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_XML)
                         .content(toJson(commentDto)))
                 .andDo(print())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnsupportedMediaType());
     }
 
     @Test
-    public void shouldReturnBadRequestWithEmptyIdInDelete() throws Exception {
-        mockMvc.perform(get(ENDPOINT + "/{id}", ""))
+    public void shouldReturnMethodNotAllowedWithEmptyIdInDelete() throws Exception {
+        mockMvc.perform(delete(ENDPOINT + "/{id}", ""))
+                .andDo(print())
+                .andExpect(status().isMethodNotAllowed());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWithIncorrectIdInDelete() throws Exception {
+        mockMvc.perform(delete(ENDPOINT + "/{id}", toJson(commentDto)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }
@@ -203,10 +207,10 @@ public class CommentIntegrationTest {
         mockMvc.perform(get(endpoint + "/{productId}/comments", productId))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Norm"))
-                .andExpect(jsonPath("$.customer").value("username"))
-                .andExpect(jsonPath("$.productId").value(productId))
-                .andExpect(jsonPath("$.customerId").value("998a0dfe-ac53-11ec-b909-0242ac120002"));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$[0].customer").value("username"))
+                .andExpect(jsonPath("$[0].message").value("Norm"))
+                .andExpect(jsonPath("$[0].customerId").value("998a0dfe-ac53-11ec-b909-0242ac120002"));
     }
 }
 

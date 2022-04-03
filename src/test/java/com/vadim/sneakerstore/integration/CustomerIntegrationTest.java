@@ -13,7 +13,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.vadim.sneakerstore.utils.JsonParser.toJson;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -240,5 +244,98 @@ public class CustomerIntegrationTest {
                 .andExpect(status().isNoContent());
     }
 
+    @Test
+    public void shouldReturnBadRequestWithEmptyField() throws Exception {
+        customerDto.setPhone(null);
 
+        mockMvc.perform(post(ENDPOINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(customerDto)))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void shouldUpdateFavoritesByCustomerIdAndProductId() throws Exception {
+        UUID customerId = UUID.fromString("998a0dfe-ac53-11ec-b909-0242ac120002");
+        List<UUID> productIds = Stream.of(UUID.fromString("9b410870-2c8a-4fd4-8377-89514c4bc05d"))
+                .collect(Collectors.toList());
+
+        List<String> fuckingProductsIds = Stream.of("9b410870-2c8a-4fd4-8377-89514c4bc05d")
+                        .collect(Collectors.toList());
+
+        customerDto.setId(customerId);
+        customerDto.setFavoritesIds(productIds);
+
+        mockMvc.perform(put(ENDPOINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(customerDto)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.favoritesIds").value(fuckingProductsIds));
+    }
+
+    @Test
+    public void shouldUpdateCustomersAddresses() throws Exception {
+        UUID customerId = UUID.fromString("998a0dfe-ac53-11ec-b909-0242ac120002");
+
+        List<String> addressesIds = Stream.of("89039889-99a8-48e1-a570-e578580fb6cb")
+                .collect(Collectors.toList());
+
+        customerDto.setId(customerId);
+        customerDto.setAddressesIds(addressesIds.stream()
+                .map(UUID::fromString)
+                .collect(Collectors.toList()));
+
+        mockMvc.perform(put(ENDPOINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(customerId)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.addressesIds").value(addressesIds));
+    }
+
+    @Test
+    public void shouldUpdateCustomersCards() throws Exception {
+        UUID customerId = UUID.fromString("998a0dfe-ac53-11ec-b909-0242ac120002");
+
+        List<String> cardsIds = Stream.of("9682140b-9d3e-44bb-a3bc-b398dd20c474")
+                .collect(Collectors.toList());
+
+        customerDto.setId(customerId);
+        customerDto.setCardsIds(cardsIds.stream()
+                .map(UUID::fromString)
+                .collect(Collectors.toList()));
+
+        mockMvc.perform(put(ENDPOINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(customerId)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.cardsIds").value(cardsIds));
+    }
+
+    @Test
+    public void shouldUpdateCustomersInCart() throws Exception {
+        UUID customerId = UUID.fromString("998a0dfe-ac53-11ec-b909-0242ac120002");
+        List<String> inCartIds = Stream.of("9b410870-2c8a-4fd4-8377-89514c4bc05d")
+                .collect(Collectors.toList());
+
+        customerDto.setId(customerId);
+        customerDto.setInCartIds(inCartIds.stream()
+                .map(UUID::fromString)
+                .collect(Collectors.toList()));
+
+        mockMvc.perform(put(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(customerDto)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.inCartIds").value(inCartIds));
+    }
 }

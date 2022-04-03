@@ -27,7 +27,7 @@ public class Confirmation {
     private Customer customer;
 
     @Column(name = "code")
-    private Integer code;
+    private String code;
 
     @Override
     public boolean equals(Object o) {

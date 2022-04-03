@@ -84,7 +84,8 @@ public class CardIntegrationTest {
 
     @Test
     public void shouldReturnCardById() throws Exception {
-        mockMvc.perform(get(ENDPOINT + "/{id}", cardDto.getId()))
+        String id = "9682140b-9d3e-44bb-a3bc-b398dd20c474";
+        mockMvc.perform(get(ENDPOINT + "/{id}", id))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.owner").value("owner"))
@@ -94,28 +95,24 @@ public class CardIntegrationTest {
     }
 
     @Test
-    public void shouldReturnNotFoundInfo() throws Exception {
+    public void shouldReturnMethodNotAllowedWithIncorrectEndpoint() throws Exception {
         mockMvc.perform(get(ENDPOINT + "/{id}", UUID.randomUUID()))
                 .andDo(print())
-                .andExpect(status().isNotFound());
+                .andExpect(status().isMethodNotAllowed());
     }
 
     @Test
-    public void shouldReturnAllCard()  throws Exception{
+    public void shouldReturnMethodNotAllowedWithIncorrectRequest()  throws Exception{
         mockMvc.perform(get(ENDPOINT))
                 .andDo(print())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isMethodNotAllowed());
     }
 
     @Test
     public void shouldReturnSavedCard() throws Exception {
-//        cardDto.setId(UUID.randomUUID());
-//        cardDto.setCvv("321");
-//        cardDto.setNumber("987654321");
-
-        mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-                        .contentType(toJson(cardDto)))
+        mockMvc.perform(post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(cardDto)))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -189,8 +186,7 @@ public class CardIntegrationTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.cvv").value("321"))
                 .andExpect(jsonPath("$.number").value("987654321"))
-                .andExpect(jsonPath("$.owner").value("owner"))
-                .andExpect(jsonPath("$.id").value(id));
+                .andExpect(jsonPath("$.owner").value("owner"));
     }
 
     @Test
@@ -202,10 +198,9 @@ public class CardIntegrationTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.firstName").value("dfg"))
-                .andExpect(jsonPath("$.lastName").value("dfg"))
-                .andExpect(jsonPath("$.phone").value("324"))
-                .andExpect(jsonPath("$.email").value("vadim@gmail.com"));
+                .andExpect(jsonPath("$[0].owner").value("owner"))
+                .andExpect(jsonPath("$[0].cvv").value("123"))
+                .andExpect(jsonPath("$[0].number").value("12345678"));
     }
 
 }

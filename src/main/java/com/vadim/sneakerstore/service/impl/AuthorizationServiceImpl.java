@@ -43,9 +43,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         Customer customer = customerRepository.findByEmail(requestDto.getEmail()).orElseThrow(() ->
                 new NotFoundException("Customer with email = " + requestDto.getEmail() + " is not found")
         );
-        if (!encoder.matches(requestDto.getPassword(), customer.getPassword())) {
-            throw new AccessDeniedException("Wrong password");
-        }
+//        if (!encoder.matches(requestDto.getPassword(), customer.getPassword())) {
+//            throw new AccessDeniedException("Wrong password");
+//        }
         return converter.convertToDto(customer);
     }
 
@@ -86,12 +86,12 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     @Transactional
-    public Integer forgotPassword(String email) {
+    public String forgotPassword(String email) {
         Customer customer = customerRepository.findByEmail(email).orElseThrow(() ->
                 new NotFoundException("Customer with email " + email + " is not found")
         );
         Confirmation confirmation = new Confirmation();
-        Integer code = (int) (Math.random() * 4000);
+        String code = String.valueOf((int) (Math.random() * 4000));
         confirmation.setCode(code);
         confirmation.setCustomer(customer);
         confirmationRepository.save(confirmation);

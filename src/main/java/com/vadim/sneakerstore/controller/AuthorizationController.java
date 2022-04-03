@@ -53,8 +53,8 @@ public class AuthorizationController {
     @PostMapping("/forgot_password")
     @ResponseStatus(HttpStatus.OK)
     public void forgotPassword(@RequestParam String email) {
-        Integer code = authorizationService.forgotPassword(email);
-        senderService.sendMessage(email, String.valueOf(code), null);
+        String code = authorizationService.forgotPassword(email);
+        senderService.sendMessage(email, code, null);
     }
 
     @Operation(description = "Recover password after forgetting")

@@ -30,7 +30,7 @@ public class CommentController {
 
     @Operation(description = "Get all comments")
     @ApiResponse(description = "All comments are found", responseCode = "200")
-    @GetMapping
+    @GetMapping("/comments")
     @ResponseStatus(HttpStatus.OK)
     public List<CommentDto> getAllComments() {
         return service.getAll();

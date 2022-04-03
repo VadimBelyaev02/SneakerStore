@@ -14,7 +14,7 @@ public interface AuthorizationService {
 
     CustomerDto resetPassword(ResetPasswordRequestDto requestDto);
 
-    Integer forgotPassword(String email);
+    String forgotPassword(String email);
 
     CustomerDto changePassword(ChangePasswordRequestDto requestDto);
 }

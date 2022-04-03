@@ -8,7 +8,9 @@ import com.vadim.sneakerstore.repository.CustomerRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -49,7 +51,10 @@ public class CardConverter {
         final LocalDate date = cardDto.getValidityDate();
         final String owner = cardDto.getOwner();
 
-        final List<Customer> customers = customerRepository.findAllById(cardDto.getCustomersIds());
+        List<Customer> customers = new ArrayList<>();
+        if (Objects.nonNull(cardDto.getCustomersIds())) {
+            customers = customerRepository.findAllById(cardDto.getCustomersIds());
+        }
 
         return Card.builder()
                 .id(id)
