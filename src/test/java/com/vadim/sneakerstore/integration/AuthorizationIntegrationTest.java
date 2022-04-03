@@ -2,6 +2,7 @@ package com.vadim.sneakerstore.integration;
 
 import com.vadim.sneakerstore.dto.CommentDto;
 import com.vadim.sneakerstore.model.AuthorizationRequestDto;
+import com.vadim.sneakerstore.model.ChangePasswordRequestDto;
 import com.vadim.sneakerstore.model.RegistrationRequestDto;
 import com.vadim.sneakerstore.model.ResetPasswordRequestDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,6 +38,7 @@ public class AuthorizationIntegrationTest {
     private final String REGISTER_ENDPOINT = "/api/register";
     private final String RESET_ENDPOINT = "/api/reset_password";
     private final String FORGOT_ENDPOINT = "/api/forgot_password";
+    private final String CHANGE_ENDPOINT = "/api/change_password";
 
 
     @Autowired
@@ -47,6 +49,7 @@ public class AuthorizationIntegrationTest {
     private AuthorizationRequestDto authorizationRequestDto;
     private RegistrationRequestDto registrationRequestDto;
     private ResetPasswordRequestDto resetPasswordRequestDto;
+    private ChangePasswordRequestDto changePasswordRequestDto;
 
     @BeforeEach
     public void setup() {
@@ -71,6 +74,10 @@ public class AuthorizationIntegrationTest {
         resetPasswordRequestDto.setNewPassword("newPassword");
         resetPasswordRequestDto.setEmail("vadim@gmail.com");
         resetPasswordRequestDto.setCode("0123");
+
+        changePasswordRequestDto.setNewPassword("newPassword");
+        changePasswordRequestDto.setOldPassword("password");
+        changePasswordRequestDto.setEmail("vadim@gmail.com");
     }
 
     @Test
@@ -287,10 +294,11 @@ public class AuthorizationIntegrationTest {
 
     @Test
     public void shouldReturnNotFoundWithWrongEmailInForgot() throws Exception {
-        String email = "wrong";
+        String email = "wrong@gmail.com";
         String expectedMessage = "Customer with email = " + email + " is not found";
 
-        mockMvc.perform(post(FORGOT_ENDPOINT).param("email", email))
+        mockMvc.perform(post(FORGOT_ENDPOINT)
+                        .param("email", email))
                 .andDo(print())
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -304,30 +312,69 @@ public class AuthorizationIntegrationTest {
                 .andExpect(status().isBadRequest());
     }
 
-    /*
-    public Integer forgotPassword(String email) {
-        Customer customer = customerRepository.findByEmail(email).orElseThrow(() ->
-                new NotFoundException("Customer with email " + email + " is not found")
-        );
-        Confirmation confirmation = new Confirmation();
-        Integer code = (int) (Math.random() * 4000);
-        confirmation.setCode(code);
-        confirmation.setCustomer(customer);
-        confirmationRepository.save(confirmation);
-        return code;
+    @Test
+    public void shouldSendAnEmailInForgot() throws Exception {
+        String email = "vadim@gmail.com";
+        mockMvc.perform(post(FORGOT_ENDPOINT)
+                        .param("email", email))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
-    @Override
-    @Transactional
-    public CustomerDto changePassword(ChangePasswordRequestDto requestDto) {
-        Customer customer = customerRepository.findByEmail(requestDto.getEmail()).orElseThrow(() ->
-                new NotFoundException("Customer with email " + requestDto.getEmail() + " is not found")
-        );
-        if (!encoder.matches(requestDto.getOldPassword(), customer.getPassword())) {
-            throw new AccessDeniedException("Incorrect old password!");
-        }
-        customer.setPassword(encoder.encode(requestDto.getNewPassword()));
-        return converter.convertToDto(customer);
+    @Test
+    public void shouldReturnNotFoundInChange() throws Exception {
+        changePasswordRequestDto.setEmail("wrong@gmail.com");
+        String expectedMessage = "Customer with email = wrong@gmail.com is not found";
+
+        mockMvc.perform(put(CHANGE_ENDPOINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(changePasswordRequestDto)))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(expectedMessage));
     }
-     */
+
+    @Test
+    public void shouldReturnBadRequestWithEmptyBodyInChange() throws Exception {
+        mockMvc.perform(put(CHANGE_ENDPOINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(""))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+    }
+
+    @Test
+    public void shouldReturnUnsupportedMediaTypeInChange() throws Exception {
+        mockMvc.perform(put(CHANGE_ENDPOINT)
+                .contentType(MediaType.APPLICATION_XML)
+                .content(toJson(changePasswordRequestDto)))
+                .andDo(print())
+                .andExpect(status().isUnsupportedMediaType());
+    }
+
+    @Test
+    public void shouldReturnForbiddenWithIncorrectPassword() throws Exception {
+        changePasswordRequestDto.setOldPassword("wrong");
+        String expectedMessage = "Incorrect old password!";
+
+        mockMvc.perform(put(CHANGE_ENDPOINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(changePasswordRequestDto)))
+                .andDo(print())
+                .andExpect(status().isForbidden())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(expectedMessage));
+    }
+
+    @Test
+    public void shouldReturnBadRequestWithIncorrectEmailPattern() throws Exception {
+        changePasswordRequestDto.setEmail("notemail");
+
+        mockMvc.perform(put(CHANGE_ENDPOINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(changePasswordRequestDto)))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
 }
