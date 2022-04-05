@@ -96,21 +96,21 @@
             <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.security.oauth.boot</groupId>
-            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-            <version>2.6.3</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.security.oauth.boot</groupId>-->
+<!--            <artifactId>spring-security-oauth2-autoconfigure</artifactId>-->
+<!--            <version>2.6.3</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
             <version>2.6.4</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-client</artifactId>
-            <version>2.6.4</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-oauth2-client</artifactId>-->
+<!--            <version>2.6.4</version>-->
+<!--        </dependency>-->
 
     </dependencies>
     <dependencyManagement>
@@ -139,19 +139,6 @@
                     </excludes>
                 </configuration>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.liquibase</groupId>-->
-<!--                <artifactId>liquibase-maven-plugin</artifactId>-->
-<!--                <version>4.8.0</version>-->
-<!--                <configuration>-->
-<!--                    <changeLogFile>classpath:db/changelog/db-changeLog.xml</changeLogFile>-->
-<!--                    <url>jdbc:postgresql://ec2-34-203-91-150.compute-1.amazonaws.com:5432/d44dlbfb1e2ah9</url>-->
-<!--                    <username>dzyrloikxfzlpn</username>-->
-<!--                    <password>a1d1fd886e9f56b117b4be3719a346055a8b3131c544a968f4c7a384fb2fe2b3</password>-->
-<!--                    <driver>org.postgresql.Driver</driver>-->
-<!--                   <propertyFile>src/main/resources/liquibase.properties</propertyFile>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
         </plugins>
     </build>
 

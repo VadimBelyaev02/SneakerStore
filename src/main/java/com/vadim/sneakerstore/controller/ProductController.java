@@ -37,18 +37,18 @@ public class ProductController {
         return productService.getById(id);
     }
 
-//    @Operation(description = "Get all products")
-//    @ApiResponse(description = "All products are found", responseCode = "200")
-//    @GetMapping
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<ProductDto> getAllProducts(@Parameter(description = "Amount of products on one page")
-//                                           @RequestParam(value = "size", defaultValue = "21") int size,
-//                                           @Parameter(description = "Number of needed page")
-//                                           @RequestParam(value = "page", defaultValue = "0") int page,
-//                                           @Parameter(description = "Name of field by that it should be sorted")
-//                                           @RequestParam(value = "sortBy", defaultValue = "id") String sortBy) {
-//        return productService.getAllPaging(page, size, sortBy);
-//    }
+    @Operation(description = "Get all products")
+    @ApiResponse(description = "All products are found", responseCode = "200")
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductDto> getAllProducts(@Parameter(description = "Amount of products on one page")
+                                           @RequestParam(value = "size", defaultValue = "21") int size,
+                                           @Parameter(description = "Number of needed page")
+                                           @RequestParam(value = "page", defaultValue = "0") int page,
+                                           @Parameter(description = "Name of field by that it should be sorted")
+                                           @RequestParam(value = "sortBy", defaultValue = "id") String sortBy) {
+        return productService.getAllPaging(page, size, sortBy);
+    }
 
     @Operation(description = "Add a new product")
     @ApiResponse(description = "Product is successfully created", responseCode = "201")
