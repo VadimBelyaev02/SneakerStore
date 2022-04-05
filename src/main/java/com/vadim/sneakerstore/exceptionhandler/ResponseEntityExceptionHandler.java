@@ -35,4 +35,10 @@ public class ResponseEntityExceptionHandler {
         ExceptionInfo info = new ExceptionInfo(e.getMessage(), HttpStatus.NOT_FOUND.value());
         return new ResponseEntity<>(info, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<?> handleEverything(RuntimeException e) {
+        ExceptionInfo info = new ExceptionInfo(e.getMessage(), HttpStatus.NOT_FOUND.value());
+        return new ResponseEntity<>(info, HttpStatus.NOT_FOUND);
+    }
 }
