@@ -40,7 +40,7 @@ public class ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleEverything(RuntimeException e) {
         String infoS = e.getMessage() + "\n" + e.getCause() + "\n" + e.getLocalizedMessage()
                 + "\n" + e.getCause() + "\n" + e.getCause().getMessage();
-        ExceptionInfo info = new ExceptionInfo(e.getMessage(), HttpStatus.NOT_FOUND.value());
+        ExceptionInfo info = new ExceptionInfo(infoS, HttpStatus.NOT_FOUND.value());
         return new ResponseEntity<>(info, HttpStatus.NOT_FOUND);
     }
 }
