@@ -33,7 +33,6 @@ public class OrderConverter {
         final UUID id = orderDto.getId();
         final String status = orderDto.getStatus();
         final String payment = orderDto.getPayment();
-        final Integer amount = orderDto.getAmount();
 
         Customer customer = new Customer();
         if (Objects.nonNull(orderDto.getCustomerEmail())) {
@@ -60,7 +59,6 @@ public class OrderConverter {
                 .id(id)
                 .status(status)
                 .product(product)
-                .amount(amount)
                 .customer(customer)
                 .payment(payment)
                 .orderedDate(orderedDate)
@@ -71,7 +69,6 @@ public class OrderConverter {
     public OrderDto convertToDto(Order order) {
         final UUID id = order.getId();
         final LocalDate date = order.getOrderedDate();
-        final Integer amount = order.getAmount();
         final String status = order.getStatus();
         final String payment = order.getPayment();
         final UUID productId = order.getProduct().getId();
@@ -81,7 +78,6 @@ public class OrderConverter {
                 .id(id)
                 .date(date)
                 .status(status)
-                .amount(amount)
                 .productId(productId)
                 .payment(payment)
                 .customerEmail(email)

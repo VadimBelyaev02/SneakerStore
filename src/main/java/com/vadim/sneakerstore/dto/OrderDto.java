@@ -43,9 +43,9 @@ public class OrderDto {
     @NotNull
     private UUID productId;
 
-    @Schema(description = "Amount of the same ordered products")
-    @NotNull
-    private Integer amount;
+//    @Schema(description = "Amount of the same ordered products")
+//    @NotNull
+//    private Integer amount;
 
     @Schema(description = "Id of group of products that were ordered at one time")
     @NotNull
