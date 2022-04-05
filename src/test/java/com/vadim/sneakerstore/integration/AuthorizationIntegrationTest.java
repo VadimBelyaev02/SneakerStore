@@ -1,6 +1,5 @@
 package com.vadim.sneakerstore.integration;
 
-import com.vadim.sneakerstore.dto.CommentDto;
 import com.vadim.sneakerstore.model.AuthorizationRequestDto;
 import com.vadim.sneakerstore.model.ChangePasswordRequestDto;
 import com.vadim.sneakerstore.model.RegistrationRequestDto;
@@ -17,14 +16,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import static com.vadim.sneakerstore.utils.JsonParser.toJson;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -341,7 +335,7 @@ public class AuthorizationIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .contentType(""))
                 .andDo(print())
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isBadRequest());
     }
 
     @Test

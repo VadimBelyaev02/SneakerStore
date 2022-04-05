@@ -7,7 +7,7 @@
         <dropColumn tableName="pictures" columnName="link"/>
 
         <addColumn tableName="pictures">
-            <column name="link" type="varchar(4097)">
+            <column name="link" type="varchar(8192)">
                 <constraints primaryKey="true"/>
             </column>
         </addColumn>
