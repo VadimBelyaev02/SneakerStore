@@ -43,9 +43,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         Customer customer = customerRepository.findByEmail(requestDto.getEmail()).orElseThrow(() ->
                 new NotFoundException("Customer with email = " + requestDto.getEmail() + " is not found")
         );
-//        if (!encoder.matches(requestDto.getPassword(), customer.getPassword())) {
-//            throw new AccessDeniedException("Wrong password");
-//        }
+        if (!encoder.matches(requestDto.getPassword(), customer.getPassword())) {
+            throw new AccessDeniedException("Wrong password");
+        }
         return converter.convertToDto(customer);
     }
 
