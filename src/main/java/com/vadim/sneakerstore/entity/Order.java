@@ -29,9 +29,9 @@ public class Order {
 
     @Column(name = "status")
     private String status;
-
-    @Column(name = "amount")
-    private Integer amount;
+//
+//    @Column(name = "amount")
+//    private Integer amount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
