@@ -57,14 +57,17 @@ public class Customer {
     private List<Address> addresses;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @ToString.Exclude
     private List<Order> orders;
 
     @OneToOne(mappedBy = "customer", fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @ToString.Exclude
     private Confirmation confirmation;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinTable(name = "cards_customers",
             joinColumns = @JoinColumn(name = "card_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"))
@@ -72,12 +75,12 @@ public class Customer {
     private List<Card> cards;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @ToString.Exclude
     private List<Comment> comments;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    //@Cascade(org.hibernate.annotations.CascadeType.ALL)
-      @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST})
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinTable(name = "favorites",
             joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
