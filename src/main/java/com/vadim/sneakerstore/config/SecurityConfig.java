@@ -85,12 +85,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic()
-                .and()
-                .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
-                .oauth2Login()
-                .and()
-                .oauth2Client();
+                .httpBasic();
+               // .and()
+               // .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+              //  .oauth2Login()
+               // .and()
+              //  .oauth2Client();
     }
 
     @Override
