@@ -146,12 +146,19 @@ public class CustomerServiceUnitTest {
 
     @Test
     public void shouldUpdateExistedCustomer() {
-        String email = "vadimbelaev002@gmail.com";
+        UUID id = UUID.randomUUID();
         Customer customer = new Customer();
         CustomerDto customerDto = new CustomerDto();
+        customerDto.setId(id);
 
-        // when(repository.existsByEmail(email)).thenReturn(true);
-        // when(repository.save())
+        when(repository.findById(id)).thenReturn(Optional.of(customer));
+        when(converter.convertToDto(customer)).thenReturn(customerDto);
+
+        assertEquals(service.update(customerDto), customerDto);
+
+        verify(repository, only()).findById(id);
+        verify(converter, times(1)).updateCustomer(customer, customerDto);
+        verify(converter, times(1)).convertToDto(customer);
     }
 
     @Test
@@ -161,12 +168,11 @@ public class CustomerServiceUnitTest {
         Customer customer = new Customer();
         customerDto.setId(id);
 
-        when(repository.existsById(id)).thenReturn(false);
+        when(repository.findById(id)).thenReturn(Optional.empty());
 
         assertThrows(NotFoundException.class, () -> service.update(customerDto));
 
         verify(repository, only()).existsById(id);
-        verify(repository, never()).save(customer);
         verify(converter, never()).convertToEntity(customerDto);
         verify(converter, never()).convertToDto(customer);
     }

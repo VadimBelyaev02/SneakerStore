@@ -68,8 +68,6 @@ public class CustomerServiceImpl implements CustomerService {
         );
         converter.updateCustomer(customer, customerDto);
         return converter.convertToDto(customer);
-        //    Customer customer = repository.save(converter.convertToEntity(customerDto));
-        //     return converter.convertToDto(customer);
     }
 
     @Override

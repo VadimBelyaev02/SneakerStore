@@ -134,7 +134,17 @@ public class PictureServiceUnitTest {
 
     @Test
     public void shouldThrowsNotFoundExceptionWhileUpdating() {
+        String link = UUID.randomUUID().toString();
+        Picture picture = new Picture();
+        PictureDto pictureDto = new PictureDto();
 
+        when(repository.existsById(link)).thenReturn(false);
+
+        assertThrows(NotFoundException.class, () -> service.update(pictureDto));
+
+        verify(repository, only()).findById(link);
+//        verify(converter, never()).convertToEntity(pictureDto);
+//        verify(converter, never())
     }
 
     @Test
@@ -144,6 +154,13 @@ public class PictureServiceUnitTest {
 
     @Test
     public void shouldThrowsNotFoundExceptionWhileDeleting() {
+        String link = UUID.randomUUID().toString();
 
+        when(repository.existsById(link)).thenReturn(false);
+
+        assertThrows(NotFoundException.class, () -> service.deleteById(link));
+
+        verify(repository, only()).existsById(link);
+        verify(repository, never()).deleteById(link);
     }
 }
