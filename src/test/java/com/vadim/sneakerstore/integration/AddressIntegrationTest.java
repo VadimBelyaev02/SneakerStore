@@ -140,14 +140,17 @@ public class AddressIntegrationTest {
 
     @Test
     public void shouldReturnInfoThatNotFoundWhileUpdating() throws Exception {
-        addressDto.setId(UUID.randomUUID());
+        UUID id = UUID.randomUUID();
+        addressDto.setId(id);
+        String expectedMessage = "Address with id = " + id + " is not found";
 
         mockMvc.perform(put(ENDPOINT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(toJson(addressDto)))
                 .andDo(print())
                 .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(expectedMessage));
     }
 
     @Test
@@ -167,9 +170,14 @@ public class AddressIntegrationTest {
 
     @Test
     public void shouldReturnNotFoundInfoWhileDeleting() throws Exception {
-        mockMvc.perform(delete(ENDPOINT + "/{id}", UUID.randomUUID()))
+        UUID id = UUID.randomUUID();
+        String expectedMessage = "Address with id = " + id + " is not found";
+
+        mockMvc.perform(delete(ENDPOINT + "/{id}", id))
                 .andDo(print())
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(expectedMessage));
     }
 
     @Test

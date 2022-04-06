@@ -47,7 +47,7 @@ public class PictureServiceImpl implements PictureService {
     @Transactional
     public PictureDto save(PictureDto pictureDto) {
         if (repository.existsById(pictureDto.getLink())) {
-            throw new AlreadyExistsException("Picture with id = " + pictureDto.getLink() + " already exists");
+            throw new AlreadyExistsException("Picture with link = " + pictureDto.getLink() + " already exists");
         }
         Picture picture = repository.save(converter.convertToEntity(pictureDto));
         return converter.convertToDto(picture);
@@ -67,7 +67,7 @@ public class PictureServiceImpl implements PictureService {
     @Transactional
     public void deleteById(String id) {
         if (!repository.existsById(id)) {
-            throw new NotFoundException("Picture with id = " + id + " is not found");
+            throw new NotFoundException("Picture with link = " + id + " is not found");
         }
         repository.deleteById(id);
     }

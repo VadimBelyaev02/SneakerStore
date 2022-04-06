@@ -83,18 +83,6 @@ public class CardIntegrationTest {
     }
 
     @Test
-    public void shouldReturnCardById() throws Exception {
-        String id = "9682140b-9d3e-44bb-a3bc-b398dd20c474";
-        mockMvc.perform(get(ENDPOINT + "/{id}", id))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.owner").value("owner"))
-                .andExpect(jsonPath("$.number").value("123456789"))
-                .andExpect(jsonPath("$.cvv").value("123"))
-                .andExpect(jsonPath("$.id").value("9682140b-9d3e-44bb-a3bc-b398dd20c474"));
-    }
-
-    @Test
     public void shouldReturnMethodNotAllowedWithIncorrectEndpoint() throws Exception {
         mockMvc.perform(get(ENDPOINT + "/{id}", UUID.randomUUID()))
                 .andDo(print())
@@ -122,15 +110,16 @@ public class CardIntegrationTest {
 
     @Test
     public void shouldReturnInfoThatCardAlreadyExists() throws Exception {
-       // cardDto.setId(UUID.fromString("9682140b-9d3e-44bb-a3bc-b398dd20c474"));
-
+        String number = "12345678";
+        String expectedMessage = "Card with number = " + number + " already exists";
 
         cardDto.setNumber("12345678");
         mockMvc.perform(post(ENDPOINT).contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(cardDto)))
                 .andDo(print())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isConflict());
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.message").value(expectedMessage));
     }
 
     @Test
@@ -167,9 +156,14 @@ public class CardIntegrationTest {
 
     @Test
     public void shouldReturnNotFoundWhileDeleting() throws Exception {
-        mockMvc.perform(delete(ENDPOINT + "/{id}", UUID.randomUUID()))
+        UUID id = UUID.randomUUID();
+        String expectedMessage = "Card with id = " + id + " is not found";
+
+        mockMvc.perform(delete(ENDPOINT + "/{id}", id))
                 .andDo(print())
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(expectedMessage));
     }
 
     @Test

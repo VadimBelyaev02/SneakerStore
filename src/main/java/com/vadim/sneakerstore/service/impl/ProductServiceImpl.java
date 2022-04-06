@@ -41,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public ProductDto getById(UUID id) {
         Product product = repository.findById(id).orElseThrow(() ->
-                new NotFoundException("Product with id=" + id + " is not found")
+                new NotFoundException("Product with id = " + id + " is not found")
         );
         return converter.convertToDto(product);
     }
@@ -77,7 +77,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public void deleteById(UUID id) {
         if (!repository.existsById(id)) {
-            throw new NotFoundException("Product with id=" + id + " is not found");
+            throw new NotFoundException("Product with id = " + id + " is not found");
         }
         repository.deleteById(id);
     }

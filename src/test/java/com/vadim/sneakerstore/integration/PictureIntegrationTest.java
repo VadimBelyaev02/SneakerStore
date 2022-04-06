@@ -72,7 +72,7 @@ public class PictureIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.link").value("link"))
-                .andExpect(jsonPath("$.productId").value("9b410870-2c8a-4fd4-8377-89514c4bc05d"));
+                .andExpect(jsonPath("$.productId").value("836b1a57-7e14-401e-b618-0024c694e8b2"));
     }
 
     @Test
@@ -87,12 +87,12 @@ public class PictureIntegrationTest {
                 .andExpect(jsonPath("$.message").value(expectedMessage));
     }
 
-    @Test
-    public void shouldReturnBadRequestWithIncorrectId() throws Exception {
-        mockMvc.perform(get(ENDPOINT + "/{id}", toJson(pictureDto)))
-                .andDo(print())
-                .andExpect(status().isBadRequest());
-    }
+//    @Test
+//    public void shouldReturnBadRequestWithIncorrectId() throws Exception {
+//        mockMvc.perform(get(ENDPOINT + "/{id}", toJson(pictureDto)))
+//                .andDo(print())
+//                .andExpect(status().isBadRequest());
+//    }
 
     @Test
     public void shouldReturnAllPictures() throws Exception {
@@ -171,7 +171,7 @@ public class PictureIntegrationTest {
 
     @Test
     public void shouldReturnUpdatedPictureDto() throws Exception {
-        UUID productId = UUID.fromString("9b410870-2c8a-4fd4-8377-89514c4bc05d");
+        UUID productId = UUID.fromString("836b1a57-7e14-401e-b618-0024c694e8b2");
         pictureDto.setLink("link");
         pictureDto.setProductId(productId);
 
@@ -182,7 +182,7 @@ public class PictureIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.link").value("link"))
-                .andExpect(jsonPath("$.productId").value(productId));
+                .andExpect(jsonPath("$.productId").value(productId.toString()));
     }
 
     @Test
@@ -192,12 +192,17 @@ public class PictureIntegrationTest {
                 .andExpect(status().isNoContent());
     }
 
+
     @Test
-    public void shouldReturnBadRequestWithIncorrectIdInDelete() throws Exception {
-        mockMvc.perform(delete(ENDPOINT + "/{id}", toJson(pictureDto)))
+    public void shouldReturnNotFoundWithIncorrectIdInDelete() throws Exception {
+        String link = UUID.randomUUID().toString();
+        String expectedMessage = "Picture with link = " + link + " is not found";
+
+        mockMvc.perform(delete(ENDPOINT + "/{link}", link))
                 .andDo(print())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value(expectedMessage));
     }
 
     @Test
