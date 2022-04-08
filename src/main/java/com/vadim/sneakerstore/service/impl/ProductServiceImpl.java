@@ -85,8 +85,17 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public List<ProductDto> getAllPaging(int page, int size, String sortBy) {
+        Pageable pageable = PageRequest.
         Pageable paging = PageRequest.of(page, size, Sort.by(sortBy));
         return repository.findAll(paging).stream()
+                .map(converter::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public List<ProductDto> getAllByIds(List<UUID> ids) {
+        return repository.findAllById(ids).stream()
                 .map(converter::convertToDto)
                 .collect(Collectors.toList());
     }

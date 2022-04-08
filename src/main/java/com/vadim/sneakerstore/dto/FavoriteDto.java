@@ -20,7 +20,9 @@ public class FavoriteDto {
     @NotNull
     private UUID customerId;
 
-    @Schema(description = "Id of a product that are in the customer's favorites")
+    @Schema(description = "Product that are in the customer's favorites")
     @NotNull
     private UUID productId;
+
+
 }

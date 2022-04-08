@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -37,18 +38,38 @@ public class ProductController {
         return productService.getById(id);
     }
 
+//    @Operation(description = "Get all products")
+//    @ApiResponse(description = "All products are found", responseCode = "200")
+//    @GetMapping
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<ProductDto> getAllProducts(@Parameter(description = "Amount of products on one page")
+//                                           @RequestParam(value = "size", defaultValue = "21") int size,
+//                                           @Parameter(description = "Number of needed page")
+//                                           @RequestParam(value = "page", defaultValue = "0") int page,
+//                                           @Parameter(description = "Name of field by that it should be sorted")
+//                                           @RequestParam(value = "sortBy", defaultValue = "id") String sortBy,
+//                                           @RequestParam(value = "filterBy", required = false) Ы) {
+//        return productService.getAllPaging(page, size, sortBy);
+//    }
+
     @Operation(description = "Get all products")
     @ApiResponse(description = "All products are found", responseCode = "200")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ProductDto> getAllProducts(@Parameter(description = "Amount of products on one page")
-                                           @RequestParam(value = "size", defaultValue = "21") int size,
-                                           @Parameter(description = "Number of needed page")
-                                           @RequestParam(value = "page", defaultValue = "0") int page,
-                                           @Parameter(description = "Name of field by that it should be sorted")
-                                           @RequestParam(value = "sortBy", defaultValue = "id") String sortBy) {
-        return productService.getAllPaging(page, size, sortBy);
+    public List<ProductDto> getAllProducts(@RequestParam Map<String, String> params) {
+        params.keySet().forEach(System.out::println);
+        return null;
+    //    return productService.getAllPaging(page, size, sortBy);
     }
+
+    @Operation(description = "Get products by array of its ids")
+    @ApiResponse(description = "All products are found by ids", responseCode = "200")
+    @GetMapping("/ids")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductDto> getAllProductsByIds(@RequestBody List<UUID> ids) {
+        return productService.getAllByIds(ids);
+    }
+
 
     @Operation(description = "Add a new product")
     @ApiResponse(description = "Product is successfully created", responseCode = "201")

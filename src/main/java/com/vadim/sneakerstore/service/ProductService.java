@@ -20,8 +20,7 @@ public interface ProductService {
 
     void deleteById(UUID id);
 
-//    List<ProductDto> getAllPaging(Pageable pageable);
-
-    @Transactional
     List<ProductDto> getAllPaging(int page, int size, String sortBy);
+
+    List<ProductDto> getAllByIds(List<UUID> ids);
 }

@@ -25,4 +25,6 @@ public interface FavoriteRepository extends JpaRepository<Favorite, ProductCusto
     @Query(nativeQuery = true, value = "DELETE FROM favorites WHERE customer_id =:customerId " +
             "AND product_id = :productId")
     void deleteByCustomerIdAndProductId(UUID customerId, UUID productId);
+
+
 }

@@ -44,37 +44,7 @@ public class CustomerConverter {
         final String lastName = customerDto.getLastName();
         final String avatar = customerDto.getAvatar();
 
-        List<Address> addresses = new ArrayList<>();
-        if (Objects.nonNull(customerDto.getAddressesIds())) {
-            addressRepository.findAllById(customerDto.getAddressesIds());
-        }
-
-        List<Order> orders = new ArrayList<>();
-        if (Objects.nonNull(customerDto.getOrdersIds())) {
-            orderRepository.findAllById(customerDto.getOrdersIds());
-        }
-
-        List<Card> cards = new ArrayList<>();
-        if (Objects.nonNull(customerDto.getCardsIds())) {
-            cardRepository.findAllById(customerDto.getCardsIds());
-        }
-
-        List<Comment> comments = new ArrayList<>();
-        if (Objects.nonNull(customerDto.getCommentsIds())) {
-            commentRepository.findAllById(customerDto.getCommentsIds());
-        }
-
-        List<Product> favorites = new ArrayList<>();
-        if (Objects.nonNull(customerDto.getFavoritesIds())) {
-            productRepository.findAllById(customerDto.getFavoritesIds());
-        }
-
-        List<Product> inCart = new ArrayList<>();
-        if (Objects.nonNull(customerDto.getInCartIds())) {
-            productRepository.findAllById(customerDto.getInCartIds());
-        }
-
-        return Customer.builder()
+        Customer customer = Customer.builder()
                 .id(id)
                 .email(email)
                 .firstName(firstName)
@@ -83,13 +53,44 @@ public class CustomerConverter {
                 .password(password)
                 .lastName(lastName)
                 .avatar(avatar)
-                .addresses(addresses)
-                .orders(orders)
-                .cards(cards)
-                .comments(comments)
-                .favorites(favorites)
-                .inCart(inCart)
                 .build();
+
+        List<Address> addresses = new ArrayList<>();
+        if (Objects.nonNull(customerDto.getAddressesIds())) {
+            addressRepository.findAllById(customerDto.getAddressesIds());
+            customer.setAddresses(addresses);
+        }
+
+        List<Order> orders = new ArrayList<>();
+        if (Objects.nonNull(customerDto.getOrdersIds())) {
+            orderRepository.findAllById(customerDto.getOrdersIds());
+            customer.setOrders(orders);
+        }
+
+        List<Card> cards = new ArrayList<>();
+        if (Objects.nonNull(customerDto.getCardsIds())) {
+            cardRepository.findAllById(customerDto.getCardsIds());
+            customer.setCards(cards);
+        }
+
+        List<Comment> comments = new ArrayList<>();
+        if (Objects.nonNull(customerDto.getCommentsIds())) {
+            commentRepository.findAllById(customerDto.getCommentsIds());
+            customer.setComments(comments);
+        }
+
+        List<Product> favorites = new ArrayList<>();
+        if (Objects.nonNull(customerDto.getFavoritesIds())) {
+            productRepository.findAllById(customerDto.getFavoritesIds());
+        }
+
+
+        List<Product> inCart = new ArrayList<>();
+        if (Objects.nonNull(customerDto.getInCartIds())) {
+            productRepository.findAllById(customerDto.getInCartIds());
+        }
+
+        return customer;
     }
 
     public CustomerDto convertToDto(Customer customer) {
@@ -97,7 +98,6 @@ public class CustomerConverter {
         final String email = customer.getEmail();
         final String firstName = customer.getFirstName();
         final String phone = customer.getPhone();
-        final String password = customer.getPassword();
         final String lastName = customer.getLastName();
         final String role = customer.getRole().name();
         final String avatar = customer.getAvatar();
