@@ -26,6 +26,7 @@ public class CartConverter {
     public Cart convertToEntity(CartDto cartDto) {
         ProductCustomerId productCustomerId = new ProductCustomerId();
 
+
         final Customer customer = customerRepository.findById(cartDto.getCustomerId()).orElseThrow(() ->
                 new NotFoundException("Customer with id = " + cartDto.getCustomerId() + " is not found")
         );
