@@ -1,11 +1,10 @@
 package com.vadim.sneakerstore.service;
 
 import com.vadim.sneakerstore.dto.ProductDto;
-import com.vadim.sneakerstore.entity.Product;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public interface ProductService {
@@ -23,4 +22,8 @@ public interface ProductService {
     List<ProductDto> getAllPaging(int page, int size, String sortBy);
 
     List<ProductDto> getAllByIds(List<UUID> ids);
+
+    List<ProductDto> getSortingAndFiltering(Map<String, List<String>> productDto, Pageable pageable);
+
+    List<ProductDto> saveAll(List<ProductDto> productDtos);
 }

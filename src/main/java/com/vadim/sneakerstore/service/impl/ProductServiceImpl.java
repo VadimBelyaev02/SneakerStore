@@ -13,9 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -98,4 +96,32 @@ public class ProductServiceImpl implements ProductService {
                 .map(converter::convertToDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<ProductDto> getSortingAndFiltering(Map<String, List<String>> productDto, Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public List<ProductDto> saveAll(List<ProductDto> productDtos) {
+        return repository.saveAll(productDtos.stream()
+                .map(converter::convertToEntity)
+                .collect(Collectors.toList())).stream()
+                .map(converter::convertToDto)
+                .collect(Collectors.toList());
+
+    }
+
+
+//    @Override
+//    public List<ProductDto> getSortingAndFiltering(Map<String, List<String>> fields, Pageable pageable) {
+//        List<Product> products = repository.findAll(pageable).stream()
+//                .filter(product -> fields.getOrDefault("brand", new ArrayList<>(Collections.singleton("*")))
+//                        .contains(product.getBrand().))
+//                .filter(product -> fields.get(""))
+//
+//
+//                .collect(Collectors.toList());
+//    }
 }
