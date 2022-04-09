@@ -14,7 +14,7 @@
         </addColumn>
         
         <addColumn tableName="products">
-            <column name="price" type="numeric(2, 10)">
+            <column name="price" type="numeric(10, 2)">
                 <constraints nullable="false"/>
             </column>
         </addColumn>
