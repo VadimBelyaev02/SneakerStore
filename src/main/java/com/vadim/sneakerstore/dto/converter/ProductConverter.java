@@ -2,6 +2,7 @@ package com.vadim.sneakerstore.dto.converter;
 
 import com.vadim.sneakerstore.dto.ProductDto;
 import com.vadim.sneakerstore.entity.*;
+import com.vadim.sneakerstore.repository.PictureRepository;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -10,6 +11,12 @@ import java.util.stream.Collectors;
 
 @Component
 public class ProductConverter {
+
+    private final PictureRepository pictureRepository;
+
+    public ProductConverter(PictureRepository pictureRepository) {
+        this.pictureRepository = pictureRepository;
+    }
 
     public Product convertToEntity(ProductDto productDto) {
         final UUID id = productDto.getId();
@@ -23,6 +30,13 @@ public class ProductConverter {
         final String description = productDto.getDescription();
         final String material = productDto.getMaterial();
         final BigDecimal price = productDto.getPrice();
+
+        List<Picture> photos = new ArrayList<>();
+        if (Objects.nonNull(productDto.getPhotos())) {
+            photos = pictureRepository.findAllById(productDto.getPhotos());
+        }
+
+
         final List<Size> sizes;
         final List<Picture> pictures;
         final List<Customer> customers;
@@ -39,6 +53,7 @@ public class ProductConverter {
                 .material(material)
                 .color(color)
                 .brand(brand)
+                .pictures(photos)
                 .originCountry(originCountry)
                 .build();
     }
@@ -121,7 +136,7 @@ public class ProductConverter {
                 .commentsIds(commentIds)
                 .customersIds(customersFavoritesIds)
                 .inCustomersCarts(inCustomersCartsIds)
-                .links(links)
+                .photos(links)
                 .sizesIds(sizesIds)
                 .averageRate(averageRate)
                 .build();

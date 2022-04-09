@@ -67,7 +67,7 @@ public class ProductDto {
     private List<UUID> sizesIds;
 
     @Schema(description = "List of pictures links")
-    private List<String> links;
+    private List<String> photos;
 
     @Schema(description = "List of who liked it")
     private List<UUID> customersIds;
