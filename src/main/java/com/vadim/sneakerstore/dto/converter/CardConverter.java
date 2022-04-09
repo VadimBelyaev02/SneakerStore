@@ -24,6 +24,7 @@ public class CardConverter {
     }
 
     public CardDto convertToDto(Card card) {
+
         final UUID id = card.getId();
         final String cvv = card.getCvv();
         final String number = card.getNumber();
