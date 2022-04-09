@@ -29,7 +29,7 @@ public class Card {
     private String number;
 
     @Column(name = "validity_date")
-    private LocalDate validityDate;
+    private String validityDate;
 
     @Column(name = "owner")
     private String owner;

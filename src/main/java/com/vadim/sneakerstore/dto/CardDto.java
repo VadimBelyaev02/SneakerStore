@@ -32,7 +32,7 @@ public class CardDto {
 
     @Schema(description = "Validity date")
     @JsonSerialize(using = ToStringSerializer.class)
-    private LocalDate validityDate;
+    private String validityDate;
 
     @Schema(description = "Owner on a card")
     @NotBlank

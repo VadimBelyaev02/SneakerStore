@@ -28,7 +28,7 @@ public class CardConverter {
         final UUID id = card.getId();
         final String cvv = card.getCvv();
         final String number = card.getNumber();
-        final LocalDate date = card.getValidityDate();
+        final String validityDate = card.getValidityDate();
         final String owner = card.getOwner();
 
         final List<UUID> customersIds = card.getCustomers().stream()
@@ -39,7 +39,7 @@ public class CardConverter {
                 .id(id)
                 .cvv(cvv)
                 .number(number)
-                .validityDate(date)
+                .validityDate(validityDate)
                 .owner(owner)
                 .customersIds(customersIds)
                 .build();
@@ -49,7 +49,7 @@ public class CardConverter {
         final UUID id = cardDto.getId();
         final String cvv = cardDto.getCvv();
         final String number = cardDto.getNumber();
-        final LocalDate date = cardDto.getValidityDate();
+        final String date = cardDto.getValidityDate();
         final String owner = cardDto.getOwner();
 
         List<Customer> customers = new ArrayList<>();
