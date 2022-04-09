@@ -77,7 +77,7 @@ public class CardIntegrationTest {
                 .id(UUID.fromString("89039889-99a8-48e1-a570-e578580fb6cb"))
                 .owner("owner")
                 .number("123456789")
-                .validityDate(LocalDate.of(2022, 1, 1))
+                .validityDate("01/01")
                 .cvv("123")
                 .build();
     }
