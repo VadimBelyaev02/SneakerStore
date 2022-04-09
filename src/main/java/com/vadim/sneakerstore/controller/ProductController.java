@@ -39,7 +39,7 @@ public class ProductController {
         return productService.getById(id);
     }
 
-    @PostMapping
+    @PostMapping("/list")
     @ResponseStatus(HttpStatus.OK)
     public List<ProductDto> postAll(@RequestBody List<ProductDto> productDtos) {
         return productService.saveAll(productDtos);
