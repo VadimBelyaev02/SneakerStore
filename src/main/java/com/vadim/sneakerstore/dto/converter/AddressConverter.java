@@ -26,6 +26,8 @@ public class AddressConverter {
         final String city = addressDto.getCity();
         final String country = addressDto.getCountry();
         final String street = addressDto.getStreet();
+        final String house = addressDto.getHouse();
+        final String apartment = addressDto.getApartment();
 
         List<Customer> customers = new ArrayList<>();
         if (Objects.nonNull(addressDto.getCustomersIds())) {
@@ -37,6 +39,7 @@ public class AddressConverter {
                 .city(city)
                 .street(street)
                 .country(country)
+
                 .customers(customers)
                 .build();
     }

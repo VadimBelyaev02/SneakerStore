@@ -80,4 +80,12 @@ public class ProductController {
                               @PathVariable("id") UUID id) {
         productService.deleteById(id);
     }
+
+    @Operation(description = "Get all products")
+    @ApiResponse(description = "All products are found", responseCode = "200")
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductDto> getAll() {
+        return productService.getAll();
+    }
 }

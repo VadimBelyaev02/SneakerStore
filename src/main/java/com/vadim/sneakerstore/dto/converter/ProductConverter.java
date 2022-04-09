@@ -29,7 +29,7 @@ public class ProductConverter {
         final String originCountry = productDto.getOriginCountry();
         final String description = productDto.getDescription();
         final String material = productDto.getMaterial();
-        final BigDecimal price = productDto.getPrice();
+        final Double price = productDto.getPrice();
 
         List<Picture> photos = new ArrayList<>();
         if (Objects.nonNull(productDto.getPhotos())) {
@@ -60,7 +60,7 @@ public class ProductConverter {
 
     public ProductDto convertToDto(Product product) {
         final UUID id = product.getId();
-        final BigDecimal price = product.getPrice();
+        final Double price = product.getPrice();
         final String name = product.getName();
         final String brand = product.getBrand();
         final String sex = product.getSex();

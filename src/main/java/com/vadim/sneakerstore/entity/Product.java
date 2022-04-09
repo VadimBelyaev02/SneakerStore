@@ -23,7 +23,7 @@ public class Product {
     private UUID id;
 
     @Column(name = "price")
-    private BigDecimal price;
+    private Double price;
 
     @Column(name = "name")
     private String name;

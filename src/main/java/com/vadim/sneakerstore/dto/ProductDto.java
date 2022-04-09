@@ -23,7 +23,7 @@ public class ProductDto {
 
     @Schema(description = "Product's costs")
     @NotNull
-    private BigDecimal price;
+    private Double price;
 
     @Schema(description = "Product's name")
     @NotBlank

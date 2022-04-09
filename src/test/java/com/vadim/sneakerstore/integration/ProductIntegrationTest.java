@@ -70,7 +70,7 @@ public class ProductIntegrationTest {
                 .sex("sex")
                 .description("description")
                 .originCountry("originCountry")
-                .price(BigDecimal.ONE)
+                .price(1D)
                 .averageRate(5D)
                 .build();
     }

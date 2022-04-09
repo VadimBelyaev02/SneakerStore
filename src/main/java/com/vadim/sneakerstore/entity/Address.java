@@ -33,6 +33,12 @@ public class Address {
     @Column(name = "street")
     private String street;
 
+    @Column(name = "apartment")
+    private String apartment;
+
+    @Column(name = "house")
+    private String house;
+
     @ManyToMany
     @JoinTable(name = "addresses_customers",
             joinColumns = @JoinColumn(name = "address_id", referencedColumnName = "id"),

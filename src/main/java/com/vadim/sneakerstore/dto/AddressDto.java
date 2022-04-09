@@ -25,8 +25,14 @@ public class AddressDto {
     @Schema(description = "Person's country of living")
     private String country;
 
-    @Schema(description = "Person's street and house number of living")
+    @Schema(description = "Person's street of living")
     private String street;
+
+    @Schema(description = "Person's house's number of living")
+    private String house;
+
+    @Schema(description = "Person's apartment")
+    private String apartment;
 
     @Schema(description = "People that are living at this address")
     @ArraySchema()
