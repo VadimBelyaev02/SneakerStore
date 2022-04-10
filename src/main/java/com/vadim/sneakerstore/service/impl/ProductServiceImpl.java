@@ -106,7 +106,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public List<ProductDto> saveAll(List<ProductDto> productDtos) {
         for (ProductDto productDto : productDtos) {
-            if (repository.existsById(productDto.getId())) {
+            if (repository.existsByName(productDto.getName())) {
                 throw new AlreadyExistsException("Exists");
             }
         }
