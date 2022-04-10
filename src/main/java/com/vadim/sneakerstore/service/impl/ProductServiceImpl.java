@@ -105,6 +105,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public List<ProductDto> saveAll(List<ProductDto> productDtos) {
+        for (ProductDto productDto : productDtos) {
+            if (repository.existsById(productDto.getId())) {
+                throw new AlreadyExistsException("Exists");
+            }
+        }
+
         return repository.saveAll(productDtos.stream()
                 .map(converter::convertToEntity)
                 .collect(Collectors.toList())).stream()
