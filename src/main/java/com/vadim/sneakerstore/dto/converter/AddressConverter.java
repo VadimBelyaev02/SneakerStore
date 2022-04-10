@@ -27,11 +27,12 @@ public class AddressConverter {
         final String country = addressDto.getCountry();
         final String street = addressDto.getStreet();
         final String house = addressDto.getHouse();
+        final String state = addressDto.getState();
         final String apartment = addressDto.getApartment();
 
         List<Customer> customers = new ArrayList<>();
         if (Objects.nonNull(addressDto.getCustomersIds())) {
-            customerRepository.findAllById(addressDto.getCustomersIds());
+            customers = customerRepository.findAllById(addressDto.getCustomersIds());
         }
 
         return Address.builder()
@@ -42,16 +43,19 @@ public class AddressConverter {
                 .house(house)
                 .apartment(apartment)
                 .customers(customers)
+                .state(state)
                 .build();
     }
 
     public AddressDto convertToDto(Address address) {
         final UUID id = address.getId();
         final String city = address.getCity();
+        final String state = address.getState();
         final String country = address.getCountry();
         final String street = address.getStreet();
         final String house = address.getHouse();
         final String apartment = address.getApartment();
+
 
         List<UUID> customersIds = new ArrayList<>();
         if (Objects.nonNull(address.getCustomers())) {
@@ -66,6 +70,7 @@ public class AddressConverter {
                 .house(house)
                 .city(city)
                 .street(street)
+                .state(state)
                 .country(country)
                 .customersIds(customersIds)
                 .build();

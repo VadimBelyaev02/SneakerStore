@@ -3,9 +3,12 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <include file="db/changelog/changeset/db-changeLog-18.0.xml"/>
-
-
-
+    <changeSet id="17" author="Vadim">
+        <addColumn tableName="addresses">
+            <column name="state" type="varchar(32)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 
 </databaseChangeLog>

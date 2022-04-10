@@ -36,6 +36,9 @@ public class Address {
     @Column(name = "apartment")
     private String apartment;
 
+    @Column(name = "state")
+    private String state;
+
     @Column(name = "house")
     private String house;
 

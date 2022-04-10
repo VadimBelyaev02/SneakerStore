@@ -36,11 +36,14 @@ public class ProductConverter {
             photos = pictureRepository.findAllById(productDto.getPhotos());
         }
 
+//        List<Picture> pictures = new ArrayList<>();
+//        if (Objects.nonNull(productDto.getPhotos())) {
+//            pictures = pictureRepository.findAllById(productDto.getPhotos());
+//        }
 
-        final List<Size> sizes;
-        final List<Picture> pictures;
-        final List<Customer> customers;
-        final List<Comment> comments;
+        List<Size> sizes = new ArrayList<>();
+        List<Customer> customers;
+        List<Comment> comments;
 
         return Product.builder()
                 .id(id)

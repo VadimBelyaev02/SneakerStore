@@ -56,6 +56,7 @@ public class Product {
     private List<Size> sizes;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Picture> pictures;
 
     @ManyToMany
