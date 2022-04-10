@@ -2,10 +2,11 @@ package com.vadim.sneakerstore.dto.converter;
 
 import com.vadim.sneakerstore.dto.ProductDto;
 import com.vadim.sneakerstore.entity.*;
+import com.vadim.sneakerstore.exception.NotFoundException;
 import com.vadim.sneakerstore.repository.PictureRepository;
+import com.vadim.sneakerstore.repository.ProductRepository;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -14,8 +15,15 @@ public class ProductConverter {
 
     private final PictureRepository pictureRepository;
 
-    public ProductConverter(PictureRepository pictureRepository) {
+
+
+
+    private final ProductRepository productRepository;
+
+
+    public ProductConverter(PictureRepository pictureRepository, ProductRepository productRepository) {
         this.pictureRepository = pictureRepository;
+        this.productRepository = productRepository;
     }
 
     public Product convertToEntity(ProductDto productDto) {
@@ -33,8 +41,18 @@ public class ProductConverter {
 
         List<Picture> photos = new ArrayList<>();
         if (Objects.nonNull(productDto.getPhotos())) {
-            photos = pictureRepository.findAllById(productDto.getPhotos());
+            Product product = productRepository.findByName(name).orElseThrow(() ->
+                    new NotFoundException("Product with name = " + name + " is not found")
+            );
+            // photos = pictureRepository.findAllById(productDto.getPhotos());
+            for (String photo : productDto.getPhotos()) {
+                Picture picture = new Picture();
+                picture.setLink(photo);
+                picture.setProduct(product);
+                photos.add(picture);
+            }
         }
+
 
 //        List<Picture> pictures = new ArrayList<>();
 //        if (Objects.nonNull(productDto.getPhotos())) {
