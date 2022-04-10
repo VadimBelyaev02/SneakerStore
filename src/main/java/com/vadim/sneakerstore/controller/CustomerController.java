@@ -33,6 +33,7 @@ public class CustomerController {
     public CustomerDto getCustomer(@Parameter(description = "Id of needed customer")
                                    @PathVariable("id") UUID id) {
         return customerService.getById(id);
+
     }
 
     @Operation(description = "Get all customers")
