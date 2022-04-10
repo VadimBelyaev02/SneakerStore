@@ -39,11 +39,22 @@ public class ProductConverter {
         final String material = productDto.getMaterial();
         final Double price = productDto.getPrice();
 
+        Product product = Product.builder()
+                .id(id)
+                .price(price)
+                .name(name)
+                .season(season)
+                .sex(sex)
+                .description(description)
+                .destiny(destiny)
+                .material(material)
+                .color(color)
+                .brand(brand)
+                .originCountry(originCountry)
+                .build();
+
         List<Picture> photos = new ArrayList<>();
         if (Objects.nonNull(productDto.getPhotos())) {
-            Product product = productRepository.findByName(name).orElseThrow(() ->
-                    new NotFoundException("Product with name = " + name + " is not found")
-            );
             // photos = pictureRepository.findAllById(productDto.getPhotos());
             for (String photo : productDto.getPhotos()) {
                 Picture picture = new Picture();
@@ -52,6 +63,8 @@ public class ProductConverter {
                 photos.add(picture);
             }
         }
+
+        product.setPictures(photos);
 
 
 //        List<Picture> pictures = new ArrayList<>();
@@ -63,20 +76,7 @@ public class ProductConverter {
         List<Customer> customers;
         List<Comment> comments;
 
-        return Product.builder()
-                .id(id)
-                .price(price)
-                .name(name)
-                .season(season)
-                .sex(sex)
-                .description(description)
-                .destiny(destiny)
-                .material(material)
-                .color(color)
-                .brand(brand)
-                .pictures(photos)
-                .originCountry(originCountry)
-                .build();
+        return product;
     }
 
     public ProductDto convertToDto(Product product) {
