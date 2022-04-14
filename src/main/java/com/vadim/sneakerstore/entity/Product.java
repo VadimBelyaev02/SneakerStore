@@ -75,9 +75,10 @@ public class Product {
     @ToString.Exclude
     private List<Customer> customers;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Stock> stocks;
 }
