@@ -142,6 +142,11 @@ public class ProductConverter {
                     .collect(Collectors.toList());
         }
 
+        Integer orderedAmount = 0;
+        if (Objects.nonNull(product.getStocks())) {
+            orderedAmount = product.getStocks().size();
+        }
+
         return ProductDto.builder()
                 .id(id)
                 .price(price)
@@ -160,6 +165,7 @@ public class ProductConverter {
                 .photos(links)
                 .sizesIds(sizesIds)
                 .averageRate(averageRate)
+                .orderedAmount(orderedAmount)
                 .build();
     }
 }

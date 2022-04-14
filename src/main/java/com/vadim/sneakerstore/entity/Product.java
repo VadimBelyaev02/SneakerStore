@@ -78,4 +78,6 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<Comment> comments;
 
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    private List<Stock> stocks;
 }

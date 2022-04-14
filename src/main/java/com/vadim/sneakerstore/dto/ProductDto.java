@@ -1,5 +1,6 @@
 package com.vadim.sneakerstore.dto;
 
+import com.vadim.sneakerstore.entity.Stock;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -72,9 +73,14 @@ public class ProductDto {
     @Schema(description = "List of who liked it")
     private List<UUID> customersIds;
 
-    @Schema(description = ":(")
+    @Schema(description = "List of product's ids that are in a customer's cart")
     private List<UUID> inCustomersCarts;
 
-    @Schema(description = "List of product's comments")
+    @Schema(description = "List of product's comments ids")
     private List<UUID> commentsIds;
+
+    @Schema(description = "Ordered amount")
+    private Integer orderedAmount;
 }
+
+
