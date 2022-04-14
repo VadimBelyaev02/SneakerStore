@@ -30,6 +30,8 @@ public class AddressConverter {
         final String state = addressDto.getState();
         final String apartment = addressDto.getApartment();
 
+
+
         List<Customer> customers = new ArrayList<>();
         if (Objects.nonNull(addressDto.getCustomersIds())) {
             customers = customerRepository.findAllById(addressDto.getCustomersIds());

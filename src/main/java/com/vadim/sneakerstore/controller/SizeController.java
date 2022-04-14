@@ -77,4 +77,10 @@ public class SizeController {
                            @PathVariable("id") UUID id) {
         service.deleteById(id);
     }
+
+    @PostMapping("/sizes/list")
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<SizeDto> postListSizes(@RequestBody List<SizeDto> sizeDtos) {
+        return service.saveAll(sizeDtos);
+    }
 }

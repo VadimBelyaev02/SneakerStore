@@ -1,5 +1,6 @@
 package com.vadim.sneakerstore.service.impl;
 
+import com.vadim.sneakerstore.dto.ProductDto;
 import com.vadim.sneakerstore.dto.SizeDto;
 import com.vadim.sneakerstore.dto.converter.SizeConverter;
 import com.vadim.sneakerstore.entity.Size;
@@ -77,5 +78,20 @@ public class SizeServiceImpl implements SizeService {
         return repository.findAllByProductId(productId).stream()
                 .map(converter::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public List<SizeDto> saveAll(List<SizeDto> sizeDtos) {
+        for (SizeDto sizeDto : sizeDtos) {
+            sizeDto.setId(UUID.randomUUID());
+        }
+
+        return repository.saveAll(sizeDtos.stream()
+                        .map(converter::convertToEntity)
+                        .collect(Collectors.toList())).stream()
+                .map(converter::convertToDto)
+                .collect(Collectors.toList());
+
     }
 }

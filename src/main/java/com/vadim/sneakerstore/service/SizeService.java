@@ -19,4 +19,6 @@ public interface SizeService {
     void deleteById(UUID id);
 
     List<SizeDto> getAllByProductId(UUID productId);
+
+    List<SizeDto> saveAll(List<SizeDto> sizeDtos);
 }
