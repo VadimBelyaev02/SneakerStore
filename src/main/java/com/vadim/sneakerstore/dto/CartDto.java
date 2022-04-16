@@ -20,7 +20,7 @@ public class CartDto {
     @NotNull
     private UUID customerId;
 
-    @Schema(description = "Id of a product that customer has in his cart")
+    @Schema(description = "Id of a size with product's info that customer has in his cart")
     @NotNull
-    private UUID productId;
+    private UUID sizeId;
 }

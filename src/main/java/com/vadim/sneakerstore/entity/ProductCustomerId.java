@@ -15,6 +15,6 @@ public class ProductCustomerId implements Serializable {
     private Customer customer;
 
     @ManyToOne(targetEntity = Product.class)
-    private Product product;
+    private Size size;
 
 }

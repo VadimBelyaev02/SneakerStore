@@ -1,13 +1,10 @@
 package com.vadim.sneakerstore.dto.converter;
 
 import com.vadim.sneakerstore.dto.CartDto;
-import com.vadim.sneakerstore.entity.Cart;
-import com.vadim.sneakerstore.entity.Customer;
-import com.vadim.sneakerstore.entity.Product;
-import com.vadim.sneakerstore.entity.ProductCustomerId;
+import com.vadim.sneakerstore.entity.*;
 import com.vadim.sneakerstore.exception.NotFoundException;
 import com.vadim.sneakerstore.repository.CustomerRepository;
-import com.vadim.sneakerstore.repository.ProductRepository;
+import com.vadim.sneakerstore.repository.SizeRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -15,11 +12,11 @@ import java.util.UUID;
 @Component
 public class CartConverter {
 
-    private final ProductRepository productRepository;
+    private final SizeRepository sizeRepository;
     private final CustomerRepository customerRepository;
 
-    public CartConverter(ProductRepository productRepository, CustomerRepository customerRepository) {
-        this.productRepository = productRepository;
+    public CartConverter(SizeRepository sizeRepository, CustomerRepository customerRepository) {
+        this.sizeRepository = sizeRepository;
         this.customerRepository = customerRepository;
     }
 
@@ -31,11 +28,11 @@ public class CartConverter {
                 new NotFoundException("Customer with id = " + cartDto.getCustomerId() + " is not found")
         );
 
-        final Product product = productRepository.findById(cartDto.getProductId()).orElseThrow(() ->
-                new NotFoundException("Product with id = " + cartDto.getProductId() + " is not found")
+        final Size size = sizeRepository.findById(cartDto.getSizeId()).orElseThrow(() ->
+                new NotFoundException("Size with id = " + cartDto.getSizeId() + " is not found")
         );
 
-        productCustomerId.setProduct(product);
+        productCustomerId.setSize(size);
         productCustomerId.setCustomer(customer);
 
         return Cart.builder()
@@ -45,11 +42,11 @@ public class CartConverter {
 
     public CartDto convertToDto(Cart cart) {
         final UUID customerId = cart.getCustomerId();
-        final UUID productId = cart.getProductId();
+        final UUID sizeId = cart.getProductId();
 
         return CartDto.builder()
                 .customerId(customerId)
-                .productId(productId)
+                .sizeId(sizeId)
                 .build();
     }
 }

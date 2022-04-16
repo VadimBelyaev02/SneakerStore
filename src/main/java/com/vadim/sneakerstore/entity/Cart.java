@@ -24,6 +24,6 @@ public class Cart {
     }
 
     public UUID getProductId() {
-        return this.id.getProduct().getId();
+        return this.id.getSize().getId();
     }
 }

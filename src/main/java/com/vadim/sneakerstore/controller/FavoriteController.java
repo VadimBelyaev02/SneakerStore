@@ -27,13 +27,13 @@ public class FavoriteController {
 
     @Operation(description = "Get favorite by customer and product ids")
     @ApiResponse(description = "Favorite product by product id and customer id is found", responseCode = "200")
-    @GetMapping("/{productId}/{customerId}")
+    @GetMapping("/{sizeId}/{customerId}")
     @ResponseStatus(HttpStatus.OK)
     public FavoriteDto getFavorite(@Parameter(description = "Id of a product that should be found in customer's cart")
-                                   @PathVariable("productId") UUID productId,
+                                   @PathVariable("sizeId") UUID sizeId,
                                    @Parameter(description = "Id of a customer's cart in whose product should be found")
                                    @PathVariable("customerId") UUID customerId) {
-        return service.getById(customerId, productId);
+        return service.getById(customerId, sizeId);
     }
 
     @Operation(description = "Get all products from everyone's favorites")
@@ -73,12 +73,12 @@ public class FavoriteController {
 
     @Operation(description = "Delete favorite by id")
     @ApiResponse(description = "Favorite product is successfully deleted from customer's favorites", responseCode = "204")
-    @DeleteMapping("/{productId}/{customerId}")
+    @DeleteMapping("/{sizeId}/{customerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCustomer(@Parameter(description = "Id of deleted product from customer's favorites")
-                               @PathVariable("productId") UUID productId,
+                               @PathVariable("sizeId") UUID sizeId,
                                @Parameter(description = "Id of a customers from whose favorite products should be deleted")
                                @PathVariable("customerId") UUID customerId) {
-        service.deleteById(customerId, productId);
+        service.deleteById(customerId, sizeId);
     }
 }

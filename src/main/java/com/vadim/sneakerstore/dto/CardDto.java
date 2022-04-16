@@ -34,7 +34,7 @@ public class CardDto {
     @NotBlank
     private String validityDate;
 
-    @Schema(description = "Owner on a card")
+    @Schema(description = "Owner of a card")
     @NotBlank
     private String owner;
 

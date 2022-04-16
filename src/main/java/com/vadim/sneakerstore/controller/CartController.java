@@ -27,13 +27,13 @@ public class CartController {
 
     @Operation(description = "Get product from customer's cart by composite id")
     @ApiResponse(description = "Product by id from customer's cart are found", responseCode = "200")
-    @GetMapping("/{customerId}/{productId}")
+    @GetMapping("/{customerId}/{sizeId}")
     @ResponseStatus(HttpStatus.OK)
     public CartDto getCart(@Parameter(description = "Id of customer in whose cart this product")
                            @PathVariable("customerId") UUID customerId,
-                           @Parameter(description = "Id of a product from customer's cart")
-                           @PathVariable("productId") UUID productId) {
-        return service.getById(customerId, productId);
+                           @Parameter(description = "Id of a size from customer's cart")
+                           @PathVariable("sizeId") UUID sizeId) {
+        return service.getById(customerId, sizeId);
     }
 
     @Operation(description = "Get all products from customer's cart by his id")
@@ -73,12 +73,12 @@ public class CartController {
 
     @Operation(description = "Delete existed product from the cart")
     @ApiResponse(description = "Product is deleted from cart", responseCode = "204")
-    @DeleteMapping("/{customerId}/{productId}")
+    @DeleteMapping("/{customerId}/{sizeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCarts(@Parameter(description = "Id of a customers from whose cart the product will be deleted")
                             @PathVariable("customerId") UUID customerId,
                             @Parameter(description = "Id of a product that will be deleted from customer's cart")
-                            @PathVariable("productId") UUID productId) {
-        service.deleteById(customerId, productId);
+                            @PathVariable("sizeId") UUID sizeId) {
+        service.deleteById(customerId, sizeId);
     }
 }

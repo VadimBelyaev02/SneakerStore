@@ -57,37 +57,39 @@ public class CustomerConverter {
 
         List<Address> addresses = new ArrayList<>();
         if (Objects.nonNull(customerDto.getAddressesIds())) {
-            addressRepository.findAllById(customerDto.getAddressesIds());
+            addresses = addressRepository.findAllById(customerDto.getAddressesIds());
             customer.setAddresses(addresses);
         }
 
         List<Order> orders = new ArrayList<>();
         if (Objects.nonNull(customerDto.getOrdersIds())) {
-            orderRepository.findAllById(customerDto.getOrdersIds());
+            orders = orderRepository.findAllById(customerDto.getOrdersIds());
             customer.setOrders(orders);
         }
 
         List<Card> cards = new ArrayList<>();
         if (Objects.nonNull(customerDto.getCardsIds())) {
-            cardRepository.findAllById(customerDto.getCardsIds());
+            cards = cardRepository.findAllById(customerDto.getCardsIds());
             customer.setCards(cards);
         }
 
         List<Comment> comments = new ArrayList<>();
         if (Objects.nonNull(customerDto.getCommentsIds())) {
-            commentRepository.findAllById(customerDto.getCommentsIds());
+            comments = commentRepository.findAllById(customerDto.getCommentsIds());
             customer.setComments(comments);
         }
 
         List<Product> favorites = new ArrayList<>();
         if (Objects.nonNull(customerDto.getFavoritesIds())) {
-            productRepository.findAllById(customerDto.getFavoritesIds());
+            favorites = productRepository.findAllById(customerDto.getFavoritesIds());
+            customer.setFavorites(favorites);
         }
 
 
         List<Product> inCart = new ArrayList<>();
         if (Objects.nonNull(customerDto.getInCartIds())) {
-            productRepository.findAllById(customerDto.getInCartIds());
+            inCart = productRepository.findAllById(customerDto.getInCartIds());
+            customer.setInCart(inCart);
         }
 
         return customer;
@@ -170,7 +172,7 @@ public class CustomerConverter {
         final Role role = Role.USER;
 
         return Customer.builder()
-                 .password(password)
+                .password(password)
                 .email(email)
                 .firstName(firstName)
                 .phone(phone)

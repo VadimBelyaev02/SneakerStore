@@ -1,13 +1,10 @@
 package com.vadim.sneakerstore.dto.converter;
 
 import com.vadim.sneakerstore.dto.FavoriteDto;
-import com.vadim.sneakerstore.entity.Customer;
-import com.vadim.sneakerstore.entity.Favorite;
-import com.vadim.sneakerstore.entity.Product;
-import com.vadim.sneakerstore.entity.ProductCustomerId;
+import com.vadim.sneakerstore.entity.*;
 import com.vadim.sneakerstore.exception.NotFoundException;
 import com.vadim.sneakerstore.repository.CustomerRepository;
-import com.vadim.sneakerstore.repository.ProductRepository;
+import com.vadim.sneakerstore.repository.SizeRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -16,11 +13,11 @@ import java.util.UUID;
 public class FavoriteConverter {
 
     private final CustomerRepository customerRepository;
-    private final ProductRepository productRepository;
+    private final SizeRepository sizeRepository;
 
-    public FavoriteConverter(CustomerRepository customerRepository, ProductRepository productRepository) {
+    public FavoriteConverter(CustomerRepository customerRepository, SizeRepository sizeRepository) {
         this.customerRepository = customerRepository;
-        this.productRepository = productRepository;
+        this.sizeRepository = sizeRepository;
     }
 
     public Favorite convertToEntity(FavoriteDto favoriteDto) {
@@ -30,12 +27,12 @@ public class FavoriteConverter {
                 new NotFoundException("Customer with id = " + favoriteDto.getCustomerId() + " is not found")
         );
 
-        Product product = productRepository.findById(favoriteDto.getProductId()).orElseThrow(() ->
-                new NotFoundException("Product with id = " + favoriteDto.getProductId() + " is not found")
+        Size size = sizeRepository.findById(favoriteDto.getSizeId()).orElseThrow(() ->
+                new NotFoundException("Size with id = " + favoriteDto.getSizeId() + " is not found")
         );
 
         productCustomerId.setCustomer(customer);
-        productCustomerId.setProduct(product);
+        productCustomerId.setSize(size);
 
         return Favorite.builder()
                 .id(productCustomerId)
@@ -47,12 +44,12 @@ public class FavoriteConverter {
     //    final UUID productId = favorite.getProductId();
 
         final UUID customerId = favorite.getId().getCustomer().getId();
-        final UUID productId = favorite.getId().getProduct().getId();
+        final UUID sizeId = favorite.getId().getSize().getId();
 
 
         return FavoriteDto.builder()
                 .customerId(customerId)
-                .productId(productId)
+                .sizeId(sizeId)
                 .build();
     }
 }

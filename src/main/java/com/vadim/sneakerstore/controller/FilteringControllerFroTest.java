@@ -17,7 +17,6 @@ import java.util.Map;
 
 @Slf4j
 @CrossOrigin(origins = "*", maxAge = 3600)
-@Tag(name = "Comment Controller", description = "Comment CRUD operations")
 @RestController
 @RequestMapping("/api")
 public class FilteringControllerFroTest {

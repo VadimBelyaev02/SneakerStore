@@ -15,16 +15,16 @@ public interface FavoriteRepository extends JpaRepository<Favorite, ProductCusto
     List<Favorite> findAllByCustomerId(UUID customerId);
 
     @Query(nativeQuery = true, value = "SELECT EXISTS(SELECT * FROM favorites WHERE " +
-            "customer_id = :customerId AND product_id = :productId)")
-    boolean existsByCustomerIdAndProductId(UUID customerId, UUID productId);
+            "customer_id = :customerId AND product_id = :sizeId)")
+    boolean existsByCustomerIdAndProductId(UUID customerId, UUID sizeId);
 
     @Query(nativeQuery = true, value = "SELECT * FROM favorites WHERE customer_id = :customerId" +
-            " AND product_id = :productId")
-    Optional<Favorite> findByCustomerIdAndProductId(UUID customerId, UUID productId);
+            " AND product_id = :sizeId")
+    Optional<Favorite> findByCustomerIdAndProductId(UUID customerId, UUID sizeId);
 
     @Query(nativeQuery = true, value = "DELETE FROM favorites WHERE customer_id =:customerId " +
-            "AND product_id = :productId")
-    void deleteByCustomerIdAndProductId(UUID customerId, UUID productId);
+            "AND product_id = :sizeId")
+    void deleteByCustomerIdAndProductId(UUID customerId, UUID sizeId);
 
 
 }

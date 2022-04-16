@@ -12,16 +12,16 @@ import java.util.UUID;
 public interface CartRepository extends JpaRepository<Cart, ProductCustomerId> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM cart WHERE customer_id = :customerId" +
-            " AND product_id = :productId")
-    Optional<Cart> findByCustomerIdAndProductId(UUID customerId, UUID productId);
+            " AND product_id = :sizeId")
+    Optional<Cart> findByCustomerIdAndProductId(UUID customerId, UUID sizeId);
 
     @Query(nativeQuery = true, value = "SELECT EXISTS(SELECT * FROM cart WHERE " +
-            "customer_id = :customerId AND product_id = :productId)")
-    boolean existsByCustomerIdAndProductId(UUID customerId, UUID productId);
+            "customer_id = :customerId AND product_id = :sizeId)")
+    boolean existsByCustomerIdAndProductId(UUID customerId, UUID sizeId);
 
     @Query(nativeQuery = true, value = "DELETE FROM cart WHERE customer_id =:customerId " +
-            "AND product_id = :productId")
-    void deleteByCustomerIdAndProductId(UUID customerId, UUID productId);
+            "AND product_id = :sizeId")
+    void deleteByCustomerIdAndProductId(UUID customerId, UUID sizeId);
 
     @Query(nativeQuery = true, value = "SELECT * FROM cart WHERE customer_id = :customerId")
     List<Cart> findAllByCustomerId(UUID customerId);

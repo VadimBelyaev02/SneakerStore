@@ -27,10 +27,10 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public CartDto getById(UUID customerId, UUID productId) {
-        Cart cart = repository.findByCustomerIdAndProductId(customerId, productId).orElseThrow(() ->
-                new NotFoundException("Cart with customer's id = " + customerId + " and product's id = " +
-                        productId + " is not found")
+    public CartDto getById(UUID customerId, UUID sizeId) {
+        Cart cart = repository.findByCustomerIdAndProductId(customerId, sizeId).orElseThrow(() ->
+                new NotFoundException("Cart with customer id = " + customerId + " and size id = " +
+                        sizeId + " is not found")
         );
         return converter.convertToDto(cart);
     }
@@ -46,7 +46,7 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional
     public CartDto save(CartDto cartDto) {
-        if (repository.existsByCustomerIdAndProductId(cartDto.getCustomerId(), cartDto.getProductId())) {
+        if (repository.existsByCustomerIdAndProductId(cartDto.getCustomerId(), cartDto.getSizeId())) {
             throw new AlreadyExistsException("Cart with customer's id = " + cartDto.getCustomerId() +
                     " and product's id = " + cartDto.getCustomerId() + " already exists");
         }
@@ -57,9 +57,9 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional
     public CartDto update(CartDto cartDto) {
-        if (!repository.existsByCustomerIdAndProductId(cartDto.getCustomerId(), cartDto.getProductId())) {
+        if (!repository.existsByCustomerIdAndProductId(cartDto.getCustomerId(), cartDto.getSizeId())) {
             throw new NotFoundException("Cart with customer's id = " + cartDto.getCustomerId() +
-                    " and product's id = " + cartDto.getProductId() + " is not found");
+                    " and product's id = " + cartDto.getSizeId() + " is not found");
         }
         Cart cart = repository.save(converter.convertToEntity(cartDto));
         return converter.convertToDto(cart);
