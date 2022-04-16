@@ -26,6 +26,6 @@ public class Favorite {
     }
 
     public UUID getProductId() {
-        return this.id.getProduct().getId();
+        return this.id.getSize().getId();
     }
 }

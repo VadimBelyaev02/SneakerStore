@@ -31,10 +31,10 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     @Transactional
-    public FavoriteDto getById(UUID customerId, UUID productId) {
-        Favorite favorite = repository.findByCustomerIdAndProductId(customerId, productId).orElseThrow(() ->
-                new NotFoundException("Favorite with customer id = " + customerId + " and product id = " +
-                        productId + " is not found")
+    public FavoriteDto getById(UUID customerId, UUID sizeId) {
+        Favorite favorite = repository.findByCustomerIdAndProductId(customerId, sizeId).orElseThrow(() ->
+                new NotFoundException("Favorite with customer id = " + customerId + " and size id = " +
+                        sizeId + " is not found")
         );
         return converter.convertToDto(favorite);
     }
@@ -58,9 +58,9 @@ public class FavoriteServiceImpl implements FavoriteService {
     @Override
     @Transactional
     public FavoriteDto save(FavoriteDto favoriteDto) {
-        if (repository.existsByCustomerIdAndProductId(favoriteDto.getCustomerId(), favoriteDto.getProductId())) {
+        if (repository.existsByCustomerIdAndProductId(favoriteDto.getCustomerId(), favoriteDto.getSizeId())) {
             throw new AlreadyExistsException("Favorite with customer id = " + favoriteDto.getCustomerId()
-            + " and product id = " + favoriteDto.getProductId() + " already exists");
+            + " and size id = " + favoriteDto.getSizeId() + " already exists");
         }
         Favorite favorite = repository.save(converter.convertToEntity(favoriteDto));
         return converter.convertToDto(favorite);
@@ -69,9 +69,9 @@ public class FavoriteServiceImpl implements FavoriteService {
     @Override
     @Transactional
     public FavoriteDto update(FavoriteDto favoriteDto) {
-        if (!repository.existsByCustomerIdAndProductId(favoriteDto.getCustomerId(), favoriteDto.getProductId())) {
+        if (!repository.existsByCustomerIdAndProductId(favoriteDto.getCustomerId(), favoriteDto.getSizeId())) {
             throw new NotFoundException("Favorite with customer id = " + favoriteDto.getCustomerId()
-                    + " and product id = " + favoriteDto.getProductId() + " is not founa");
+                    + " and size id = " + favoriteDto.getSizeId() + " is not found");
         }
         Favorite favorite = repository.save(converter.convertToEntity(favoriteDto));
         return converter.convertToDto(favorite);
@@ -79,12 +79,12 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     @Transactional
-    public void deleteById(UUID customerId, UUID productId) {
-        if (!repository.existsByCustomerIdAndProductId(customerId, productId)) {
+    public void deleteById(UUID customerId, UUID sizeId) {
+        if (!repository.existsByCustomerIdAndProductId(customerId, sizeId)) {
             throw new NotFoundException("Favorite with customer id = " + customerId
-                    + " and product id = " + productId + " is not founa");
+                    + " and product id = " + sizeId + " is not found");
         }
-        repository.deleteByCustomerIdAndProductId(customerId, productId);
+        repository.deleteByCustomerIdAndProductId(customerId, sizeId);
     }
 
 
