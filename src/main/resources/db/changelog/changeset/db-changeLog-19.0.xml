@@ -4,13 +4,24 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
     <changeSet id="19" author="Vadim">
-        <dropColumn tableName="favorites" columnName="product_id"/>
+<!--        <dropColumn tableName="favorites" columnName="product_id"/>-->
+        <dropTable tableName="favorites"/>
 
-        <addColumn tableName="favorites">
-            <column name="size_id">
+        <createTable tableName="favorites">
+            <column name="customer_id" type="uuid">
+                <constraints primaryKey="true" foreignKeyName="customers_favorites_id_fkey" references="sizes(id)"/>
+            </column>
+            <column name="size_id" type="uuid">
                 <constraints primaryKey="true" foreignKeyName="sizes_favorites_id_fkey" references="sizes(id)"/>
             </column>
-        </addColumn>
+        </createTable>
+
+<!--        -->
+<!--        <addColumn tableName="favorites">-->
+<!--            <column name="size_id">-->
+<!--                <constraints primaryKey="true" foreignKeyName="sizes_favorites_id_fkey" references="sizes(id)"/>-->
+<!--            </column>-->
+<!--        </addColumn>-->
     </changeSet>
 
 </databaseChangeLog>
