@@ -1,0 +1,27 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="20" author="Vadim">
+        <!--        <dropColumn tableName="favorites" columnName="product_id"/>-->
+        <dropTable tableName="cart"/>
+
+        <createTable tableName="cart">
+            <column name="customer_id" type="uuid">
+                <constraints primaryKey="true" foreignKeyName="customers_favorites_id_fkey" references="sizes(id)"/>
+            </column>
+            <column name="size_id" type="uuid">
+                <constraints primaryKey="true" foreignKeyName="sizes_favorites_id_fkey" references="sizes(id)"/>
+            </column>
+        </createTable>
+
+        <!--        -->
+        <!--        <addColumn tableName="favorites">-->
+        <!--            <column name="size_id">-->
+        <!--                <constraints primaryKey="true" foreignKeyName="sizes_favorites_id_fkey" references="sizes(id)"/>-->
+        <!--            </column>-->
+        <!--        </addColumn>-->
+    </changeSet>
+
+</databaseChangeLog>
