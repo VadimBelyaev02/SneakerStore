@@ -83,7 +83,7 @@ public class Customer {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinTable(name = "favorites",
             joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
+            inverseJoinColumns = @JoinColumn(name = "size_id", referencedColumnName = "id"))
     @ToString.Exclude
     private List<Product> favorites;
 
@@ -91,7 +91,7 @@ public class Customer {
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST})
     @JoinTable(name = "cart",
             joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
+            inverseJoinColumns = @JoinColumn(name = "size_id", referencedColumnName = "id"))
     @ToString.Exclude
     private List<Product> inCart;
 

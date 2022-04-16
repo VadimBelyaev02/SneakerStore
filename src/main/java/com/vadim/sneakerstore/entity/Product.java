@@ -62,7 +62,7 @@ public class Product {
     @ManyToMany
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST})
     @JoinTable(name = "cart",
-            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
+            joinColumns = @JoinColumn(name = "size_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"))
     @ToString.Exclude
     private List<Customer> inCustomersCarts;
@@ -70,7 +70,7 @@ public class Product {
     @ManyToMany
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST})
     @JoinTable(name = "favorites",
-            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
+            joinColumns = @JoinColumn(name = "size_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"))
     @ToString.Exclude
     private List<Customer> customers;
