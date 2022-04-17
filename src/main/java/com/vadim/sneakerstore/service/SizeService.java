@@ -21,4 +21,6 @@ public interface SizeService {
     List<SizeDto> getAllByProductId(UUID productId);
 
     List<SizeDto> saveAll(List<SizeDto> sizeDtos);
+
+    List<SizeDto> getAllByProductsIds(List<UUID> ids);
 }

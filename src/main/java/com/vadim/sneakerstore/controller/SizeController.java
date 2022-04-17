@@ -34,6 +34,12 @@ public class SizeController {
         return service.getById(id);
     }
 
+    @GetMapping("/products/sizes/ids")
+    @ResponseStatus(HttpStatus.OK)
+    public List<SizeDto> getAllProductsSizes(@RequestBody List<UUID> ids) {
+        return service.getAllByProductsIds(ids);
+    }
+
     @Operation(description = "Get all sizes")
     @ApiResponse(description = "All sizes are found", responseCode = "200")
     @GetMapping("/sizes")

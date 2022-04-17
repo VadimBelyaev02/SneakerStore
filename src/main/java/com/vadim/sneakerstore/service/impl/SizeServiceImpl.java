@@ -94,4 +94,13 @@ public class SizeServiceImpl implements SizeService {
                 .collect(Collectors.toList());
 
     }
+
+    @Override
+    @Transactional
+    public List<SizeDto> getAllByProductsIds(List<UUID> ids) {
+        return repository.findAll().stream()
+                .filter(s -> ids.contains(s.getProduct().getId()))
+                .map(converter::convertToDto)
+                .collect(Collectors.toList());
+    }
 }
