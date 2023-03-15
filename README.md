@@ -19,5 +19,10 @@ A list of technologies that are used in the project:
 Docs
 ====
 
+[пример](http://example.com/ "Необязательная подсказка")
 
+[пример](http://example.com/ "Необязательная подсказка")
 
+[пример](http://example.com/ "Необязательная подсказка")
+
+[Source Code](https://github.com/VadimBelyaev02/SneakerStore/tree/master/src "Необязательная подсказка")
