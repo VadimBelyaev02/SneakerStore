@@ -19,7 +19,7 @@ A list of technologies that are used in the project:
 Docs
 ====
 
-[пример](http://example.com/ "Необязательная подсказка")
+[SDS](https://github.com/VadimBelyaev02/SneakerStore/blob/master/SDS "Необязательная подсказка")
 
 [пример](http://example.com/ "Необязательная подсказка")
 
