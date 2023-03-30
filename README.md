@@ -89,6 +89,14 @@ After user put at least one pair he can make an order. The information from his 
 
 ### 3.1.1.2 Sorting the list of products
 
+<b>Description</b>. User can open the catalog and sort sneaker by different parameters.
+
+<b>Requirement<b>. The application must provide an opportunity to sort sneaker by different parameters: sizes, gender (there are only two: male or female) and brand. He also can find needed sneakers by its name. 
+
+## 3.1.2 Limitations and exceptions
+
++ The application works only if a user has installed Java 1.8 on his PC.
+
+## 3.2.3 Limitations 
 
 
-The application doesn't require registration if you want only to look at the products, sort them or check if there is an appropriate size of chosen sneakers. But user has to register if he wants to order a product or add to favorite.
