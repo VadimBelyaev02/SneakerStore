@@ -62,4 +62,33 @@ The product must be a crossplatform web application with user-friendly interface
 -----------------------------
 ## 2.3.1 User classes
 
+## 2.3.2 Application audience
+
+### 2.3.2.1 Target audience
+
+Everyone who can use the Internet and want to buy new sneakers.
+
+## 2.4 Assumptions and dependencies
+
++ The application doesn't work if user doesn't have installed Java 1.8 on his PC.
+
+# 3 System requirements
+
+## 3.1 Functional requirement
+
+### 3.1.1 Main function
+
+#### 3.1.1.1 Getting, changing, adding, removing information
+
+<b>Description</b>. A user can get, change, delete, remove information about himself: phone number, email, password, country of living, street, city, house, apartment. He also can order products, put them in cart and add to favorite, chage avatar, add a credit card to buy for purchases.
+
+<b>Requirements</b> After user authorized he can open his profile and information about himself. He can change any information. He can also open a list of sneakers available for purchase. There are several options:
++ put sneaker in a card in order to buy them. It's possible to put in cart more than one pair of sneakers. 
++ add to favorite in order to decide later if he wants to buy it or not.
+After user put at least one pair he can make an order. The information from his profile will be used to determinte where to deliver and confirm the purchase.
+
+### 3.1.1.2 Sorting the list of products
+
+
+
 The application doesn't require registration if you want only to look at the products, sort them or check if there is an appropriate size of chosen sneakers. But user has to register if he wants to order a product or add to favorite.
