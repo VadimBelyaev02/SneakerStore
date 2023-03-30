@@ -98,6 +98,9 @@ After user put at least one pair he can make an order. The information from his 
 + The application works only if a user has installed Java 1.8 on his PC.
 
   
+  
+  Documentation:
+  
   <html lang="en"><div id="in-page-channel-node-id" data-channel-name="in_page_channel_fq5VLj"></div><head>
     <meta charset="UTF-8">
     <title>Swagger UI</title>
