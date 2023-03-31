@@ -55,16 +55,18 @@ The product must be a crossplatform web application with user-friendly interface
 
 ## 2.2 User interface
 
-
-
+User interface is in the end of the file. It's an HTML page.
 
 ## 2.3 User characteristics 
 
-## 2.3.1 User classes
+### 2.3.1 User classes
 
-## 2.3.2 Application audience
+The application requires to register if a user wants to buy anything or add product in favorite or put in cart.
+Anyone can look at products without registration.
 
-### 2.3.2.1 Target audience
+### 2.3.2 Application audience
+
+#### 2.3.2.1 Target audience
 
 Everyone who can use the Internet and want to buy new sneakers.
 
