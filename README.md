@@ -15,6 +15,7 @@ A list of technologies that are used in the project:
 + Redis
 + Sptring AOP
 + Openapi
++ OpenWeatherMap
 
 Docs
 ====
