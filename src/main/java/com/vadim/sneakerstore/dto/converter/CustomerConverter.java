@@ -3,6 +3,7 @@ package com.vadim.sneakerstore.dto.converter;
 import com.vadim.sneakerstore.dto.CustomerDto;
 import com.vadim.sneakerstore.entity.*;
 import com.vadim.sneakerstore.entity.enums.Role;
+import com.vadim.sneakerstore.entity.enums.Theme;
 import com.vadim.sneakerstore.model.RegistrationRequestDto;
 import com.vadim.sneakerstore.repository.*;
 import org.springframework.stereotype.Component;
@@ -43,9 +44,11 @@ public class CustomerConverter {
         final String phone = customerDto.getPhone();
         final String lastName = customerDto.getLastName();
         final String avatar = customerDto.getAvatar();
+        final Theme theme = customerDto.getTheme();
 
         Customer customer = Customer.builder()
                 .id(id)
+                .theme(theme)
                 .email(email)
                 .firstName(firstName)
                 .role(role)
@@ -103,6 +106,7 @@ public class CustomerConverter {
         final String lastName = customer.getLastName();
         final String role = customer.getRole().name();
         final String avatar = customer.getAvatar();
+        final Theme theme = customer.getTheme();
 
         List<UUID> favoritesIds = new ArrayList<>();
         if (Objects.nonNull(customer.getFavorites())) {
@@ -151,6 +155,7 @@ public class CustomerConverter {
                 .email(email)
                 .firstName(firstName)
                 .role(role)
+                .theme(theme)
                 .phone(phone)
                 .lastName(lastName)
                 .avatar(avatar)

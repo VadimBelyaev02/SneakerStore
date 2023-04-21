@@ -1,6 +1,7 @@
 package com.vadim.sneakerstore.entity;
 
 import com.vadim.sneakerstore.entity.enums.Role;
+import com.vadim.sneakerstore.entity.enums.Theme;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cascade;
@@ -38,6 +39,9 @@ public class Customer {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "theme")
+    private Theme theme;
 
     @Column(name = "password")
     private String password;
