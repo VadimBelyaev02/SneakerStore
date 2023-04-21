@@ -23,7 +23,7 @@ public class ResponseEntityExceptionHandler {
         ExceptionInfo info = new ExceptionInfo(e.getMessage(), HttpStatus.FORBIDDEN.value());
         return new ResponseEntity<>(info, HttpStatus.FORBIDDEN);
     }
-//
+
     @ExceptionHandler(AlreadyExistsException.class)
     public ResponseEntity<?> handleAlreadyExistsException(AlreadyExistsException e) {
         ExceptionInfo info = new ExceptionInfo(e.getMessage(), HttpStatus.CONFLICT.value());

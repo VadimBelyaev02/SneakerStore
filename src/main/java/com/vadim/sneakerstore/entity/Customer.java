@@ -4,6 +4,7 @@ import com.vadim.sneakerstore.entity.enums.Role;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

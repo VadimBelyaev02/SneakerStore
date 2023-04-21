@@ -34,6 +34,7 @@ public class AddressDto {
     @Schema(description = "Person's apartment")
     private String apartment;
 
+
     private String state;
 
     @Schema(description = "People that are living at this address")

@@ -20,6 +20,7 @@ import java.util.UUID;
 public class Address {
 
     @Id
+
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
