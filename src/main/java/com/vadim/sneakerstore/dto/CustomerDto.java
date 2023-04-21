@@ -1,6 +1,7 @@
 package com.vadim.sneakerstore.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vadim.sneakerstore.entity.enums.Theme;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,7 +35,11 @@ public class CustomerDto {
     @NotBlank
     private String phone;
 
+    @Schema(description = "Person's theme (dark/light)")
+    private Theme theme;
+
     @JsonIgnore
+    @Schema(description = "Person's password")
     private String password;
 
     @Schema(description = "Person's email")
