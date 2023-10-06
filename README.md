@@ -105,4 +105,4 @@ After user put at least one pair he can make an order. The information from his 
   
   
 # Documentation (user interface):
- PDF file named "documentation.pdf"
+ PDF file named "sneackerstore-docs.pdf"
